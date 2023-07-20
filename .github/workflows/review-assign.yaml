@@ -1,0 +1,18 @@
+name: Review Assign
+
+on:
+  pull_request:
+    types: [ opened, ready_for_review ]
+
+jobs:
+  assign:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
+          reviewers: ${{ vars.REVIEWERS }}
+          ready-comment: 'Ready for review :rocket:'
