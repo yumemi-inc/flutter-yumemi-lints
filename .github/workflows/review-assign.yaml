@@ -8,8 +8,9 @@ jobs:
   assign:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
+    permissions:
+      pull-requests: write
     steps:
-      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
       - uses: hkusu/review-assign-action@v1
         with:
           assignees: ${{ github.actor }}
