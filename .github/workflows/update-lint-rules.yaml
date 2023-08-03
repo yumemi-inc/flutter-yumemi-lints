@@ -1,0 +1,14 @@
+name: Update Lint Rules
+
+# TODO:
+#   Set schedule event as soon as update mechanism is implemented.
+#   https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#schedule
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
