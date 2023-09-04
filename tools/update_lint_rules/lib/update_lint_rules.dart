@@ -20,6 +20,11 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
   try {
     final allLintRules = await lintRuleService.getAllLintRules();
     print(allLintRules);
+
+    final flutterLintRuleNames =
+        await lintRuleService.getFlutterLintRuleNames();
+    print(flutterLintRuleNames);
+
     return ExitStatus.success;
   } on Exception catch (e) {
     print(e);

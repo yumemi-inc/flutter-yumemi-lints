@@ -6,4 +6,9 @@ class FakeLintRuleService implements LintRuleService {
   Future<Iterable<LintRule>> getAllLintRules() async {
     return [];
   }
+
+  @override
+  Future<Iterable<String>> getFlutterLintRuleNames() async {
+    return [];
+  }
 }

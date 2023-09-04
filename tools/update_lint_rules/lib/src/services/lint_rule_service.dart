@@ -2,24 +2,30 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
+import 'package:update_lint_rules/src/clients/github_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 
 part 'lint_rule_service.g.dart';
 
-@Riverpod(dependencies: [appClient])
+@Riverpod(dependencies: [appClient, gitHubClient])
 LintRuleService lintRuleService(LintRuleServiceRef ref) {
   final appClient = ref.watch(appClientProvider);
+  final gitHubClient = ref.watch(gitHubClientProvider);
   return LintRuleService(
     appClient: appClient,
+    gitHubClient: gitHubClient,
   );
 }
 
 class LintRuleService {
   const LintRuleService({
     required AppClient appClient,
-  }) : _appClient = appClient;
+    required GitHubClient gitHubClient,
+  })  : _appClient = appClient,
+        _gitHubClient = gitHubClient;
 
   final AppClient _appClient;
+  final GitHubClient _gitHubClient;
 
   Future<Iterable<LintRule>> getAllLintRules() async {
     final url = Uri.https(
@@ -38,5 +44,30 @@ class LintRuleService {
           },
         );
     return lintRules;
+  }
+
+  Future<Iterable<String>> getFlutterLintRuleNames() async {
+    const searchText = "import '../util/flutter_utils.dart';";
+    final url = Uri.https(
+      'api.github.com',
+      'search/code',
+      {
+        'q': '$searchText in:file repo:dart-lang/sdk extension:dart',
+      },
+    );
+
+    final responseBody = await _gitHubClient.read(url);
+
+    final json = jsonDecode(responseBody) as Map<String, dynamic>;
+    final items = json['items'] as List<dynamic>;
+
+    final lintRuleNames = items.map((item) {
+      if (item is Map<String, dynamic>) {
+        final fileName = item['name'] as String;
+        return fileName.replaceFirst('.dart', '');
+      }
+      return null;
+    }).nonNulls;
+    return lintRuleNames;
   }
 }
