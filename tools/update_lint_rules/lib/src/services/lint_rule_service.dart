@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:update_lint_rules/src/app_client.dart';
+import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 
 part 'lint_rule_service.g.dart';
