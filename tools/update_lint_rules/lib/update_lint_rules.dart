@@ -6,7 +6,8 @@ import 'package:update_lint_rules/src/services/lint_rule_service.dart';
 Future<ExitStatus> run(List<String> args) async {
   final container = ProviderContainer();
   try {
-    return updateLintRules(container);
+    final exitStatus = await updateLintRules(container);
+    return exitStatus;
   } finally {
     container.dispose();
   }
