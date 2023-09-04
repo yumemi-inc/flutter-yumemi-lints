@@ -5,3 +5,4 @@ analyzer:
     - custom_lint
   errors:
     invalid_annotation_target: ignore
+    invalid_use_of_visible_for_testing_member: error
