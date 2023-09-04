@@ -3,7 +3,7 @@ import 'package:update_lint_rules/src/services/lint_rule_service.dart';
 
 class FakeLintRuleService implements LintRuleService {
   @override
-  Future<Iterable<LintRule>> getLintRules() async {
+  Future<Iterable<LintRule>> getAllLintRules() async {
     return [];
   }
 }

@@ -21,7 +21,7 @@ class LintRuleService {
 
   final AppClient _appClient;
 
-  Future<Iterable<LintRule>> getLintRules() async {
+  Future<Iterable<LintRule>> getAllLintRules() async {
     final url = Uri.https(
       'raw.githubusercontent.com',
       'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',

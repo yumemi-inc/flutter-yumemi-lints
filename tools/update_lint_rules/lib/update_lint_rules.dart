@@ -17,8 +17,8 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
   final lintRuleService = container.read(lintRuleServiceProvider);
 
   try {
-    final lintRules = await lintRuleService.getLintRules();
-    print(lintRules);
+    final allLintRules = await lintRuleService.getAllLintRules();
+    print(allLintRules);
     return ExitStatus.success;
   } on Exception catch (e) {
     print(e);
