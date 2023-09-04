@@ -8,11 +8,11 @@ part of 'lint_rule.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_LintRule _$$_LintRuleFromJson(Map<String, dynamic> json) => $checkedCreate(
-      r'_$_LintRule',
+_$_Rule _$$_RuleFromJson(Map<String, dynamic> json) => $checkedCreate(
+      r'_$_Rule',
       json,
       ($checkedConvert) {
-        final val = _$_LintRule(
+        final val = _$_Rule(
           name: $checkedConvert('name', (v) => v as String),
           description: $checkedConvert('description', (v) => v as String),
           group: $checkedConvert(
@@ -40,8 +40,7 @@ _$_LintRule _$$_LintRuleFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
     );
 
-Map<String, dynamic> _$$_LintRuleToJson(_$_LintRule instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_RuleToJson(_$_Rule instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'group': _$RuleGroupEnumMap[instance.group]!,

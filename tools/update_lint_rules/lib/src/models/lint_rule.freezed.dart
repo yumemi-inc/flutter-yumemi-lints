@@ -14,12 +14,381 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-LintRule _$LintRuleFromJson(Map<String, dynamic> json) {
-  return _LintRule.fromJson(json);
+/// @nodoc
+mixin _$LintRule {
+  Rule get rule => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Rule rule) dart,
+    required TResult Function(Rule rule) flutter,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Rule rule)? dart,
+    TResult? Function(Rule rule)? flutter,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Rule rule)? dart,
+    TResult Function(Rule rule)? flutter,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DartLintRule value) dart,
+    required TResult Function(FlutterLintRule value) flutter,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DartLintRule value)? dart,
+    TResult? Function(FlutterLintRule value)? flutter,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DartLintRule value)? dart,
+    TResult Function(FlutterLintRule value)? flutter,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $LintRuleCopyWith<LintRule> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$LintRule {
+abstract class $LintRuleCopyWith<$Res> {
+  factory $LintRuleCopyWith(LintRule value, $Res Function(LintRule) then) =
+      _$LintRuleCopyWithImpl<$Res, LintRule>;
+  @useResult
+  $Res call({Rule rule});
+
+  $RuleCopyWith<$Res> get rule;
+}
+
+/// @nodoc
+class _$LintRuleCopyWithImpl<$Res, $Val extends LintRule>
+    implements $LintRuleCopyWith<$Res> {
+  _$LintRuleCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rule = null,
+  }) {
+    return _then(_value.copyWith(
+      rule: null == rule
+          ? _value.rule
+          : rule // ignore: cast_nullable_to_non_nullable
+              as Rule,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RuleCopyWith<$Res> get rule {
+    return $RuleCopyWith<$Res>(_value.rule, (value) {
+      return _then(_value.copyWith(rule: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$DartLintRuleCopyWith<$Res>
+    implements $LintRuleCopyWith<$Res> {
+  factory _$$DartLintRuleCopyWith(
+          _$DartLintRule value, $Res Function(_$DartLintRule) then) =
+      __$$DartLintRuleCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Rule rule});
+
+  @override
+  $RuleCopyWith<$Res> get rule;
+}
+
+/// @nodoc
+class __$$DartLintRuleCopyWithImpl<$Res>
+    extends _$LintRuleCopyWithImpl<$Res, _$DartLintRule>
+    implements _$$DartLintRuleCopyWith<$Res> {
+  __$$DartLintRuleCopyWithImpl(
+      _$DartLintRule _value, $Res Function(_$DartLintRule) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rule = null,
+  }) {
+    return _then(_$DartLintRule(
+      null == rule
+          ? _value.rule
+          : rule // ignore: cast_nullable_to_non_nullable
+              as Rule,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DartLintRule implements DartLintRule {
+  const _$DartLintRule(this.rule);
+
+  @override
+  final Rule rule;
+
+  @override
+  String toString() {
+    return 'LintRule.dart(rule: $rule)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DartLintRule &&
+            (identical(other.rule, rule) || other.rule == rule));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, rule);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DartLintRuleCopyWith<_$DartLintRule> get copyWith =>
+      __$$DartLintRuleCopyWithImpl<_$DartLintRule>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Rule rule) dart,
+    required TResult Function(Rule rule) flutter,
+  }) {
+    return dart(rule);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Rule rule)? dart,
+    TResult? Function(Rule rule)? flutter,
+  }) {
+    return dart?.call(rule);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Rule rule)? dart,
+    TResult Function(Rule rule)? flutter,
+    required TResult orElse(),
+  }) {
+    if (dart != null) {
+      return dart(rule);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DartLintRule value) dart,
+    required TResult Function(FlutterLintRule value) flutter,
+  }) {
+    return dart(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DartLintRule value)? dart,
+    TResult? Function(FlutterLintRule value)? flutter,
+  }) {
+    return dart?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DartLintRule value)? dart,
+    TResult Function(FlutterLintRule value)? flutter,
+    required TResult orElse(),
+  }) {
+    if (dart != null) {
+      return dart(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DartLintRule implements LintRule {
+  const factory DartLintRule(final Rule rule) = _$DartLintRule;
+
+  @override
+  Rule get rule;
+  @override
+  @JsonKey(ignore: true)
+  _$$DartLintRuleCopyWith<_$DartLintRule> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FlutterLintRuleCopyWith<$Res>
+    implements $LintRuleCopyWith<$Res> {
+  factory _$$FlutterLintRuleCopyWith(
+          _$FlutterLintRule value, $Res Function(_$FlutterLintRule) then) =
+      __$$FlutterLintRuleCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Rule rule});
+
+  @override
+  $RuleCopyWith<$Res> get rule;
+}
+
+/// @nodoc
+class __$$FlutterLintRuleCopyWithImpl<$Res>
+    extends _$LintRuleCopyWithImpl<$Res, _$FlutterLintRule>
+    implements _$$FlutterLintRuleCopyWith<$Res> {
+  __$$FlutterLintRuleCopyWithImpl(
+      _$FlutterLintRule _value, $Res Function(_$FlutterLintRule) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rule = null,
+  }) {
+    return _then(_$FlutterLintRule(
+      null == rule
+          ? _value.rule
+          : rule // ignore: cast_nullable_to_non_nullable
+              as Rule,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FlutterLintRule implements FlutterLintRule {
+  const _$FlutterLintRule(this.rule);
+
+  @override
+  final Rule rule;
+
+  @override
+  String toString() {
+    return 'LintRule.flutter(rule: $rule)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FlutterLintRule &&
+            (identical(other.rule, rule) || other.rule == rule));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, rule);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FlutterLintRuleCopyWith<_$FlutterLintRule> get copyWith =>
+      __$$FlutterLintRuleCopyWithImpl<_$FlutterLintRule>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Rule rule) dart,
+    required TResult Function(Rule rule) flutter,
+  }) {
+    return flutter(rule);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Rule rule)? dart,
+    TResult? Function(Rule rule)? flutter,
+  }) {
+    return flutter?.call(rule);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Rule rule)? dart,
+    TResult Function(Rule rule)? flutter,
+    required TResult orElse(),
+  }) {
+    if (flutter != null) {
+      return flutter(rule);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DartLintRule value) dart,
+    required TResult Function(FlutterLintRule value) flutter,
+  }) {
+    return flutter(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DartLintRule value)? dart,
+    TResult? Function(FlutterLintRule value)? flutter,
+  }) {
+    return flutter?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DartLintRule value)? dart,
+    TResult Function(FlutterLintRule value)? flutter,
+    required TResult orElse(),
+  }) {
+    if (flutter != null) {
+      return flutter(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FlutterLintRule implements LintRule {
+  const factory FlutterLintRule(final Rule rule) = _$FlutterLintRule;
+
+  @override
+  Rule get rule;
+  @override
+  @JsonKey(ignore: true)
+  _$$FlutterLintRuleCopyWith<_$FlutterLintRule> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Rule _$RuleFromJson(Map<String, dynamic> json) {
+  return _Rule.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Rule {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   RuleGroup get group => throw _privateConstructorUsedError;
@@ -34,14 +403,13 @@ mixin _$LintRule {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LintRuleCopyWith<LintRule> get copyWith =>
-      throw _privateConstructorUsedError;
+  $RuleCopyWith<Rule> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LintRuleCopyWith<$Res> {
-  factory $LintRuleCopyWith(LintRule value, $Res Function(LintRule) then) =
-      _$LintRuleCopyWithImpl<$Res, LintRule>;
+abstract class $RuleCopyWith<$Res> {
+  factory $RuleCopyWith(Rule value, $Res Function(Rule) then) =
+      _$RuleCopyWithImpl<$Res, Rule>;
   @useResult
   $Res call(
       {String name,
@@ -58,9 +426,9 @@ abstract class $LintRuleCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LintRuleCopyWithImpl<$Res, $Val extends LintRule>
-    implements $LintRuleCopyWith<$Res> {
-  _$LintRuleCopyWithImpl(this._value, this._then);
+class _$RuleCopyWithImpl<$Res, $Val extends Rule>
+    implements $RuleCopyWith<$Res> {
+  _$RuleCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -130,10 +498,9 @@ class _$LintRuleCopyWithImpl<$Res, $Val extends LintRule>
 }
 
 /// @nodoc
-abstract class _$$_LintRuleCopyWith<$Res> implements $LintRuleCopyWith<$Res> {
-  factory _$$_LintRuleCopyWith(
-          _$_LintRule value, $Res Function(_$_LintRule) then) =
-      __$$_LintRuleCopyWithImpl<$Res>;
+abstract class _$$_RuleCopyWith<$Res> implements $RuleCopyWith<$Res> {
+  factory _$$_RuleCopyWith(_$_Rule value, $Res Function(_$_Rule) then) =
+      __$$_RuleCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -152,11 +519,9 @@ abstract class _$$_LintRuleCopyWith<$Res> implements $LintRuleCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LintRuleCopyWithImpl<$Res>
-    extends _$LintRuleCopyWithImpl<$Res, _$_LintRule>
-    implements _$$_LintRuleCopyWith<$Res> {
-  __$$_LintRuleCopyWithImpl(
-      _$_LintRule _value, $Res Function(_$_LintRule) _then)
+class __$$_RuleCopyWithImpl<$Res> extends _$RuleCopyWithImpl<$Res, _$_Rule>
+    implements _$$_RuleCopyWith<$Res> {
+  __$$_RuleCopyWithImpl(_$_Rule _value, $Res Function(_$_Rule) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,7 +537,7 @@ class __$$_LintRuleCopyWithImpl<$Res>
     Object? details = null,
     Object? since = null,
   }) {
-    return _then(_$_LintRule(
+    return _then(_$_Rule(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -215,8 +580,8 @@ class __$$_LintRuleCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LintRule implements _LintRule {
-  const _$_LintRule(
+class _$_Rule implements _Rule {
+  const _$_Rule(
       {required this.name,
       required this.description,
       required this.group,
@@ -229,8 +594,7 @@ class _$_LintRule implements _LintRule {
       : _incompatibles = incompatibles,
         _sets = sets;
 
-  factory _$_LintRule.fromJson(Map<String, dynamic> json) =>
-      _$$_LintRuleFromJson(json);
+  factory _$_Rule.fromJson(Map<String, dynamic> json) => _$$_RuleFromJson(json);
 
   @override
   final String name;
@@ -267,14 +631,14 @@ class _$_LintRule implements _LintRule {
 
   @override
   String toString() {
-    return 'LintRule(name: $name, description: $description, group: $group, state: $state, incompatibles: $incompatibles, sets: $sets, fixStatus: $fixStatus, details: $details, since: $since)';
+    return 'Rule(name: $name, description: $description, group: $group, state: $state, incompatibles: $incompatibles, sets: $sets, fixStatus: $fixStatus, details: $details, since: $since)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LintRule &&
+            other is _$_Rule &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -306,19 +670,19 @@ class _$_LintRule implements _LintRule {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LintRuleCopyWith<_$_LintRule> get copyWith =>
-      __$$_LintRuleCopyWithImpl<_$_LintRule>(this, _$identity);
+  _$$_RuleCopyWith<_$_Rule> get copyWith =>
+      __$$_RuleCopyWithImpl<_$_Rule>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LintRuleToJson(
+    return _$$_RuleToJson(
       this,
     );
   }
 }
 
-abstract class _LintRule implements LintRule {
-  const factory _LintRule(
+abstract class _Rule implements Rule {
+  const factory _Rule(
       {required final String name,
       required final String description,
       required final RuleGroup group,
@@ -327,9 +691,9 @@ abstract class _LintRule implements LintRule {
       required final List<RuleSet> sets,
       required final FixStatus fixStatus,
       required final String details,
-      @JsonKey(name: 'sinceDartSdk') required final Since since}) = _$_LintRule;
+      @JsonKey(name: 'sinceDartSdk') required final Since since}) = _$_Rule;
 
-  factory _LintRule.fromJson(Map<String, dynamic> json) = _$_LintRule.fromJson;
+  factory _Rule.fromJson(Map<String, dynamic> json) = _$_Rule.fromJson;
 
   @override
   String get name;
@@ -353,8 +717,7 @@ abstract class _LintRule implements LintRule {
   Since get since;
   @override
   @JsonKey(ignore: true)
-  _$$_LintRuleCopyWith<_$_LintRule> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_RuleCopyWith<_$_Rule> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

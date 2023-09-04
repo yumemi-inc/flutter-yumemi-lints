@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/clients/github_client.dart';
@@ -27,7 +28,26 @@ class LintRuleService {
   final AppClient _appClient;
   final GitHubClient _gitHubClient;
 
-  Future<Iterable<LintRule>> getAllLintRules() async {
+  Future<LintRules> getLintRules() async {
+    final allRules = await getRules();
+    final flutterLintRuleNames = await getFlutterRuleNames();
+
+    final allLintRules = allRules.map((rule) {
+      if (flutterLintRuleNames.contains(rule.name)) {
+        return LintRule.flutter(rule);
+      } else {
+        return LintRule.dart(rule);
+      }
+    });
+
+    return (
+      dart: allLintRules.whereType<DartLintRule>(),
+      flutter: allLintRules.whereType<FlutterLintRule>(),
+    );
+  }
+
+  @visibleForTesting
+  Future<Iterable<Rule>> getRules() async {
     final url = Uri.https(
       'raw.githubusercontent.com',
       'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
@@ -37,16 +57,17 @@ class LintRuleService {
 
     final json = jsonDecode(responseBody) as List<dynamic>;
 
-    final lintRules = json.map((e) => LintRule.fromJson(e)).where(
+    final rules = json.map((e) => Rule.fromJson(e)).where(
           (e) => switch (e.state) {
             RuleState.stable || RuleState.experimental => true,
             RuleState.deprecated || RuleState.removed => false,
           },
         );
-    return lintRules;
+    return rules;
   }
 
-  Future<Iterable<String>> getFlutterLintRuleNames() async {
+  @visibleForTesting
+  Future<Iterable<String>> getFlutterRuleNames() async {
     const searchText = "import '../util/flutter_utils.dart';";
     final url = Uri.https(
       'api.github.com',

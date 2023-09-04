@@ -2,11 +2,24 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 part 'lint_rule.freezed.dart';
+
 part 'lint_rule.g.dart';
 
+typedef LintRules = ({
+  Iterable<DartLintRule> dart,
+  Iterable<FlutterLintRule> flutter,
+});
+
 @freezed
-class LintRule with _$LintRule {
-  const factory LintRule({
+sealed class LintRule with _$LintRule {
+  const factory LintRule.dart(Rule rule) = DartLintRule;
+
+  const factory LintRule.flutter(Rule rule) = FlutterLintRule;
+}
+
+@freezed
+class Rule with _$Rule {
+  const factory Rule({
     required String name,
     required String description,
     required RuleGroup group,
@@ -16,10 +29,9 @@ class LintRule with _$LintRule {
     required FixStatus fixStatus,
     required String details,
     @JsonKey(name: 'sinceDartSdk') required Since since,
-  }) = _LintRule;
+  }) = _Rule;
 
-  factory LintRule.fromJson(Map<String, dynamic> json) =>
-      _$LintRuleFromJson(json);
+  factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
 }
 
 enum RuleGroup {
