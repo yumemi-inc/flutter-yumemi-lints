@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_client.g.dart';
 
-@Riverpod(dependencies: [])
+@Riverpod(keepAlive: true, dependencies: [])
 AppClient appClient(AppClientRef ref) {
   final appClient = AppClient(Client());
   ref.onDispose(appClient.close);
