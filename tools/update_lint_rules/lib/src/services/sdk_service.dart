@@ -76,13 +76,25 @@ class SdkService {
 
     final responseBody = await _appClient.read(url);
 
-    final json = jsonDecode(responseBody) as Map<String, dynamic>;
-    final releases = json['releases'] as List<dynamic>;
+    final json = jsonDecode(responseBody);
+    if (json is! Map<String, dynamic>) {
+      throw FormatException(
+        'The type of `json` should be `Map<String, dynamic>`.',
+      );
+    }
+    final releases = json['releases'];
+    if (releases is! List<dynamic>) {
+      throw FormatException(
+        'The type of `releases` should be `List<dynamic>`.',
+      );
+    }
 
     return releases
         .map((release) {
           if (release is! Map<String, dynamic>) {
-            return null;
+            throw FormatException(
+              'The type of `release` should be `Map<String, dynamic>`.',
+            );
           }
           try {
             return FlutterSdkRelease.fromJson(release);
