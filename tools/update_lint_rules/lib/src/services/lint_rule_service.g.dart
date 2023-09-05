@@ -8,7 +8,7 @@ part of 'lint_rule_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lintRuleServiceHash() => r'5f360697d9b61cf3cbf54e6c0d18c5a0b8cdb8c0';
+String _$lintRuleServiceHash() => r'61139ae5288d244c639c1c73b97a0773a2572dc4';
 
 /// See also [lintRuleService].
 @ProviderFor(lintRuleService)
@@ -18,10 +18,12 @@ final lintRuleServiceProvider = AutoDisposeProvider<LintRuleService>.internal(
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$lintRuleServiceHash,
-  dependencies: <ProviderOrFamily>[appClientProvider],
+  dependencies: <ProviderOrFamily>[appClientProvider, gitHubClientProvider],
   allTransitiveDependencies: <ProviderOrFamily>{
     appClientProvider,
-    ...?appClientProvider.allTransitiveDependencies
+    ...?appClientProvider.allTransitiveDependencies,
+    gitHubClientProvider,
+    ...?gitHubClientProvider.allTransitiveDependencies
   },
 );
 

@@ -18,8 +18,8 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
   final lintRuleService = container.read(lintRuleServiceProvider);
 
   try {
-    final allLintRules = await lintRuleService.getAllLintRules();
-    print(allLintRules);
+    final lintRules = await lintRuleService.getLintRules();
+    print(lintRules);
     return ExitStatus.success;
   } on Exception catch (e) {
     print(e);
