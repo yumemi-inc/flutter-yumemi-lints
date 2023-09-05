@@ -1,3 +1,4 @@
+import 'package:file/src/interface/file.dart';
 import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
 import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
@@ -14,5 +15,12 @@ class FakeAnalysisOptionsService implements AnalysisOptionsService {
   Future<void> updateFlutterLintRule({
     required Iterable<FlutterSdkRelease> releases,
     required Iterable<FlutterLintRule> lintRules,
+  }) async {}
+
+  @override
+  Future<void> outputAllLintRules({
+    required File outputFile,
+    required Iterable<LintRule> lintRules,
+    String includeContent = '',
   }) async {}
 }
