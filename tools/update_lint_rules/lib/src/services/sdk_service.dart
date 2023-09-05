@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
+import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 
 part 'sdk_service.g.dart';
 
@@ -64,6 +66,39 @@ class SdkService {
           return v >= Version(2, 17, 0);
         });
     return versions.map((v) => DartSdkRelease(version: v));
+  }
+
+  Future<Iterable<FlutterSdkRelease>> getFlutterSdkReleases() async {
+    final url = Uri.https(
+      'storage.googleapis.com',
+      '/flutter_infra_release/releases/releases_linux.json',
+    );
+
+    final responseBody = await _appClient.read(url);
+
+    final json = jsonDecode(responseBody) as Map<String, dynamic>;
+    final releases = json['releases'] as List<dynamic>;
+
+    return releases
+        .map((release) {
+          if (release is! Map<String, dynamic>) {
+            return null;
+          }
+          try {
+            return FlutterSdkRelease.fromJson(release);
+          } on CheckedFromJsonException {
+            return null;
+          }
+        })
+        .nonNulls
+        .where((release) {
+          if (release.channel != FlutterChannel.stable) {
+            return false;
+          }
+
+          // The yumemi_lints package supports Flutter 3.0.0 and later.
+          return release.version >= Version(3, 0, 0);
+        });
   }
 }
 
