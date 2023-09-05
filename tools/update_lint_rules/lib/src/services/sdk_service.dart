@@ -86,8 +86,18 @@ class SdkService {
           }
           try {
             return FlutterSdkRelease.fromJson(release);
-          } on CheckedFromJsonException {
-            return null;
+          } on CheckedFromJsonException catch (e) {
+            if (e.key case 'version' || 'dart_sdk_version') {
+              // Intentionally don't handle older formats of `version` and
+              // `dart_sdk_version` values, and therefore, don't throw
+              // exceptions in these cases.
+              //
+              // Unsupported formats:
+              // - `version` such as `v1.12.13+hotfix.9` or `v1.16.3`
+              // - `dart_sdk_version` such as `3.0.0 (build 3.0.0-417.1.beta)`
+              return null;
+            }
+            rethrow;
           }
         })
         .nonNulls
