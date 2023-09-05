@@ -34,13 +34,25 @@ class SdkService {
 
     final responseBody = await _appClient.read(url);
 
-    final json = jsonDecode(responseBody) as Map<String, dynamic>;
-    final prefixes = json['prefixes'] as List<dynamic>;
+    final json = jsonDecode(responseBody);
+    if (json is! Map<String, dynamic>) {
+      throw FormatException(
+        'The type of `json` should be `Map<String, dynamic>`.',
+      );
+    }
+    final prefixes = json['prefixes'];
+    if (prefixes is! List<dynamic>) {
+      throw FormatException(
+        'The type of `prefixes` should be `List<dynamic>`.',
+      );
+    }
 
     final versions = prefixes
         .map((prefix) {
           if (prefix is! String) {
-            return null;
+            throw FormatException(
+              'The type of `prefix` should be `String`.',
+            );
           }
           return prefix.toVersionOrNull;
         })
