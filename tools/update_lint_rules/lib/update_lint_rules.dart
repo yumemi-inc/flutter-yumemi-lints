@@ -26,6 +26,9 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
     final dartSdkReleases = await sdkService.getDartSdkReleases();
     print(dartSdkReleases);
 
+    final flutterSdkReleases = await sdkService.getFlutterSdkReleases();
+    print(flutterSdkReleases);
+
     return ExitStatus.success;
   } on Exception catch (e) {
     print(e);

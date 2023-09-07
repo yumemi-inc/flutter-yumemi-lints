@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
+import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 
 part 'sdk_service.g.dart';
 
@@ -64,6 +66,61 @@ class SdkService {
           return v >= Version(2, 17, 0);
         });
     return versions.map((v) => DartSdkRelease(version: v));
+  }
+
+  Future<Iterable<FlutterSdkRelease>> getFlutterSdkReleases() async {
+    final url = Uri.https(
+      'storage.googleapis.com',
+      '/flutter_infra_release/releases/releases_linux.json',
+    );
+
+    final responseBody = await _appClient.read(url);
+
+    final json = jsonDecode(responseBody);
+    if (json is! Map<String, dynamic>) {
+      throw FormatException(
+        'The type of `json` should be `Map<String, dynamic>`.',
+      );
+    }
+    final releases = json['releases'];
+    if (releases is! List<dynamic>) {
+      throw FormatException(
+        'The type of `releases` should be `List<dynamic>`.',
+      );
+    }
+
+    return releases
+        .map((release) {
+          if (release is! Map<String, dynamic>) {
+            throw FormatException(
+              'The type of `release` should be `Map<String, dynamic>`.',
+            );
+          }
+          try {
+            return FlutterSdkRelease.fromJson(release);
+          } on CheckedFromJsonException catch (e) {
+            if (e.key case 'version' || 'dart_sdk_version') {
+              // Intentionally don't handle older formats of `version` and
+              // `dart_sdk_version` values, and therefore, don't throw
+              // exceptions in these cases.
+              //
+              // Unsupported formats:
+              // - `version` such as `v1.12.13+hotfix.9` or `v1.16.3`
+              // - `dart_sdk_version` such as `3.0.0 (build 3.0.0-417.1.beta)`
+              return null;
+            }
+            rethrow;
+          }
+        })
+        .nonNulls
+        .where((release) {
+          if (release.channel != FlutterChannel.stable) {
+            return false;
+          }
+
+          // The yumemi_lints package supports Flutter 3.0.0 and later.
+          return release.version >= Version(3, 0, 0);
+        });
   }
 }
 
