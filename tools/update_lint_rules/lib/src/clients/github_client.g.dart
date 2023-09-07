@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, duplicate_ignore
 
 part of 'github_client.dart';
 
@@ -8,7 +8,7 @@ part of 'github_client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gitHubTokenHash() => r'f23013ca01f97f13965fc03146205a2b642d664d';
+String _$gitHubTokenHash() => r'9e9667ae10df40c18bddd23158d0b6cde79bfd0f';
 
 /// See also [gitHubToken].
 @ProviderFor(gitHubToken)
