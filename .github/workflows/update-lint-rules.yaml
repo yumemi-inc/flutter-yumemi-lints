@@ -14,8 +14,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up dart
+        uses: dart-lang/setup-dart@v1
         with:
           sdk: '3.1.0' # See: tools/update_lint_rules/pubspec.yaml
       - name: Install dependencies
