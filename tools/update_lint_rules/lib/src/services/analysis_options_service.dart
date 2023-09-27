@@ -65,9 +65,9 @@ class AnalysisOptionsService {
         return since.version <= dartSdkVersion;
       });
 
-      final dartOutputDir =
+      final flutterOutputDir =
           _outputDir.childDirectory('flutter/$flutterSdkVersion');
-      final allFile = dartOutputDir.childFile('all.yaml')
+      final allFile = flutterOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
       final includeContent =
           'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
