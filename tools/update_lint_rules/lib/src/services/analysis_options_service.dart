@@ -69,13 +69,13 @@ class AnalysisOptionsService {
           _outputDir.childDirectory('flutter/$flutterSdkVersion');
       final allFile = flutterOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
-      final includeContent =
+      final allIncludeContent =
           'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
 
       return outputAllLintRules(
         outputFile: allFile,
         lintRules: allLintRules,
-        includeContent: includeContent,
+        includeContent: allIncludeContent,
       );
     });
 
