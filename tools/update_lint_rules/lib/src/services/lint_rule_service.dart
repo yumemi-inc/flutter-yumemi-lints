@@ -15,6 +15,55 @@ LintRuleService lintRuleService(LintRuleServiceRef ref) {
   );
 }
 
+//　Lint rules not recommended by YUMEMI Inc.
+const _yumemiNotRecommendedRules = <({String name, String reason})>[
+  (
+    name: 'always_specify_types',
+    reason:
+        'Conflicts with enabling `avoid_types_on_closure_parameters`, `omit_local_variable_types`.',
+  ),
+  (
+    name: 'avoid_annotating_with_dynamic',
+    reason: 'Conflicts with enabling `strict-raw-types`.',
+  ),
+  (
+    name: 'cascade_invocations',
+    reason: 'There are cases that are warned but not fixed by `dart fix`.',
+  ),
+  (
+    name: 'flutter_style_todos',
+    reason: "Don't use Flutter-style todos.",
+  ),
+  (
+    name: 'one_member_abstracts',
+    reason: 'May add more methods later.',
+  ),
+  (
+    name: 'prefer_double_quotes',
+    reason: 'Conflicts with enabling `prefer_single_quotes`.',
+  ),
+  (
+    name: 'prefer_expression_function_bodies',
+    reason: 'Using `=>` has sometimes to reduce readability.',
+  ),
+  (
+    name: 'prefer_final_parameters',
+    reason: 'Conflicts with enabling `avoid_final_parameters`.',
+  ),
+  (
+    name: 'prefer_relative_imports',
+    reason: 'Conflicts with enabling `always_use_package_imports`.',
+  ),
+  (
+    name: 'public_member_api_docs',
+    reason: "Don't often develop package.",
+  ),
+  (
+    name: 'unnecessary_final',
+    reason: 'Conflicts with enabling `prefer_final_locals`.',
+  ),
+];
+
 class LintRuleService {
   const LintRuleService({
     required AppClient appClient,
