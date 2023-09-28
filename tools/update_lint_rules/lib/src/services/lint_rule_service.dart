@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
+import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
 
 part 'lint_rule_service.g.dart';
 
@@ -86,6 +88,25 @@ class LintRuleService {
       dart: allLintRules.whereType<DartLintRule>(),
       flutter: allLintRules.whereType<FlutterLintRule>(),
     );
+  }
+
+  Future<Iterable<NotRecommendedRule>> getNotRecommendedRules() async {
+    // TODO: Reuse what has been obtained once.
+    final allRules = await getRules();
+
+    return _yumemiNotRecommendedRules.map((notRecommendedRule) {
+      final rule = allRules.firstWhereOrNull(
+        (rule) => notRecommendedRule.name == rule.name,
+      );
+      if (rule == null) {
+        return null;
+      }
+
+      return NotRecommendedRule(
+        rule: rule,
+        reason: notRecommendedRule.reason,
+      );
+    }).nonNulls;
   }
 
   @visibleForTesting
