@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
 import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
+import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
 import 'package:update_lint_rules/src/output_dir.dart';
 
 part 'analysis_options_service.g.dart';
@@ -26,8 +27,9 @@ class AnalysisOptionsService {
   Future<void> updateDartLintRules({
     required Iterable<DartSdkRelease> releases,
     required Iterable<DartLintRule> lintRules,
+    required Iterable<NotRecommendedRule> notRecommendedRules,
   }) async {
-    final futures = releases.map((release) {
+    final futures = releases.map((release) async {
       final dartSdkVersion = release.version;
       final allLintRules = lintRules.where((lintRule) {
         final since = lintRule.rule.since;
@@ -36,14 +38,31 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredNotRecommendedRules = notRecommendedRules.where((r) {
+        final since = r.rule.since;
+        if (since is! SinceDartSdk) {
+          return false;
+        }
+        return since.version <= dartSdkVersion;
+      });
 
       final dartOutputDir = _outputDir.childDirectory('dart/$dartSdkVersion');
+
       final allFile = dartOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
-
-      return outputAllLintRules(
+      await outputAllLintRules(
         outputFile: allFile,
         lintRules: allLintRules,
+      );
+
+      final recommendedFile = dartOutputDir.childFile('recommended.yaml')
+        ..createSync(recursive: true);
+      final recommendedIncludeContent =
+          'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
+      return outputRecommendedLintRules(
+        outputFile: recommendedFile,
+        notRecommendedRules: filteredNotRecommendedRules,
+        includeContent: recommendedIncludeContent,
       );
     });
 
@@ -53,8 +72,9 @@ class AnalysisOptionsService {
   Future<void> updateFlutterLintRule({
     required Iterable<FlutterSdkRelease> releases,
     required Iterable<FlutterLintRule> lintRules,
+    required Iterable<NotRecommendedRule> notRecommendedRules,
   }) async {
-    final futures = releases.map((release) {
+    final futures = releases.map((release) async {
       final flutterSdkVersion = release.version;
       final dartSdkVersion = release.dartSdkVersion;
       final allLintRules = lintRules.where((lintRule) {
@@ -64,18 +84,35 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredNotRecommendedRules = notRecommendedRules.where((r) {
+        final since = r.rule.since;
+        if (since is! SinceDartSdk) {
+          return false;
+        }
+        return since.version <= dartSdkVersion;
+      });
 
       final flutterOutputDir =
           _outputDir.childDirectory('flutter/$flutterSdkVersion');
+
       final allFile = flutterOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
       final allIncludeContent =
           'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
-
-      return outputAllLintRules(
+      await outputAllLintRules(
         outputFile: allFile,
         lintRules: allLintRules,
         includeContent: allIncludeContent,
+      );
+
+      final recommendedFile = flutterOutputDir.childFile('recommended.yaml')
+        ..createSync(recursive: true);
+      final recommendedIncludeContent =
+          'include: package:yumemi_lints/flutter/$flutterSdkVersion/all.yaml';
+      return outputRecommendedLintRules(
+        outputFile: recommendedFile,
+        notRecommendedRules: filteredNotRecommendedRules,
+        includeContent: recommendedIncludeContent,
       );
     });
 
@@ -130,6 +167,47 @@ linter:
     if (lintRuleTexts.isNotEmpty) {
       contentBuffer.writeln(lintRuleTexts.join('\n\n'));
     }
+    outputFile.writeAsStringSync(contentBuffer.toString());
+  }
+
+  Future<void> outputRecommendedLintRules({
+    required File outputFile,
+    required Iterable<NotRecommendedRule> notRecommendedRules,
+    required String includeContent,
+  }) async {
+    final contentBuffer = StringBuffer();
+    contentBuffer.writeln('# GENERATED CODE - DO NOT MODIFY BY HAND');
+    contentBuffer.writeln();
+
+    contentBuffer.writeln(includeContent);
+    contentBuffer.writeln();
+
+    contentBuffer.writeln('''
+analyzer:
+  language:
+    # Increase safety as much as possible.
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # By including all.yaml, some rules will conflict.
+    # These warnings will be addressed within this file.
+    included_file_warning: ignore
+''');
+
+    contentBuffer.writeln('''
+linter:
+  rules:''');
+
+    const indent = '    ';
+    final disableLintRuleTexts = notRecommendedRules.map((l) {
+      final buffer = StringBuffer();
+      buffer.writeln('$indent# ${l.reason}');
+      buffer.write('$indent${l.rule.name}: false');
+      return buffer.toString();
+    }).join('\n\n');
+
+    contentBuffer.writeln(disableLintRuleTexts);
     outputFile.writeAsStringSync(contentBuffer.toString());
   }
 }
