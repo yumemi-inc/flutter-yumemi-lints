@@ -1,0 +1,11 @@
+name: example
+description: A example of yumemi_lints.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dev_dependencies:
+  yumemi_lints:
+    path: ..
