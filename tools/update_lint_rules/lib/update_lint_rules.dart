@@ -45,17 +45,20 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
 
   try {
     final lintRules = await lintRuleService.getLintRules();
+    final notRecommendedRules = await lintRuleService.getNotRecommendedRules();
 
     final dartSdkReleases = await sdkService.getDartSdkReleases();
     await analysisOptionsService.updateDartLintRules(
       releases: dartSdkReleases,
       lintRules: lintRules.dart,
+      notRecommendedRules: notRecommendedRules,
     );
 
     final flutterSdkReleases = await sdkService.getFlutterSdkReleases();
     await analysisOptionsService.updateFlutterLintRule(
       releases: flutterSdkReleases,
       lintRules: lintRules.flutter,
+      notRecommendedRules: notRecommendedRules,
     );
 
     return ExitStatus.success;
