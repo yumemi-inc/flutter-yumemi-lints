@@ -2,6 +2,6 @@
 
 Before submitting your Pull Request, please check the following items:
 
-- [ ] Are there any typos?
+- [ ] Are there no typos?
 - [ ] Are all the links included?
-- [ ] Have you made any unnecessary changes?
+- [ ] Have you made no unnecessary changes?
