@@ -20,6 +20,7 @@ jobs:
         run: |
           git branch ${{ env.UPDATE_CONTRIBUTORS_BRANCH }}
           git push origin ${{ env.UPDATE_CONTRIBUTORS_BRANCH }}
+      # https://github.com/BobAnkh/add-contributors
       - uses: BobAnkh/add-contributors@v0.2.2
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
