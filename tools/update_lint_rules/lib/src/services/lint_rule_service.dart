@@ -89,11 +89,12 @@ class LintRuleService {
     );
   }
 
-  Future<Iterable<NotRecommendedRule>> getNotRecommendedRules() async {
+  Future<NotRecommendedRules> getNotRecommendedRules() async {
     // TODO: Reuse what has been obtained once.
     final allRules = await getRules();
 
-    return _yumemiNotRecommendedRules.map((notRecommendedRule) {
+    final notReccomendedAllRules =
+        _yumemiNotRecommendedRules.map((notRecommendedRule) {
       final rule = allRules.firstWhereOrNull(
         (rule) => notRecommendedRule.name == rule.name,
       );
@@ -101,11 +102,18 @@ class LintRuleService {
         return null;
       }
 
-      return NotRecommendedRule(
-        rule: rule,
-        reason: notRecommendedRule.reason,
-      );
-    }).nonNulls;
+      if (rule.isFlutterOnly) {
+        return NotRecommendedRule.flutter(
+            rule: rule, reason: notRecommendedRule.reason);
+      } else {
+        return NotRecommendedRule.dart(
+            rule: rule, reason: notRecommendedRule.reason);
+      }
+    });
+    return (
+      flutter: notReccomendedAllRules.whereType<NotRecommendedFlutterRule>(),
+      dart: notReccomendedAllRules.whereType<NotRecommendedDartRule>()
+    );
   }
 
   @visibleForTesting

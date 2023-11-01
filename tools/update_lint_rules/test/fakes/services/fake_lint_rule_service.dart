@@ -9,8 +9,11 @@ class FakeLintRuleService implements LintRuleService {
   }
 
   @override
-  Future<Iterable<NotRecommendedRule>> getNotRecommendedRules() async {
-    return [];
+  Future<NotRecommendedRules> getNotRecommendedRules() async {
+    return (
+      dart: <NotRecommendedDartRule>[],
+      flutter: <NotRecommendedFlutterRule>[],
+    );
   }
 
   @override
