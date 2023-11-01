@@ -76,8 +76,7 @@ class LintRuleService {
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
     final allLintRules = allRules.map((rule) {
-      if (rule.sets case final sets
-          when sets.length == 1 && sets.first == RuleSet.flutter) {
+      if (rule.isFlutterOnly) {
         return LintRule.flutter(rule);
       } else {
         return LintRule.dart(rule);
