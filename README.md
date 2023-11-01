@@ -59,3 +59,13 @@ linter:
 ```
 
 In the above example, we have customized various lint rules by adjusting their settings in the `analysis_options.yaml` file. You can modify these settings according to your project's specific needs and coding style preferences.
+
+## How to contribute
+
+See [Contributor Guide] for contributing conventions.
+
+### Contributors
+
+<!-- Links -->
+
+[Contributor Guide]: docs/contributing/CONTRIBUTING.md
