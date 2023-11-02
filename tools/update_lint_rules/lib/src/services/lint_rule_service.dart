@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:async/async.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -67,7 +68,7 @@ const _yumemiNotRecommendedRules = <({String name, String reason})>[
 ];
 
 class LintRuleService {
-  const LintRuleService({
+  LintRuleService({
     required AppClient appClient,
   }) : _appClient = appClient;
 
@@ -90,10 +91,9 @@ class LintRuleService {
   }
 
   Future<NotRecommendedRules> getNotRecommendedRules() async {
-    // TODO: Reuse what has been obtained once.
     final allRules = await getRules();
 
-    final notReccomendedAllRules =
+    final notRecommendedAllRules =
         _yumemiNotRecommendedRules.map((notRecommendedRule) {
       final rule = allRules.firstWhereOrNull(
         (rule) => notRecommendedRule.name == rule.name,
@@ -111,28 +111,32 @@ class LintRuleService {
       }
     });
     return (
-      flutter: notReccomendedAllRules.whereType<NotRecommendedFlutterRule>(),
-      dart: notReccomendedAllRules.whereType<NotRecommendedDartRule>()
+      flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
+      dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
     );
   }
+
+  final _allRulesMemo = AsyncMemoizer<Iterable<Rule>>();
 
   @visibleForTesting
-  Future<Iterable<Rule>> getRules() async {
-    final url = Uri.https(
-      'raw.githubusercontent.com',
-      'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
-    );
+  Future<Iterable<Rule>> getRules() => _allRulesMemo.runOnce(
+        () async {
+          final url = Uri.https(
+            'raw.githubusercontent.com',
+            'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
+          );
 
-    final responseBody = await _appClient.read(url);
+          final responseBody = await _appClient.read(url);
 
-    final json = jsonDecode(responseBody) as List<dynamic>;
+          final json = jsonDecode(responseBody) as List<dynamic>;
 
-    final rules = json.map((e) => Rule.fromJson(e)).where(
-          (e) => switch (e.state) {
-            RuleState.stable || RuleState.experimental => true,
-            RuleState.deprecated || RuleState.removed => false,
-          },
-        );
-    return rules;
-  }
+          final rules = json.map((e) => Rule.fromJson(e)).where(
+                (e) => switch (e.state) {
+                  RuleState.stable || RuleState.experimental => true,
+                  RuleState.deprecated || RuleState.removed => false,
+                },
+              );
+          return rules;
+        },
+      );
 }
