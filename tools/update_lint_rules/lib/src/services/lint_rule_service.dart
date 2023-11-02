@@ -76,8 +76,7 @@ class LintRuleService {
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
     final allLintRules = allRules.map((rule) {
-      if (rule.sets case final sets
-          when sets.length == 1 && sets.first == RuleSet.flutter) {
+      if (rule.isFlutterOnly) {
         return LintRule.flutter(rule);
       } else {
         return LintRule.dart(rule);
@@ -90,11 +89,12 @@ class LintRuleService {
     );
   }
 
-  Future<Iterable<NotRecommendedRule>> getNotRecommendedRules() async {
+  Future<NotRecommendedRules> getNotRecommendedRules() async {
     // TODO: Reuse what has been obtained once.
     final allRules = await getRules();
 
-    return _yumemiNotRecommendedRules.map((notRecommendedRule) {
+    final notReccomendedAllRules =
+        _yumemiNotRecommendedRules.map((notRecommendedRule) {
       final rule = allRules.firstWhereOrNull(
         (rule) => notRecommendedRule.name == rule.name,
       );
@@ -102,11 +102,18 @@ class LintRuleService {
         return null;
       }
 
-      return NotRecommendedRule(
-        rule: rule,
-        reason: notRecommendedRule.reason,
-      );
-    }).nonNulls;
+      if (rule.isFlutterOnly) {
+        return NotRecommendedRule.flutter(
+            rule: rule, reason: notRecommendedRule.reason);
+      } else {
+        return NotRecommendedRule.dart(
+            rule: rule, reason: notRecommendedRule.reason);
+      }
+    });
+    return (
+      flutter: notReccomendedAllRules.whereType<NotRecommendedFlutterRule>(),
+      dart: notReccomendedAllRules.whereType<NotRecommendedDartRule>()
+    );
   }
 
   @visibleForTesting

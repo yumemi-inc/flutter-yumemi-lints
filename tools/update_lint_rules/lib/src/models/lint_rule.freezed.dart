@@ -580,7 +580,7 @@ class __$$_RuleCopyWithImpl<$Res> extends _$RuleCopyWithImpl<$Res, _$_Rule>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Rule implements _Rule {
+class _$_Rule extends _Rule {
   const _$_Rule(
       {required this.name,
       required this.description,
@@ -592,7 +592,8 @@ class _$_Rule implements _Rule {
       required this.details,
       @JsonKey(name: 'sinceDartSdk') required this.since})
       : _incompatibles = incompatibles,
-        _sets = sets;
+        _sets = sets,
+        super._();
 
   factory _$_Rule.fromJson(Map<String, dynamic> json) => _$$_RuleFromJson(json);
 
@@ -681,7 +682,7 @@ class _$_Rule implements _Rule {
   }
 }
 
-abstract class _Rule implements Rule {
+abstract class _Rule extends Rule {
   const factory _Rule(
       {required final String name,
       required final String description,
@@ -692,6 +693,7 @@ abstract class _Rule implements Rule {
       required final FixStatus fixStatus,
       required final String details,
       @JsonKey(name: 'sinceDartSdk') required final Since since}) = _$_Rule;
+  const _Rule._() : super._();
 
   factory _Rule.fromJson(Map<String, dynamic> json) = _$_Rule.fromJson;
 
