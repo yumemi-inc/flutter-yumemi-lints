@@ -67,11 +67,12 @@ const _yumemiNotRecommendedRules = <({String name, String reason})>[
 ];
 
 class LintRuleService {
-  const LintRuleService({
+  LintRuleService({
     required AppClient appClient,
   }) : _appClient = appClient;
 
   final AppClient _appClient;
+  Iterable<Rule>? _cacheAllRules;
 
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
@@ -90,7 +91,6 @@ class LintRuleService {
   }
 
   Future<NotRecommendedRules> getNotRecommendedRules() async {
-    // TODO: Reuse what has been obtained once.
     final allRules = await getRules();
 
     final notReccomendedAllRules =
@@ -118,6 +118,11 @@ class LintRuleService {
 
   @visibleForTesting
   Future<Iterable<Rule>> getRules() async {
+    final cacheAllRules = _cacheAllRules;
+    if (cacheAllRules != null) {
+      return cacheAllRules;
+    }
+
     final url = Uri.https(
       'raw.githubusercontent.com',
       'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
@@ -133,6 +138,6 @@ class LintRuleService {
             RuleState.deprecated || RuleState.removed => false,
           },
         );
-    return rules;
+    return _cacheAllRules = rules;
   }
 }
