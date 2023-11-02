@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:async/async.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -72,7 +73,6 @@ class LintRuleService {
   }) : _appClient = appClient;
 
   final AppClient _appClient;
-  Iterable<Rule>? _cacheAllRules;
 
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
@@ -116,28 +116,27 @@ class LintRuleService {
     );
   }
 
+  final _allRulesMemo = AsyncMemoizer<Iterable<Rule>>();
+
   @visibleForTesting
-  Future<Iterable<Rule>> getRules() async {
-    final cacheAllRules = _cacheAllRules;
-    if (cacheAllRules != null) {
-      return cacheAllRules;
-    }
+  Future<Iterable<Rule>> getRules() => _allRulesMemo.runOnce(
+        () async {
+          final url = Uri.https(
+            'raw.githubusercontent.com',
+            'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
+          );
 
-    final url = Uri.https(
-      'raw.githubusercontent.com',
-      'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
-    );
+          final responseBody = await _appClient.read(url);
 
-    final responseBody = await _appClient.read(url);
+          final json = jsonDecode(responseBody) as List<dynamic>;
 
-    final json = jsonDecode(responseBody) as List<dynamic>;
-
-    final rules = json.map((e) => Rule.fromJson(e)).where(
-          (e) => switch (e.state) {
-            RuleState.stable || RuleState.experimental => true,
-            RuleState.deprecated || RuleState.removed => false,
-          },
-        );
-    return _cacheAllRules = rules;
-  }
+          final rules = json.map((e) => Rule.fromJson(e)).where(
+                (e) => switch (e.state) {
+                  RuleState.stable || RuleState.experimental => true,
+                  RuleState.deprecated || RuleState.removed => false,
+                },
+              );
+          return rules;
+        },
+      );
 }
