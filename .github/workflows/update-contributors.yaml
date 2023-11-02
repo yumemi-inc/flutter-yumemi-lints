@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - 'main'
-  schedule:
-  # Schedule at 9 AM JST (0 AM UTC) every Friday
-  - cron: '0 0 * * 5'
 
 env:
   UPDATE_CONTRIBUTORS_BRANCH: update-contributors
