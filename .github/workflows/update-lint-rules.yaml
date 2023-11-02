@@ -1,10 +1,10 @@
 name: Update Lint Rules
 
-# TODO:
-#   Set schedule event as soon as update mechanism is implemented.
-#   https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#schedule
 on:
   workflow_dispatch:
+  schedule:
+    # Schedule at 9 AM JST (0 AM UTC) every Friday
+    - cron: '0 0 * * 5'
 
 jobs:
   update:
