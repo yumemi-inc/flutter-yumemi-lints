@@ -93,7 +93,7 @@ class LintRuleService {
   Future<NotRecommendedRules> getNotRecommendedRules() async {
     final allRules = await getRules();
 
-    final notReccomendedAllRules =
+    final notRecommendedAllRules =
         _yumemiNotRecommendedRules.map((notRecommendedRule) {
       final rule = allRules.firstWhereOrNull(
         (rule) => notRecommendedRule.name == rule.name,
@@ -111,8 +111,8 @@ class LintRuleService {
       }
     });
     return (
-      flutter: notReccomendedAllRules.whereType<NotRecommendedFlutterRule>(),
-      dart: notReccomendedAllRules.whereType<NotRecommendedDartRule>()
+      flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
+      dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
     );
   }
 
