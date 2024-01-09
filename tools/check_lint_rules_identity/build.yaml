@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      source_gen|combining_builder:
+        generate_for:
+          include:
+            - "lib/**/*.dart"
+        options:
+          ignore_for_file:
+            - type=lint
+            - duplicate_ignore
