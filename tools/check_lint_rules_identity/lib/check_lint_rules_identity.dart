@@ -1,7 +1,7 @@
 import 'package:check_lint_rules_identity/src/diff_path_list_file.dart';
-import 'package:check_lint_rules_identity/src/diff_version_service.dart';
+import 'package:check_lint_rules_identity/src/services/diff_version_service.dart';
 import 'package:check_lint_rules_identity/src/models/exit_status.dart';
-import 'package:check_lint_rules_identity/src/identity_verification_service.dart';
+import 'package:check_lint_rules_identity/src/services/identity_verification_service.dart';
 import 'package:check_lint_rules_identity/src/lint_rules_dir.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
