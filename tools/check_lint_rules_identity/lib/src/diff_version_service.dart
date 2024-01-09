@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:check_lint_rules_identity/src/diff_path_list_file.dart';
 import 'package:check_lint_rules_identity/src/lint_type.dart';
 import 'package:meta/meta.dart';
 
@@ -12,12 +13,14 @@ typedef Versions = ({Set<Version> flutter, Set<Version> dart});
 
 @riverpod
 DiffVersionService diffVersionService(DiffVersionServiceRef ref) {
-  return DiffVersionService();
+  final diffPathListFile = ref.watch(diffPathListFileProvider);
+  return DiffVersionService(diffPathListFile);
 }
 
 class DiffVersionService {
-  const DiffVersionService();
-  Versions getDiffVersion(File diffPathListFile) {
+  const DiffVersionService(this.diffPathListFile);
+  final File diffPathListFile;
+  Versions getDiffVersion() {
     final paths = diffPathListFile.readAsLinesSync();
     final dartVersions = <Version>{};
     final flutterVersions = <Version>{};

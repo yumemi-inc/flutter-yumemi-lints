@@ -9,7 +9,7 @@ part of 'diff_version_service.dart';
 // **************************************************************************
 
 String _$diffVersionServiceHash() =>
-    r'19aa06fa3b72741d0970b8a5f76847dcbe41b7a3';
+    r'da96bf26d13594f018775ec95e853655675e7e33';
 
 /// See also [diffVersionService].
 @ProviderFor(diffVersionService)
