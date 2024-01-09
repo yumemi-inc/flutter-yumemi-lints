@@ -4,8 +4,16 @@ import 'package:check_lint_rules_identity/src/lint_type.dart';
 import 'package:meta/meta.dart';
 
 import 'package:pub_semver/pub_semver.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'diff_version_service.g.dart';
 
 typedef Versions = ({Set<Version> flutter, Set<Version> dart});
+
+@riverpod
+DiffVersionService diffVersionService(DiffVersionServiceRef ref) {
+  return DiffVersionService();
+}
 
 class DiffVersionService {
   const DiffVersionService();

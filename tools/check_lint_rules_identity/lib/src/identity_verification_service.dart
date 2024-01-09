@@ -1,7 +1,24 @@
 import 'package:check_lint_rules_identity/src/version_data_source.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yaml/yaml.dart';
 import 'package:collection/collection.dart';
+
+part 'identity_verification_service.g.dart';
+
+@riverpod
+DartIdentityVerificationService dartIdentityVerificationService(
+    DartIdentityVerificationServiceRef ref) {
+  final dartVersionDataSource = ref.watch(dartVersionDataSourceProvider);
+  return DartIdentityVerificationService(dartVersionDataSource);
+}
+
+@riverpod
+FlutterIdentityVerificationService flutterIdentityVerificationService(
+    FlutterIdentityVerificationServiceRef ref) {
+  final flutterVersionDataSource = ref.watch(flutterVersionDataSourceProvider);
+  return FlutterIdentityVerificationService(flutterVersionDataSource);
+}
 
 class DartIdentityVerificationService extends IdentityVerificationService {
   const DartIdentityVerificationService(
