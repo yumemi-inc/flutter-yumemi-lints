@@ -1,11 +1,7 @@
 import 'package:async/async.dart';
+import 'package:check_lint_rules_identity/src/lint_type.dart';
 import 'package:file/file.dart';
 import 'package:pub_semver/pub_semver.dart';
-
-enum LintType {
-  dart,
-  flutter,
-}
 
 class DartVersionDataSource extends VersionDataSource {
   DartVersionDataSource({required super.lintRulesDir});
