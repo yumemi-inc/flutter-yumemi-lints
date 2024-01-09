@@ -5,17 +5,19 @@ import 'package:check_lint_rules_identity/src/identity_verification_service.dart
 import 'package:check_lint_rules_identity/src/lint_rules_dir.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
+import 'package:meta/meta.dart';
 import 'package:riverpod/riverpod.dart';
 
 Future<ExitStatus> run(List<String> argument) async {
-  final diffPathListFilePath = argument.firstOrNull;
-
   final fileSystem = LocalFileSystem();
+
+  final diffPathListFilePath = argument.firstOrNull;
   if (diffPathListFilePath == null ||
       !fileSystem.isFileSync(diffPathListFilePath)) {
     throw ArgumentError(
         'The first argument must be a valid path to an existing file.');
   }
+
   final lintRulesDirPath = argument.elementAtOrNull(1);
   if (lintRulesDirPath == null ||
       !fileSystem.isDirectorySync(lintRulesDirPath)) {
@@ -40,6 +42,7 @@ Future<ExitStatus> run(List<String> argument) async {
   }
 }
 
+@visibleForTesting
 Future<ExitStatus> checkLintRulesIdentity(ProviderContainer container) async {
   final diffPathListFile = container.read(diffPathListFileProvider);
   final diffVersionService = container.read(diffVersionServiceProvider);
