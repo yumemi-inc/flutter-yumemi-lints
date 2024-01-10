@@ -53,16 +53,22 @@ abstract class IdentityVerificationService {
   Future<bool> isIdenticalLintRule(Version target) async {
     final previousVersion = await _versionDataSource.getPreviousVersion(target);
 
-    print('''${_versionDataSource.type.name} version comparison:
-      target=$target
-      previous=$previousVersion
-      ''');
-
     final targetLint = await _versionDataSource.readAllYamlAsString(target);
     final previousLint =
         await _versionDataSource.readAllYamlAsString(previousVersion);
 
-    return _isEqualContent(targetLint, previousLint);
+    final isSame = _isEqualContent(targetLint, previousLint);
+    final message =
+        '[${_versionDataSource.type.name}] $previousVersion and $target are';
+    if (isSame) {
+      print('$message the same lint rule.');
+    } else {
+      print('''
+------------------------------------------------
+$message different lint rule !!!
+------------------------------------------------''');
+    }
+    return isSame;
   }
 
   bool _isEqualContent(String yamlAsString1, String yamlAsString2);
