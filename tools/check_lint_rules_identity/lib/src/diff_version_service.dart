@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:check_lint_rules_identity/src/diff_path_list_file.dart';
-import 'package:check_lint_rules_identity/src/lint_type.dart';
+import 'package:check_lint_rules_identity/src/models/lint_type.dart';
 import 'package:meta/meta.dart';
 
 import 'package:pub_semver/pub_semver.dart';
