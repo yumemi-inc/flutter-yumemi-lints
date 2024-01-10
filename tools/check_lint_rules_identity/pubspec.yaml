@@ -8,6 +8,8 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
+  file: ^7.0.0
+  pub_semver: ^2.1.4
   # path: ^1.8.0
 
 dev_dependencies:
