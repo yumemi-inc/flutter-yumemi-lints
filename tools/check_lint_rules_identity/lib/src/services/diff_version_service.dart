@@ -46,13 +46,17 @@ class DiffVersionService {
     final match = regexp.firstMatch(path);
     final versionText = match?.namedGroup(nameVersion);
     final typeText = match?.namedGroup(nameType);
+
+    final versionParsingException = FormatException(
+        '[Version Parsing Exception] Version parsing from Path failed. The pull request may contain changes other than LintRule. \nPATH=$path');
+
     if (versionText == null || typeText == null) {
-      throw FormatException();
+      throw versionParsingException;
     }
 
     final type = LintType.values.byNameOrNull(typeText);
     if (type == null) {
-      throw FormatException();
+      throw versionParsingException;
     }
 
     return (type: type, version: Version.parse(versionText));
