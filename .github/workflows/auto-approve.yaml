@@ -42,6 +42,4 @@ jobs:
         continue-on-error: true
 
       - name: Auto approve
-        # uses: hmarr/auto-approve-action@v3
-        run: echo 'approve'
-        if: steps.identiry.outcome == 'success'
+        uses: hmarr/auto-approve-action@v3
