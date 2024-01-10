@@ -12,7 +12,6 @@ void main() {
         '差分ファイルのパスがまとめられたファイルから、バージョンを解析できる',
         () {
           // Arrange
-          final service = DiffVersionService();
           final file = MemoryFileSystem().file('file')..writeAsStringSync('''
 build/flutter/3.16.4/all.yaml
 build/flutter/3.16.4/recommended.yaml
@@ -23,8 +22,10 @@ build/dart/3.2.3/recommended.yaml
 build/dart/3.2.2/all.yaml
 build/dart/3.2.2/recommended.yaml
 ''');
+          final service = DiffVersionService(file);
+
           // Act
-          final act = service.getDiffVersion(file);
+          final act = service.getDiffVersion();
 
           // Expect
           expect(

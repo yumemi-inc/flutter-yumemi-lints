@@ -44,7 +44,6 @@ Future<ExitStatus> run(List<String> argument) async {
 
 @visibleForTesting
 Future<ExitStatus> checkLintRulesIdentity(ProviderContainer container) async {
-  final diffPathListFile = container.read(diffPathListFileProvider);
   final diffVersionService = container.read(diffVersionServiceProvider);
   final dartIdentityVerificationService =
       container.read(dartIdentityVerificationServiceProvider);
@@ -52,7 +51,7 @@ Future<ExitStatus> checkLintRulesIdentity(ProviderContainer container) async {
       container.read(flutterIdentityVerificationServiceProvider);
 
   try {
-    final diffVersions = diffVersionService.getDiffVersion(diffPathListFile);
+    final diffVersions = diffVersionService.getDiffVersion();
     final isDartIdentity = await diffVersions.dart
         .asyncEvery(dartIdentityVerificationService.isIdenticalLintRule);
     final isFlutterIdentity = await diffVersions.flutter
