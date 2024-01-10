@@ -1,4 +1,4 @@
-name: Auto approve
+name: Diff check & Auto approve
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
       - "main"
 
 jobs:
-  update:
+  auto-approve:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
@@ -32,9 +32,15 @@ jobs:
         shell: bash
         working-directory: ${{ env.PROGRAM_DIR }}
 
-      - name: Check Diff
+      - name: Create diff.txt
         run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
 
       - name: Run check_lint_rules_identity
         run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
         shell: bash
+        id: identiry
+
+      - name: Auto approve
+        # uses: hmarr/auto-approve-action@v3
+        run: echo 'approve'
+        if: steps.identiry.outcome == 'success'
