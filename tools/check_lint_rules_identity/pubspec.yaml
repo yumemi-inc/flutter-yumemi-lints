@@ -9,8 +9,10 @@ environment:
 # Add regular dependencies here.
 dependencies:
   async: ^2.11.0
+  collection: ^1.18.0
   file: ^7.0.0
   pub_semver: ^2.1.4
+  yaml: ^3.1.2
   # path: ^1.8.0
 
 dev_dependencies:
