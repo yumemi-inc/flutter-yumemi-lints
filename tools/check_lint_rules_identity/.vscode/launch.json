@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "version_path",
+      "description": "<version-file-path>",
+    }
+  ],
+  "configurations": [
+    {
+      "name": "check_lint_rules_identity",
+      "request": "launch",
+      "type": "dart",
+      "program": "bin/check_lint_rules_identity.dart",
+      "args": [
+        "${input:version_path}",
+        "../../lib"
+      ]
+    }
+  ]
+}
