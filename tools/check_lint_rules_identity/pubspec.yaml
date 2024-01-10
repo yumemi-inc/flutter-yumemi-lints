@@ -8,6 +8,7 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
+  async: ^2.11.0
   file: ^7.0.0
   pub_semver: ^2.1.4
   # path: ^1.8.0
