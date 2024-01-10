@@ -1,7 +1,25 @@
+import 'dart:io';
+
 import 'package:async/async.dart';
+import 'package:check_lint_rules_identity/src/lint_rules_dir.dart';
 import 'package:check_lint_rules_identity/src/lint_type.dart';
-import 'package:file/file.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'version_data_source.g.dart';
+
+@riverpod
+DartVersionDataSource dartVersionDataSource(DartVersionDataSourceRef ref) {
+  final dir = ref.watch(lintRulesDirProvider);
+  return DartVersionDataSource(lintRulesDir: dir);
+}
+
+@riverpod
+FlutterVersionDataSource flutterVersionDataSource(
+    FlutterVersionDataSourceRef ref) {
+  final dir = ref.watch(lintRulesDirProvider);
+  return FlutterVersionDataSource(lintRulesDir: dir);
+}
 
 class DartVersionDataSource extends VersionDataSource {
   DartVersionDataSource({required super.lintRulesDir});
