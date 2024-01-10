@@ -39,6 +39,7 @@ jobs:
         run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
         shell: bash
         id: identiry
+        continue-on-error: true
 
       - name: Auto approve
         # uses: hmarr/auto-approve-action@v3
