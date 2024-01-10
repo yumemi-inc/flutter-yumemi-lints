@@ -1,0 +1,40 @@
+name: Auto approve
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      DIFF_FILE: diff.txt
+      PROGRAM_DIR: tools/check_lint_rules_identity
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: branch
+
+      - name: Set up dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.1.0" # See: tools/check_lint_rules_identity/pubspec.yaml
+
+      - name: Install dependencies
+        run: dart pub get
+        shell: bash
+        working-directory: ${{ env.PROGRAM_DIR }}
+
+      - name: Check Diff
+        run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
+
+      - name: Run check_lint_rules_identity
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
+        shell: bash
