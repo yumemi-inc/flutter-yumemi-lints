@@ -1,0 +1,49 @@
+name: Check for differences from the previous lint rule
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  auto-approve:
+    if: contains(github.head_ref, ${{ vars.AUTO_UPDATE_BRANCH_NAME }})
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      DIFF_FILE: diff.txt
+      PROGRAM_DIR: tools/check_lint_rules_identity
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: branch
+
+      - name: Set up dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.1.0" # See: tools/check_lint_rules_identity/pubspec.yaml
+
+      - name: Install dependencies
+        run: dart pub get
+        shell: bash
+        working-directory: ${{ env.PROGRAM_DIR }}
+
+      - name: Create diff.txt
+        run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
+
+      - name: Run check_lint_rules_identity
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
+        shell: bash
+        id: identiry
+        continue-on-error: true
+
+      - name: Auto approve
+        uses: hmarr/auto-approve-action@v3
+        if: steps.identiry.outcome == 'success'
+        with:
+          review-message: Approved. Because it is the same lint rule as the previous version.
