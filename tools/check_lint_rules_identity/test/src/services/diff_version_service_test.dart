@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:file/memory.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
-import 'package:check_lint_rules_identity/src/diff_version_service.dart';
+import 'package:check_lint_rules_identity/src/services/diff_version_service.dart';
 
 void main() {
   group(
