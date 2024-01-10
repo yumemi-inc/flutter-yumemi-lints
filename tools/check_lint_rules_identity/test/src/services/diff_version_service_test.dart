@@ -9,7 +9,7 @@ void main() {
     DiffVersionService,
     () {
       test(
-        '差分ファイルのパスがまとめられたファイルから、バージョンを解析できる',
+        'Analyze the version from a file containing the paths of differential files',
         () {
           // Arrange
           final file = MemoryFileSystem().file('file')..writeAsStringSync('''
