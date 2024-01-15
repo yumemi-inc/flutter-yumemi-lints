@@ -21,6 +21,11 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 1.4.0
+
+- Added support for Dart 3.2.4.
+- Added support for Flutter 3.16.5 to 3.16.7.
+
 ## 1.3.0
 
 - Added support for Flutter 3.16.4.
