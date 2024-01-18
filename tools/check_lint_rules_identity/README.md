@@ -82,10 +82,11 @@ lint-rules/flutter/3.16.1/recommended.yaml
 lint-rules/flutter/3.16.2/all.yaml
 lint-rules/flutter/3.16.2/recommended.yaml
 ```
-> **Note**
-> As long as the path contains something like `<lint-type>/<version>` the version will be successfully parsed.
->
+> **Note**:
+> Paths must contain `<lint-type>/<version>`.\
 > Example: `dart/3.2.3`
+>
+> If the path does not contain it, the path will not be parsed successfully and **the CLI will exit with an exception**.
 
 
 <!-- Links -->
