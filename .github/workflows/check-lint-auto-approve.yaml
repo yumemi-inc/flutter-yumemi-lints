@@ -1,7 +1,6 @@
 name: Check for differences from the previous lint rule
 
 on:
-  workflow_dispatch:
   pull_request:
     branches:
       - "main"
