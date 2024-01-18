@@ -8,13 +8,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'version_data_source.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [lintRulesDir])
 DartVersionDataSource dartVersionDataSource(DartVersionDataSourceRef ref) {
   final dir = ref.watch(lintRulesDirProvider);
   return DartVersionDataSource(lintRulesDir: dir);
 }
 
-@riverpod
+@Riverpod(dependencies: [lintRulesDir])
 FlutterVersionDataSource flutterVersionDataSource(
     FlutterVersionDataSourceRef ref) {
   final dir = ref.watch(lintRulesDirProvider);

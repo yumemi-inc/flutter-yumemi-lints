@@ -6,14 +6,14 @@ import 'package:collection/collection.dart';
 
 part 'identity_verification_service.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [dartVersionDataSource])
 DartIdentityVerificationService dartIdentityVerificationService(
     DartIdentityVerificationServiceRef ref) {
   final dartVersionDataSource = ref.watch(dartVersionDataSourceProvider);
   return DartIdentityVerificationService(dartVersionDataSource);
 }
 
-@riverpod
+@Riverpod(dependencies: [flutterVersionDataSource])
 FlutterIdentityVerificationService flutterIdentityVerificationService(
     FlutterIdentityVerificationServiceRef ref) {
   final flutterVersionDataSource = ref.watch(flutterVersionDataSourceProvider);

@@ -11,7 +11,7 @@ part 'diff_version_service.g.dart';
 
 typedef Versions = ({Set<Version> flutter, Set<Version> dart});
 
-@riverpod
+@Riverpod(dependencies: [diffPathListFile])
 DiffVersionService diffVersionService(DiffVersionServiceRef ref) {
   final diffPathListFile = ref.watch(diffPathListFileProvider);
   return DiffVersionService(diffPathListFile);
