@@ -1,6 +1,6 @@
 name: yumemi_lints
 description: Customizable Linter library which enforces coding standards and best practice for Flutter/Dart apps, packages and plugins.
-version: 1.4.0
+version: 1.5.0
 repository: https://github.com/yumemi-inc/flutter-yumemi-lints
 
 environment:
