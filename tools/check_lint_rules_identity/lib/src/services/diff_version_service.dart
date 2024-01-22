@@ -21,7 +21,7 @@ class DiffVersionService {
   final File diffPathListFile;
   Versions getDiffVersion() {
     final paths = diffPathListFile.readAsLinesSync();
-    final versions = paths.map(selectionVersion);
+    final versions = paths.map(extractVersion);
     final flutterVersions = versions
         .where((version) => version.type == LintType.flutter)
         .map((version) => version.version)
@@ -34,7 +34,7 @@ class DiffVersionService {
   }
 
   @visibleForTesting
-  ({LintType type, Version version}) selectionVersion(String path) {
+  ({LintType type, Version version}) extractVersion(String path) {
     const nameVersion = 'version';
     const nameType = 'type';
     final regexp =
