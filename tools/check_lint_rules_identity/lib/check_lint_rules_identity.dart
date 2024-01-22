@@ -71,7 +71,7 @@ extension AsyncEvery<E> on Set<E> {
   Future<bool> asyncEvery(Future<bool> Function(E element) test) async {
     bool isPass = true;
     for (E element in this) {
-      isPass = isPass && await test(element);
+      isPass &= await test(element);
     }
     return isPass;
   }
