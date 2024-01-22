@@ -21,18 +21,15 @@ class DiffVersionService {
   final File diffPathListFile;
   Versions getDiffVersion() {
     final paths = diffPathListFile.readAsLinesSync();
-    final dartVersions = <Version>{};
-    final flutterVersions = <Version>{};
-    for (final path in paths) {
-      final data = selectionVersion(path);
-      switch (data.type) {
-        case LintType.dart:
-          dartVersions.add(data.version);
-        case LintType.flutter:
-          flutterVersions.add(data.version);
-      }
-    }
-
+    final versions = paths.map(selectionVersion);
+    final flutterVersions = versions
+        .where((version) => version.type == LintType.flutter)
+        .map((version) => version.version)
+        .toSet();
+    final dartVersions = versions
+        .where((version) => version.type == LintType.dart)
+        .map((version) => version.version)
+        .toSet();
     return (flutter: flutterVersions, dart: dartVersions);
   }
 
