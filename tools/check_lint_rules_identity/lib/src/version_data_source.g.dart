@@ -9,7 +9,7 @@ part of 'version_data_source.dart';
 // **************************************************************************
 
 String _$dartVersionDataSourceHash() =>
-    r'6deb03e6e11a2d2fcc35556f928b2f8be44456f8';
+    r'e454ac2f2ba2c711a6e8755daf3aa629176080f8';
 
 /// See also [dartVersionDataSource].
 @ProviderFor(dartVersionDataSource)
@@ -20,14 +20,17 @@ final dartVersionDataSourceProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$dartVersionDataSourceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[lintRulesDirProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    lintRulesDirProvider,
+    ...?lintRulesDirProvider.allTransitiveDependencies
+  },
 );
 
 typedef DartVersionDataSourceRef
     = AutoDisposeProviderRef<DartVersionDataSource>;
 String _$flutterVersionDataSourceHash() =>
-    r'cfea43a52ef24c75b85b086a624bc91ddc005cf3';
+    r'3c0cde5ad990aa57e33a39da7a7bfc82de66a447';
 
 /// See also [flutterVersionDataSource].
 @ProviderFor(flutterVersionDataSource)
@@ -38,8 +41,11 @@ final flutterVersionDataSourceProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$flutterVersionDataSourceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[lintRulesDirProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    lintRulesDirProvider,
+    ...?lintRulesDirProvider.allTransitiveDependencies
+  },
 );
 
 typedef FlutterVersionDataSourceRef

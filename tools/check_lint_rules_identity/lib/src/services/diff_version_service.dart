@@ -1,4 +1,4 @@
-import 'package:check_lint_rules_identity/src/diff_path_list_file.dart';
+import 'package:check_lint_rules_identity/src/version_paths_file.dart';
 import 'package:check_lint_rules_identity/src/models/lint_type.dart';
 import 'package:file/file.dart';
 import 'package:meta/meta.dart';
@@ -10,9 +10,9 @@ part 'diff_version_service.g.dart';
 
 typedef Versions = ({Set<Version> flutter, Set<Version> dart});
 
-@Riverpod(dependencies: [diffPathListFile])
+@Riverpod(dependencies: [versionPathsFile])
 DiffVersionService diffVersionService(DiffVersionServiceRef ref) {
-  final diffPathListFile = ref.watch(diffPathListFileProvider);
+  final diffPathListFile = ref.watch(versionPathsFileProvider);
   return DiffVersionService(diffPathListFile);
 }
 

@@ -9,7 +9,7 @@ part of 'diff_version_service.dart';
 // **************************************************************************
 
 String _$diffVersionServiceHash() =>
-    r'da96bf26d13594f018775ec95e853655675e7e33';
+    r'f71b21a98c422140dd887694c5397b3dae6b1cdc';
 
 /// See also [diffVersionService].
 @ProviderFor(diffVersionService)
@@ -20,8 +20,11 @@ final diffVersionServiceProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$diffVersionServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[versionPathsFileProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    versionPathsFileProvider,
+    ...?versionPathsFileProvider.allTransitiveDependencies
+  },
 );
 
 typedef DiffVersionServiceRef = AutoDisposeProviderRef<DiffVersionService>;

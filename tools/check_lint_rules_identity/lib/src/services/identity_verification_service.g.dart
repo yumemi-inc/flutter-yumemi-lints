@@ -9,7 +9,7 @@ part of 'identity_verification_service.dart';
 // **************************************************************************
 
 String _$dartIdentityVerificationServiceHash() =>
-    r'7d17511917c87a60c2fb408744abc45c9a872eae';
+    r'3769f4a4599c7a57d1470ba3edc6e04711d1cc24';
 
 /// See also [dartIdentityVerificationService].
 @ProviderFor(dartIdentityVerificationService)
@@ -20,14 +20,17 @@ final dartIdentityVerificationServiceProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$dartIdentityVerificationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[dartVersionDataSourceProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    dartVersionDataSourceProvider,
+    ...?dartVersionDataSourceProvider.allTransitiveDependencies
+  },
 );
 
 typedef DartIdentityVerificationServiceRef
     = AutoDisposeProviderRef<DartIdentityVerificationService>;
 String _$flutterIdentityVerificationServiceHash() =>
-    r'2e6a0b7d8878189325a059b4ecb955d522497ef1';
+    r'205e9708269bec7648518c6c341b6ddfb69fa3aa';
 
 /// See also [flutterIdentityVerificationService].
 @ProviderFor(flutterIdentityVerificationService)
@@ -38,8 +41,11 @@ final flutterIdentityVerificationServiceProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$flutterIdentityVerificationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[flutterVersionDataSourceProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    flutterVersionDataSourceProvider,
+    ...?flutterVersionDataSourceProvider.allTransitiveDependencies
+  },
 );
 
 typedef FlutterIdentityVerificationServiceRef

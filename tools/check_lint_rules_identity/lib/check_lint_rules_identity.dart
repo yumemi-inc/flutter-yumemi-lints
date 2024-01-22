@@ -1,5 +1,5 @@
-import 'package:check_lint_rules_identity/src/diff_path_list_file.dart';
 import 'package:check_lint_rules_identity/src/services/diff_version_service.dart';
+import 'package:check_lint_rules_identity/src/version_paths_file.dart';
 import 'package:check_lint_rules_identity/src/models/exit_status.dart';
 import 'package:check_lint_rules_identity/src/services/identity_verification_service.dart';
 import 'package:check_lint_rules_identity/src/lint_rules_dir.dart';
@@ -31,7 +31,7 @@ Future<ExitStatus> run(List<String> argument) async {
   final container = ProviderContainer(
     overrides: [
       lintRulesDirProvider.overrideWithValue(lintRulesDir),
-      diffPathListFileProvider.overrideWithValue(diffPathListFile),
+      versionPathsFileProvider.overrideWithValue(diffPathListFile),
     ],
   );
   try {
