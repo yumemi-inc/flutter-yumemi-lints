@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:file/file.dart';
 
 import 'package:async/async.dart';
 import 'package:check_lint_rules_identity/src/lint_rules_dir.dart';
@@ -41,6 +41,8 @@ abstract class VersionDataSource {
 
   final Directory _lintRulesDir;
   LintType get type;
+  Directory get _targetDir => _lintRulesDir.childDirectory(type.name);
+
   final _versionDirsMemo = AsyncMemoizer<Iterable<Directory>>();
 
   final _versionsMemo = AsyncMemoizer<List<Version>>();
@@ -56,13 +58,7 @@ abstract class VersionDataSource {
 
   Future<Iterable<Directory>> _readVersionDirs() =>
       _versionDirsMemo.runOnce(() async {
-        final dartAndFlutterLintRuleDirs =
-            (await _lintRulesDir.list().toList()).whereType<Directory>();
-        final targetTypeDir = dartAndFlutterLintRuleDirs
-            .where((dir) => dir.name == type.name)
-            .first;
-
-        return (await targetTypeDir.list().toList()).whereType<Directory>();
+        return (await _targetDir.list().toList()).whereType<Directory>();
       });
 
   Future<String> readAllYamlAsString(Version version) async {
