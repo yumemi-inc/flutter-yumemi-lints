@@ -69,9 +69,10 @@ Future<ExitStatus> checkLintRulesIdentity(ProviderContainer container) async {
 
 extension AsyncEvery<E> on Set<E> {
   Future<bool> asyncEvery(Future<bool> Function(E element) test) async {
+    bool isPass = true;
     for (E element in this) {
-      if (!await test(element)) return false;
+      isPass = isPass && await test(element);
     }
-    return true;
+    return isPass;
   }
 }
