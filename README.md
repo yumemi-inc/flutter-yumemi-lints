@@ -76,17 +76,17 @@ See [Contributor Guide] for contributing conventions.
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/morikann>
-            <img src=https://avatars.githubusercontent.com/u/70502790?v=4 width="100;"  alt=Kanta Mori/>
-            <br />
-            <sub style="font-size:14px"><b>Kanta Mori</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/Yamasaki-pan961>
             <img src=https://avatars.githubusercontent.com/u/54800851?v=4 width="100;"  alt=Yamasaki-pan961/>
             <br />
             <sub style="font-size:14px"><b>Yamasaki-pan961</b></sub>
+        </a>
+    </td>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/morikann>
+            <img src=https://avatars.githubusercontent.com/u/70502790?v=4 width="100;"  alt=Kanta Mori/>
+            <br />
+            <sub style="font-size:14px"><b>Kanta Mori</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
