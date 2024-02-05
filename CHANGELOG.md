@@ -21,6 +21,8 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 2.0.0
+
 ## 1.6.0
 
 - Added support for Dart 3.2.6.
