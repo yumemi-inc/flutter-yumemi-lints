@@ -23,6 +23,8 @@ Examples of version updates are as follows:
 
 ## 2.0.0
 
+- Changed the warning level of `invalid_use_of_visible_for_testing_member` to error.
+
 ## 1.6.0
 
 - Added support for Dart 3.2.6.
