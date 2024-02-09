@@ -1,0 +1,7 @@
+name: yumemi_lints_tools
+sdkPath: .dvm/dart_sdk
+
+packages:
+  - check_lint_rules_identity
+  - update_lint_rules
+
