@@ -51,3 +51,6 @@ linter:
 
     # Conflicts with enabling `prefer_final_locals`.
     unnecessary_final: false
+
+    # Don't trigger warnings with methods for simple state updates, among other things.
+    use_setters_to_change_properties: false

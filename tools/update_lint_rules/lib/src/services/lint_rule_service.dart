@@ -65,6 +65,11 @@ const _yumemiNotRecommendedRules = <({String name, String reason})>[
     name: 'unnecessary_final',
     reason: 'Conflicts with enabling `prefer_final_locals`.',
   ),
+  (
+    name: 'use_setters_to_change_properties',
+    reason:
+        "Don't trigger warnings with methods for simple state updates, among other things.",
+  ),
 ];
 
 class LintRuleService {
