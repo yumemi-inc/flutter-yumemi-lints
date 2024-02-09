@@ -5,3 +5,8 @@ packages:
   - check_lint_rules_identity
   - update_lint_rules
 
+ide:
+  intellij:
+    # Disabling IntelliJ's automatic configuration.
+    # This is to support different build configurations for environments.
+    enabled: false
