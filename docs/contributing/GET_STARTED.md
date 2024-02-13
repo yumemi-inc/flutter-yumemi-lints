@@ -9,7 +9,7 @@ Please install the necessary tools before making a contribution.
 ```bash
 dvm use
 ```
-1. Run the command `dvm dart --version` to check the version.
+3. Run the command `dvm dart --version` to check the version.
 
 
 ## 2. Install Melos
