@@ -1,6 +1,7 @@
 import 'package:file/file.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:update_lint_rules/src/extension/version_ext.dart';
 import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
 import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
@@ -46,7 +47,8 @@ class AnalysisOptionsService {
         return since.version <= dartSdkVersion;
       });
 
-      final dartOutputDir = _outputDir.childDirectory('dart/$dartSdkVersion');
+      final dartOutputDir = _outputDir
+          .childDirectory('dart/${dartSdkVersion.excludePatchVersion}');
 
       final allFile = dartOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
@@ -58,7 +60,7 @@ class AnalysisOptionsService {
       final recommendedFile = dartOutputDir.childFile('recommended.yaml')
         ..createSync(recursive: true);
       final recommendedIncludeContent =
-          'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
+          'include: package:yumemi_lints/dart/${dartSdkVersion.excludePatchVersion}/all.yaml';
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
@@ -92,13 +94,13 @@ class AnalysisOptionsService {
         return since.version <= dartSdkVersion;
       });
 
-      final flutterOutputDir =
-          _outputDir.childDirectory('flutter/$flutterSdkVersion');
+      final flutterOutputDir = _outputDir
+          .childDirectory('flutter/${flutterSdkVersion.excludePatchVersion}');
 
       final allFile = flutterOutputDir.childFile('all.yaml')
         ..createSync(recursive: true);
       final allIncludeContent =
-          'include: package:yumemi_lints/dart/$dartSdkVersion/all.yaml';
+          'include: package:yumemi_lints/dart/${dartSdkVersion.excludePatchVersion}/all.yaml';
       await outputAllLintRules(
         outputFile: allFile,
         lintRules: allLintRules,
@@ -108,7 +110,7 @@ class AnalysisOptionsService {
       final recommendedFile = flutterOutputDir.childFile('recommended.yaml')
         ..createSync(recursive: true);
       final recommendedIncludeContent =
-          'include: package:yumemi_lints/flutter/$flutterSdkVersion/all.yaml';
+          'include: package:yumemi_lints/flutter/${flutterSdkVersion.excludePatchVersion}/all.yaml';
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
