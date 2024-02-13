@@ -120,7 +120,9 @@ class SdkService {
           }
 
           // The yumemi_lints package supports Flutter 3.0.0 and later.
-          return release.version >= Version(3, 0, 0);
+          // Do not create lint rule when patch version is changed.
+          return release.version >= Version(3, 0, 0) &&
+              release.version.patch == 0;
         });
   }
 }
