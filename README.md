@@ -115,4 +115,4 @@ See [Contributor Guide] for contributing conventions.
 
 <!-- Links -->
 
-[Contributor Guide]: docs/contributing/CONTRIBUTING.md
+[Contributor Guide]: https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/contributing/CONTRIBUTING.md

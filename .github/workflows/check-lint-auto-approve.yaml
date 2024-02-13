@@ -36,7 +36,7 @@ jobs:
         run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
 
       - name: Run check_lint_rules_identity
-        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} packages/yumemi_lints/lib
         shell: bash
         id: identity
         continue-on-error: true
