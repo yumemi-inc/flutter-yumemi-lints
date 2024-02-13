@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev: update lint rules",
+      "cwd": "tools/update_lint_rules",
+      "type": "dart",
+      "request": "launch",
+      "program": "bin/update_lint_rules.dart"
+    },
+    {
+      "name": "prod: update lint rules",
+      "cwd": "tools/update_lint_rules",
+      "type": "dart",
+      "request": "launch",
+      "program": "bin/update_lint_rules.dart",
+      "args": ["../../packages/yumemi_lints/lib"]
+    }
+  ]
+}
