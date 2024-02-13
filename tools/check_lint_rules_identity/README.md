@@ -2,24 +2,7 @@
 The CLI checks whether a particular version of a lint rule is identical to a previous version of the rule.
 
 ## Get Started
-
-### 1. Install Dart SDK
-
-Before using this tool, make sure you have the Dart SDK installed. You can follow the instructions in the official
-documentation to install the Dart SDK and set up the `dart` command:
-
-[Install Dart SDK]
-
-> **Note**
-> Ensure that your Dart SDK version is `3.1.0`.
-
-### 2. Install Dependencies
-
-After installing the Dart SDK, you need to install the project dependencies using the following command:
-
-```shell
-dart pub get
-```
+Please Read [GET_STARTED.md].
 
 ## Usage
 
@@ -96,3 +79,5 @@ lint-rules/flutter/3.16.2/recommended.yaml
 [yumemi-inc/flutter-yumemi-lints]: https://github.com/yumemi-inc/flutter-yumemi-lints
 
 [Pub.dev]: https://pub.dev/
+
+[GET_STARTED.md]: https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/contributing/GET_STARTED.md

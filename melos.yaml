@@ -1,0 +1,48 @@
+name: yumemi_lints_tools
+sdkPath: .dvm/dart_sdk
+
+packages:
+  - tools/**
+
+command:
+  bootstrap:
+    environment:
+      sdk: ^3.1.0
+    dependencies:
+      async: ^2.11.0
+      collection: ^1.18.0
+      file: ^7.0.0
+      freezed_annotation: ^2.4.1
+      http: ^1.1.0
+      json_annotation: ^4.8.1
+      meta: ^1.11.0
+      pub_semver: ^2.1.4
+      riverpod: ^2.4.9
+      riverpod_annotation: ^2.3.3
+      yaml: ^3.1.2
+
+    dev_dependencies:
+      build_runner: ^2.4.7
+      custom_lint: ^0.5.8
+      freezed: ^2.4.2
+      json_serializable: ^6.7.1
+      lints: ^2.0.0
+      riverpod_generator: ^2.3.9
+      riverpod_lint: ^2.3.7
+      test: ^1.21.0
+
+scripts:
+  regenerate_code: melos run regenerate_by_using_build_runner
+
+  regenerate_by_using_build_runner:
+    run: dart run build_runner build -d
+    exec:
+      orderDependents: true
+    packageFilters:
+      dependsOn: build_runner
+
+ide:
+  intellij:
+    # Disabling IntelliJ's automatic configuration.
+    # This is to support different build configurations for environments.
+    enabled: false

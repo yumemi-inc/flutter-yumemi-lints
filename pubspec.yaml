@@ -1,0 +1,6 @@
+name: yumemi_lints_workspace
+
+environment:
+  sdk: ^3.1.0
+dev_dependencies:
+  melos: ^4.1.0
