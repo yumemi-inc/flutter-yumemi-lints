@@ -31,6 +31,16 @@ command:
       riverpod_lint: ^2.3.7
       test: ^1.21.0
 
+scripts:
+  regenerate_code: melos run regenerate_by_using_build_runner
+
+  regenerate_by_using_build_runner:
+    run: dart run build_runner build -d
+    exec:
+      orderDependents: true
+    packageFilters:
+      dependsOn: build_runner
+
 ide:
   intellij:
     # Disabling IntelliJ's automatic configuration.
