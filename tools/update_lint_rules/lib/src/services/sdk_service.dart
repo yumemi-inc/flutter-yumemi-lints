@@ -63,7 +63,8 @@ class SdkService {
           // The yumemi_lints package supports Flutter 3.0.0 and later.
           // Since Flutter 3.0.0 is associated with Dart SDK version 2.17.0, we
           // will narrow it down to Dart versions 2.17.0 and later.
-          return v >= Version(2, 17, 0);
+          // Do not create lint rule when patch version is changed.
+          return v >= Version(2, 17, 0) && v.patch == 0;
         });
     return versions.map((v) => DartSdkRelease(version: v));
   }
