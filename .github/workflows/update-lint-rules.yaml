@@ -28,7 +28,7 @@ jobs:
         working-directory: tools/update_lint_rules
 
       - name: Run update_lint_rules
-        run: dart run bin/update_lint_rules.dart "$GITHUB_WORKSPACE/lib"
+        run: dart run bin/update_lint_rules.dart "$GITHUB_WORKSPACE/packages/yumemi_lints/lib"
         shell: bash
         working-directory: tools/update_lint_rules
 
