@@ -19,7 +19,7 @@ dart pub add dev:yumemi_lints
 For basic lint rule configuration, include lint rules recommended by YUMEMI Inc. in your `analysis_options.yaml` file as shown below:
 
 ```yaml:analysis_options.yaml
-include: package:yumemi_lints/dart/2.17.0/recommended.yaml
+include: package:yumemi_lints/dart/2.17/recommended.yaml
 ```
 
 Please note that you need to adjust the file path accordingly based on the Dart or Flutter version your project is using.
@@ -29,7 +29,7 @@ Please note that you need to adjust the file path accordingly based on the Dart 
 If you want to customize lint rules, include all lint rules in your `analysis_options.yaml` file as shown below:
 
 ```yaml:analysis_options.yaml
-include: package:yumemi_lints/dart/2.17.0/all.yaml
+include: package:yumemi_lints/dart/2.17/all.yaml
 
 analyzer:
   errors:
