@@ -38,7 +38,7 @@ class DiffVersionService {
     const nameVersion = 'version';
     const nameType = 'type';
     final regexp =
-        RegExp('(?<$nameType>\\w+)\\/(?<$nameVersion>\\d+\\.\\d+\\.\\d+)');
+        RegExp('(?<$nameType>\\w+)\\/(?<$nameVersion>\\d+\\.\\d+)');
     final match = regexp.firstMatch(path);
     final versionText = match?.namedGroup(nameVersion);
     final typeText = match?.namedGroup(nameType);
