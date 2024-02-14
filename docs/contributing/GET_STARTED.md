@@ -24,8 +24,12 @@ melos bootstrap
 ## 3.　Read README.md
 Read the README.md of the respective tool or package.
 
+## Optional
+- Activate GitHub Copilot according to [COPILOT.md]
+
 <!-- Links -->
 [dvmx]: https://pub.dev/packages/dvmx
 [install dvm]: https://pub.dev/packages/dvmx/install
 [Melos]: https://pub.dev/packages/melos
 [install melos]: https://pub.dev/packages/melos/install
+[COPILOT.md]: https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/COPILOT.md
