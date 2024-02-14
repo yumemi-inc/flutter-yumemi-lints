@@ -1,2 +1,2 @@
 # https://pub.dev/packages/yumemi_lints
-include: package:yumemi_lints/dart/2.17.0/recommended.yaml
+include: package:yumemi_lints/dart/2.17/recommended.yaml

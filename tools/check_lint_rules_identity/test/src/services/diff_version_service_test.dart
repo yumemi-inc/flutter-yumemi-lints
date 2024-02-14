@@ -13,14 +13,14 @@ void main() {
         () {
           // Arrange
           final file = MemoryFileSystem().file('file')..writeAsStringSync('''
-build/flutter/3.16.4/all.yaml
-build/flutter/3.16.4/recommended.yaml
-build/flutter/3.16.3/all.yaml
-build/flutter/3.16.3/recommended.yaml
-build/dart/3.2.3/all.yaml
-build/dart/3.2.3/recommended.yaml
-build/dart/3.2.2/all.yaml
-build/dart/3.2.2/recommended.yaml
+build/flutter/3.16/all.yaml
+build/flutter/3.16/recommended.yaml
+build/flutter/3.13/all.yaml
+build/flutter/3.13/recommended.yaml
+build/dart/3.2/all.yaml
+build/dart/3.2/recommended.yaml
+build/dart/3.1/all.yaml
+build/dart/3.1/recommended.yaml
 ''');
           final service = DiffVersionService(file);
 
@@ -30,14 +30,14 @@ build/dart/3.2.2/recommended.yaml
           // Expect
           expect(
               SetEquality().equals(act.dart, {
-                Version(3, 2, 3),
-                Version(3, 2, 2),
+                Version(3, 2, 0),
+                Version(3, 1, 0),
               }),
               true);
           expect(
               SetEquality().equals(act.flutter, {
-                Version(3, 16, 4),
-                Version(3, 16, 3),
+                Version(3, 16, 0),
+                Version(3, 13, 0),
               }),
               true);
         },

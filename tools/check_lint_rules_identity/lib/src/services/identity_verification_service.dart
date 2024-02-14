@@ -1,8 +1,8 @@
 import 'package:check_lint_rules_identity/src/version_data_source.dart';
+import 'package:collection/collection.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yaml/yaml.dart';
-import 'package:collection/collection.dart';
 
 part 'identity_verification_service.g.dart';
 
@@ -59,7 +59,7 @@ abstract class IdentityVerificationService {
 
     final isSame = _isEqualContent(targetLint, previousLint);
     final message =
-        '[${_versionDataSource.type.name}] $previousVersion and $target are';
+        '[${_versionDataSource.type.name}] ${previousVersion.excludePatchVersion} and ${target.excludePatchVersion} are';
     if (isSame) {
       print('$message the same lint rule.');
     } else {
@@ -72,4 +72,8 @@ $message different lint rule !!!
   }
 
   bool _isEqualContent(String yamlAsString1, String yamlAsString2);
+}
+
+extension VersionExt on Version {
+  String get excludePatchVersion => '$major.$minor';
 }

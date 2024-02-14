@@ -2,7 +2,7 @@
 
 The CLI is a tool designed to create lint rules tailored for Dart and Flutter, with support for different versions.
 
-It currently supports lint rule generation for Dart 2.17.0+ and Flutter 3.0.0+.
+It currently supports lint rule generation for Dart 2.17+ and Flutter 3.0+.
 
 ## Get Started
 

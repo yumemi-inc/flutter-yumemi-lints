@@ -1,3 +1,4 @@
+import 'package:check_lint_rules_identity/src/utils/version_utils.dart';
 import 'package:check_lint_rules_identity/src/version_paths_file.dart';
 import 'package:check_lint_rules_identity/src/models/lint_type.dart';
 import 'package:file/file.dart';
@@ -38,7 +39,7 @@ class DiffVersionService {
     const nameVersion = 'version';
     const nameType = 'type';
     final regexp =
-        RegExp('(?<$nameType>\\w+)\\/(?<$nameVersion>\\d+\\.\\d+\\.\\d+)');
+        RegExp('(?<$nameType>\\w+)\\/(?<$nameVersion>\\d+\\.\\d+)');
     final match = regexp.firstMatch(path);
     final versionText = match?.namedGroup(nameVersion);
     final typeText = match?.namedGroup(nameType);
@@ -55,6 +56,6 @@ class DiffVersionService {
       throw versionParsingException;
     }
 
-    return (type: type, version: Version.parse(versionText));
+    return (type: type, version: parseStringToVersion(versionText));
   }
 }
