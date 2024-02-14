@@ -66,10 +66,6 @@ List of languages supported by VSCode
 https://code.visualstudio.com/docs/languages/identifiers
 
 
-> [!NOTE]
-> This setting has already been applied to the project,
-> when a repository is created using GitHub's template feature,
-> workflow is executed to override the settings so that they are disabled
 ### Xcode 1.
 1. install [Copilot for Xcode](https://github.com/intitni/CopilotForXcode) 2.
 Follow the README to activate Copilot for Xcode 3.
