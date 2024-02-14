@@ -25,6 +25,7 @@ Examples of version updates are as follows:
 
 - Changed the warning level of `invalid_use_of_visible_for_testing_member` to error.
 - Changed the lint rule `use_setters_to_change_properties` to be deprecated.
+- Remove the patch version from the directory name of Lint Rules.
 
 ## 1.6.0
 
