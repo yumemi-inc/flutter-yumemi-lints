@@ -23,8 +23,8 @@ You should be aware of what information those tools collect from your project an
 ## Risks of GitHub Copilot
 GitHub Copilot can be used by setting up a subscription.
 There are two types of subscriptions: personal and organizational (Organization or Enterprise) as shown below. Note that each has a different privacy policy.
-- [GitHub Copilot Individual](https://docs.github.com/ja/copilot/overview-of-github-copilot/about-github-copilot-individual)
-- [GitHub Copilot Business](https://docs.github.com/ja/copilot/overview-of-github-copilot/about-github-copilot-business)
+- [GitHub Copilot Individual](https://docs.github.com/en/copilot/overview-of-github-copilot/about-github-copilot-individual)
+- [GitHub Copilot Business](https://docs.github.com/en/copilot/overview-of-github-copilot/about-github-copilot-business)
 
 ### Risk as an IDE extension
 Note that the extent to which GitHub Copilot extensions are enabled depends on the IDE.
@@ -73,4 +73,4 @@ Follow the README to activate Copilot for Xcode 3.
 4. click on the `Exception List` next to step 3 and add the project path where you want to enable Copilot
 
 ## Reference
-https://docs.github.com/ja/copilot
+https://docs.github.com/en/copilot
