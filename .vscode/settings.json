@@ -7,6 +7,5 @@
     "json": true,
     "yaml": true
   },
-  "github.copilot.editor.enableCodeActions": true,
   "github.copilot.editor.enableAutoCompletions": true
 }
