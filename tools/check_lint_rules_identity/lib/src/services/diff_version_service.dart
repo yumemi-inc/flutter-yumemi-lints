@@ -1,3 +1,4 @@
+import 'package:check_lint_rules_identity/src/utils/version_utils.dart';
 import 'package:check_lint_rules_identity/src/version_paths_file.dart';
 import 'package:check_lint_rules_identity/src/models/lint_type.dart';
 import 'package:file/file.dart';
@@ -55,6 +56,6 @@ class DiffVersionService {
       throw versionParsingException;
     }
 
-    return (type: type, version: Version.parse(versionText));
+    return (type: type, version: parseStringToVersion(versionText));
   }
 }
