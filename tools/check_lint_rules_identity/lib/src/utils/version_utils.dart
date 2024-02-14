@@ -1,6 +1,6 @@
 import 'package:pub_semver/pub_semver.dart';
 
-// Version.parse cannot be used if minor does not exist, so I created my own parse method.
+// Version.parse cannot be used if patch does not exist, so I created my own parse method.
 Version parseStringToVersion(String versionString) {
   final version = versionString.split('.');
   try {
