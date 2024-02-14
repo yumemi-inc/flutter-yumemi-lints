@@ -32,7 +32,7 @@ VSCode and Xcode allow you to enable it on a per-project basis, but other IDEs d
 
 ## How to use Copilot
 ### VSCode
-1. install [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) to VSCode 2.
+1. install [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) to VSCode
 2. disable the Copilot extension so that Copilot will not work throughout VSCode
 3. open any workspace and enable the Copilot extension in that workspace only
 4. Add the following GitHub Copilot configuration to the workspace settings (`.vscode/settings.json`)
@@ -66,9 +66,9 @@ List of languages supported by VSCode
 https://code.visualstudio.com/docs/languages/identifiers
 
 
-### Xcode 1.
-1. install [Copilot for Xcode](https://github.com/intitni/CopilotForXcode) 2.
-Follow the README to activate Copilot for Xcode 3.
+### Xcode
+1. install [Copilot for Xcode](https://github.com/intitni/CopilotForXcode) 
+2. Follow the README to activate Copilot for Xcode
 3. open the Copilot for Xcode app and activate the `Disable Suggestion Feature Globally` in the `Feature tab
 4. click on the `Exception List` next to step 3 and add the project path where you want to enable Copilot
 
