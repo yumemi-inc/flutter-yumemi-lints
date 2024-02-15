@@ -44,6 +44,7 @@ VSCode and Xcode allow you to enable it on a per-project basis, but other IDEs d
     "*": false,
     "dart": true
   },
+  "github.copilot.editor.enableCodeActions": true, 
   "github.copilot.editor.enableAutoCompletions": true
 }
 ```` 
@@ -55,6 +56,7 @@ VSCode and Xcode allow you to enable it on a per-project basis, but other IDEs d
   "github.copilot.enable": {
     "*" : false
   },
+  "github.copilot.editor.enableCodeActions": false,
   "github.copilot.editor.enableAutoCompletions": false
 }
 ```

@@ -43,6 +43,7 @@ VSCodeとXcodeではプロジェクト単位で有効にすることが可能で
     "*": false,
     "dart": true
   },
+  "github.copilot.editor.enableCodeActions": true,
   "github.copilot.editor.enableAutoCompletions": true
 }
 ``` 
@@ -53,6 +54,7 @@ VSCodeとXcodeではプロジェクト単位で有効にすることが可能で
   "github.copilot.enable": {
     "*" : false,
   },
+  "github.copilot.editor.enableCodeActions": false,
   "github.copilot.editor.enableAutoCompletions": false,
 }
 ```
