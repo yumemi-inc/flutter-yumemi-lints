@@ -1,6 +1,3 @@
-<!-- Update all documents for other languages when new languages are added -->
-[English](https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/COPILOT.md) | [日本語](https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/resources/translations/ja_JP/COPILOT.md)
-
 # GitHub Copilot 
 
 > [!NOTE]
