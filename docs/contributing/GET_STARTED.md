@@ -21,7 +21,7 @@ dvm use
 melos bootstrap
 ```
 
-## 3.　Read README.md
+## 3. Read README.md
 Read the README.md of the respective tool or package.
 
 ## Optional
