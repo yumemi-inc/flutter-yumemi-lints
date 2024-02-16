@@ -27,42 +27,8 @@ There are two types of subscriptions: personal and organizational (Organization 
 Note that the extent to which GitHub Copilot extensions are enabled depends on the IDE.
 VSCode and Xcode allow you to enable it on a per-project basis, but other IDEs do not allow you to control it on a per-project basis, so you must be careful not to accidentally run Copilot.
 
-## How to use Copilot
-### VSCode
-1. install [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) to VSCode
-2. disable the Copilot extension so that Copilot will not work throughout VSCode
-3. open any workspace and enable the Copilot extension in that workspace only
-4. Add the following GitHub Copilot configuration to the workspace settings (`.vscode/settings.json`)
-  
-```jsonc
-{
-  "github.copilot.enable": {
-    // Specify which languages you want to enable Copilot for.
-    "*": false,
-    "dart": true
-  },
-  "github.copilot.editor.enableCodeActions": true, 
-  "github.copilot.editor.enableAutoCompletions": true
-}
-```` 
-
-5. (Optional) Disable Copilot in the overall VSCode settings (`settings.json`)
-
-```json
-{
-  "github.copilot.enable": {
-    "*" : false
-  },
-  "github.copilot.editor.enableCodeActions": false,
-  "github.copilot.editor.enableAutoCompletions": false
-}
-```
-
-VSCode - Programming Languages Overview
-https://code.visualstudio.com/docs/languages/overview
-
-List of languages supported by VSCode
-https://code.visualstudio.com/docs/languages/identifiers
+### Getting started with GitHub Copilot
+https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot
 
 ## Reference
 https://docs.github.com/en/copilot
