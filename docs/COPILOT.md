@@ -64,12 +64,5 @@ https://code.visualstudio.com/docs/languages/overview
 List of languages supported by VSCode
 https://code.visualstudio.com/docs/languages/identifiers
 
-
-### Xcode
-1. install [Copilot for Xcode](https://github.com/intitni/CopilotForXcode) 
-2. Follow the README to activate Copilot for Xcode
-3. open the Copilot for Xcode app and activate the `Disable Suggestion Feature Globally` in the `Feature tab
-4. click on the `Exception List` next to step 3 and add the project path where you want to enable Copilot
-
 ## Reference
 https://docs.github.com/en/copilot
