@@ -21,7 +21,7 @@ gitGraph
     commit
     branch "release/2.0.0" order: 1
     checkout "release/2.0.0"
-    branch "feature/#1" order: 2
+    branch "issue/#1" order: 2
     commit
     checkout "main"
     branch "dependabot/github_actions/peter-evans/create-pull-request-6" order: 3
@@ -30,12 +30,12 @@ gitGraph
     merge "dependabot/github_actions/peter-evans/create-pull-request-6"
     checkout "release/2.0.0"
     merge "main"
-    checkout "feature/#1"
+    checkout "issue/#1"
     merge "release/2.0.0"
     commit
     checkout "release/2.0.0"
-    merge "feature/#1"
-    branch "feature/#2" order: 4
+    merge "issue/#1"
+    branch "issue/#2" order: 4
     commit
     commit
     checkout "main"
@@ -45,12 +45,12 @@ gitGraph
     merge "auto/update-lint-rules-1234567"
     checkout "release/2.0.0"
     merge "main"
-    checkout "feature/#2"
+    checkout "issue/#2"
     merge "release/2.0.0"
     commit
     commit
     checkout "release/2.0.0"
-    merge "feature/#2"
+    merge "issue/#2"
     checkout "main"
     merge "release/2.0.0"
     branch "update-contributors" order: 6
