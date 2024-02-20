@@ -21,7 +21,7 @@ If there is no relevant Issue, you can create a new one using the [Issue Form].
 
 To avoid overlapping work with others, comment on the Issue with 🙋 and start working on it.
 
-Create a branch from the latest state of the `main` branch.
+Create a branch from the latest state of the `main` or `release/{version}` branch. For more information on our [branch strategy].
 
 ### 3. Submit a Pull Request
 
@@ -38,5 +38,7 @@ And thank you ✨
 [Discussions]: https://github.com/yumemi-inc/flutter-yumemi-lints/discussions
 
 [Issue Form]: https://github.com/yumemi-inc/flutter-yumemi-lints/issues/new/choose
+
+[branch strategy]: ../BRANCH.md
 
 [self-review]: SELF_REVIEW.md
