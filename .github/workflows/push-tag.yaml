@@ -1,0 +1,44 @@
+name: Push Tag
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  push-tag:
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Generate a token
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+      - name: Extract a version
+        id: extract_version
+        run: |
+          version=$(echo ${{ github.head_ref }} | sed -e 's/release\///')
+          # Check version
+          # See: https://github.com/dart-lang/pub_semver/blob/3175ba0a58a96fb23f8d68b5f5c44d1a5b30cc16/lib/src/patterns.dart#L6-L9
+          if [[ ! "$version" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(-([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(\+([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?$ ]]; then
+              echo "Invalid version format: $version"
+              exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Push a tag
+        run: |
+          git tag "$VERSION"
+          git push origin "$VERSION"
+        env:
+          VERSION: ${{ steps.extract_version.outputs.version }}
