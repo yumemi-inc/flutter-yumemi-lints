@@ -16,7 +16,7 @@ final class UpdateCommandService {
 
       return switch (projectType) {
         ProjectType.dart => _updateDartProjectLint(),
-        ProjectType.flutter => _updateFlutterProjectLint(),
+        ProjectType.flutter => _updateFlutterProjectLintRule(),
       };
     } on Exception catch (e) {
       print(e);
@@ -49,7 +49,7 @@ final class UpdateCommandService {
     }
   }
 
-  ExitStatus _updateFlutterProjectLint() {
+  ExitStatus _updateFlutterProjectLintRule() {
     ProcessResult command;
 
     // Determine if fvm is being used
