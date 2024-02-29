@@ -57,5 +57,23 @@ final class UpdateCommandService {
     return Version.parse(version);
   }
 
+  @visibleForTesting
+  Version getDartVersion(String input) {
+    final regExp = RegExp(r'Dart SDK version:\s+(\d+\.\d+\.\d+)');
+    final match = regExp.firstMatch(input);
+
+    if (match == null) {
+      throw const FormatException(
+        'Dart version could not be found from [dart --version].',
+      );
+    }
+
+    final version = match.group(1);
+    if (version == null) {
+      throw const FormatException('Dart version extraction failed.');
+    }
+    return Version.parse(version);
+  }
+
 }
 
