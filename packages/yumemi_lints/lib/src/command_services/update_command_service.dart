@@ -58,7 +58,7 @@ final class UpdateCommandService {
     // fvm v3.0 >=
     final fvmrc = File(path.join(Directory.current.path, '.fvmrc'));
     if (fvm.existsSync() || fvmrc.existsSync()) {
-      command = Process.runSync('fvm', ['flutter, --version']);
+      command = Process.runSync('fvm', ['flutter', '--version']);
     } else {
       command = Process.runSync('flutter', ['--version']);
     }
