@@ -37,6 +37,33 @@ final class UpdateCommandService {
     }
   }
 
+  ExitStatus _updateFlutterProjectLint() {
+    ProcessResult command;
+
+    // Determine if fvm is being used
+    // fvm v3.0 <
+    final fvm = Directory(path.join(Directory.current.path, '.fvm'));
+    // fvm v3.0 >=
+    final fvmrc = File(path.join(Directory.current.path, '.fvmrc'));
+    if (fvm.existsSync() || fvmrc.existsSync()) {
+      command = Process.runSync('fvm', ['flutter, --version']);
+    } else {
+      command = Process.runSync('flutter', ['--version']);
+    }
+
+    try {
+      final flutterVersion = getFlutterVersion(command.stdout.toString());
+      final includeLine =
+          'include: package:yumemi_lints/flutter/${flutterVersion.excludePatchVersion}/recommended.yaml';
+      _updateAnalysisOptionsFile(includeLine);
+
+      return ExitStatus.success;
+    } on FormatException catch (e) {
+      print(e.message);
+      return ExitStatus.error;
+    }
+  }
+
   ProjectType _getProjectType() {
     final pubspecFile = File(
       path.join(
