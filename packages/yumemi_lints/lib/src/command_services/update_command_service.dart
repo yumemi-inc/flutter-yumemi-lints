@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
@@ -35,6 +36,25 @@ final class UpdateCommandService {
       }
     }
     return ProjectType.dart;
+  }
+
+  @visibleForTesting
+  Version getFlutterVersion(String input) {
+    final regExp = RegExp(r'Flutter\s+(\d+\.\d+\.\d+)');
+    final match = regExp.firstMatch(input);
+
+    if (match == null) {
+      throw const FormatException(
+        'Flutter version could not be found from [flutter --version].',
+      );
+    }
+
+    final version = match.group(1);
+    if (version == null) {
+      throw const FormatException('Flutter version extraction failed.');
+    }
+
+    return Version.parse(version);
   }
 
 }
