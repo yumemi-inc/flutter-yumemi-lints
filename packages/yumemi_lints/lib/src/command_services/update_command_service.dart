@@ -40,7 +40,7 @@ final class UpdateCommandService {
 
       final includeLine =
           'include: package:yumemi_lints/dart/${dartVersion.excludePatchVersion}/recommended.yaml';
-      _updateAnalysisOptionsFile(includeLine);
+      _updateLintRule(includeLine);
 
       return ExitStatus.success;
     } on FormatException catch (e) {
@@ -64,7 +64,7 @@ final class UpdateCommandService {
       final flutterVersion = getFlutterVersion(command.stdout.toString());
       final includeLine =
           'include: package:yumemi_lints/flutter/${flutterVersion.excludePatchVersion}/recommended.yaml';
-      _updateAnalysisOptionsFile(includeLine);
+      _updateLintRule(includeLine);
 
       return ExitStatus.success;
     } on FormatException catch (e) {
@@ -135,7 +135,7 @@ final class UpdateCommandService {
     return Version.parse(version);
   }
 
-  void _updateAnalysisOptionsFile(String includeLine) {
+  void _updateLintRule(String includeLine) {
     final analysisOptionsFile = File(
       path.join(Directory.current.path, 'analysis_options.yaml'),
     );
