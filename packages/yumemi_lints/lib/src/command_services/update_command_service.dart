@@ -35,6 +35,11 @@ final class UpdateCommandService {
       command = Process.runSync('dart', ['--version']);
     }
 
+    final exitStatus = ExitStatus.fromCode(command.exitCode);
+    if (exitStatus != ExitStatus.success) {
+      return exitStatus;
+    }
+
     try {
       final dartVersion = getDartVersion(command.stdout.toString());
 
@@ -58,6 +63,11 @@ final class UpdateCommandService {
       command = Process.runSync('fvm', ['flutter', '--version']);
     } else {
       command = Process.runSync('flutter', ['--version']);
+    }
+
+    final exitStatus = ExitStatus.fromCode(command.exitCode);
+    if (exitStatus != ExitStatus.success) {
+      return exitStatus;
     }
 
     try {
