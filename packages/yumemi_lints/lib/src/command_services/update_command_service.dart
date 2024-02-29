@@ -15,7 +15,7 @@ final class UpdateCommandService {
       final projectType = _getProjectType();
 
       return switch (projectType) {
-        ProjectType.dart => _updateDartProjectLint(),
+        ProjectType.dart => _updateDartProjectLintRule(),
         ProjectType.flutter => _updateFlutterProjectLintRule(),
       };
     } on Exception catch (e) {
@@ -24,7 +24,7 @@ final class UpdateCommandService {
     }
   }
 
-  ExitStatus _updateDartProjectLint() {
+  ExitStatus _updateDartProjectLintRule() {
     ProcessResult command;
 
     // Determine if dvm is being used
