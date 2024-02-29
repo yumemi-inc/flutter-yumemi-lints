@@ -75,5 +75,37 @@ final class UpdateCommandService {
     return Version.parse(version);
   }
 
+  void _updateAnalysisOptionsFile(String includeLine) {
+    final analysisOptionsFile = File(
+      path.join(Directory.current.path, 'analysis_options.yaml'),
+    );
+    if (!analysisOptionsFile.existsSync()) {
+      // Create analysis_options.yaml if it does not exist
+      analysisOptionsFile.createSync();
+    }
+
+    // Override analysis_options.yaml
+    var foundIncludeLine = false;
+    final lines = analysisOptionsFile.readAsLinesSync();
+    final newLines = <String>[];
+
+    for (final line in lines) {
+      if (line.startsWith('include:')) {
+        foundIncludeLine = true;
+        newLines.add(includeLine);
+      } else {
+        newLines.add(line);
+      }
+    }
+
+    // If there are no includes in analysis_options.yaml,
+    // insert includes at the top
+    if (!foundIncludeLine) {
+      newLines.insert(0, includeLine);
+      newLines.insert(1, '');
+    }
+
+    analysisOptionsFile.writeAsStringSync(newLines.join('\n'));
+  }
 }
 
