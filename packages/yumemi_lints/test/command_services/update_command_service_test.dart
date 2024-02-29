@@ -49,5 +49,16 @@ Tools • Dart 3.2.3 • DevTools 2.28.4''';
       // assert
       expect(version, Version(3, 16, 4));
     });
+
+    test('Failure to get Flutter version if input is incorrect', () {
+      // arrange
+      const input = '';
+
+      // act, assert
+      expect(
+        () => updateCommandService.getDartVersion(input),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 }
