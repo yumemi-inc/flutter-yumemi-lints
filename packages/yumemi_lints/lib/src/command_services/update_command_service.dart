@@ -11,6 +11,30 @@ final class UpdateCommandService {
 
   ExitStatus call() {
     return ExitStatus.success;
+
+  ExitStatus _updateDartProjectLint() {
+    ProcessResult command;
+
+    // Determine if dvm is being used
+    final dvm = Directory(path.join(Directory.current.path, '.dvm'));
+    if (dvm.existsSync()) {
+      command = Process.runSync('dvm', ['dart', '--version']);
+    } else {
+      command = Process.runSync('dart', ['--version']);
+    }
+
+    try {
+      final dartVersion = getDartVersion(command.stdout.toString());
+
+      final includeLine =
+          'include: package:yumemi_lints/dart/${dartVersion.excludePatchVersion}/recommended.yaml';
+      _updateAnalysisOptionsFile(includeLine);
+
+      return ExitStatus.success;
+    } on FormatException catch (e) {
+      print(e.message);
+      return ExitStatus.error;
+    }
   }
 
   ProjectType _getProjectType() {
