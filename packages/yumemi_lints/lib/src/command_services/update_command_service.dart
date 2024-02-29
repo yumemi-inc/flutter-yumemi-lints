@@ -109,3 +109,6 @@ final class UpdateCommandService {
   }
 }
 
+extension VersionExt on Version {
+  String get excludePatchVersion => '$major.$minor';
+}
