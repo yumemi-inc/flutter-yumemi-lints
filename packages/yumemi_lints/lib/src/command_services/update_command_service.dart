@@ -10,7 +10,19 @@ final class UpdateCommandService {
   const UpdateCommandService();
 
   ExitStatus call() {
-    return ExitStatus.success;
+    try {
+      // Determine if it is a Dart project or a Flutter project
+      final projectType = _getProjectType();
+
+      return switch (projectType) {
+        ProjectType.dart => _updateDartProjectLint(),
+        ProjectType.flutter => _updateFlutterProjectLint(),
+      };
+    } on Exception catch (e) {
+      print(e);
+      return ExitStatus.error;
+    }
+  }
 
   ExitStatus _updateDartProjectLint() {
     ProcessResult command;
