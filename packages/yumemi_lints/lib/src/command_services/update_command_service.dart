@@ -53,11 +53,8 @@ final class UpdateCommandService {
     ProcessResult command;
 
     // Determine if fvm is being used
-    // fvm v3.0 <
     final fvm = Directory(path.join(Directory.current.path, '.fvm'));
-    // fvm v3.0 >=
-    final fvmrc = File(path.join(Directory.current.path, '.fvmrc'));
-    if (fvm.existsSync() || fvmrc.existsSync()) {
+    if (fvm.existsSync()) {
       command = Process.runSync('fvm', ['flutter', '--version']);
     } else {
       command = Process.runSync('flutter', ['--version']);
