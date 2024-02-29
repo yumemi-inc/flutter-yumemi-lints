@@ -4,6 +4,19 @@ import 'package:yumemi_lints/src/command_services/update_command_service.dart';
 
 void main() {
   const updateCommandService = UpdateCommandService();
+  test('get dart version', () {
+    // arrange
+    const input =
+        'Dart SDK version: 3.2.6 (stable) (Wed Jan 24 13:41:58 2024 +0000) on "macos_arm64"';
+
+    // act
+    final version = updateCommandService.getDartVersion(input);
+
+    // assert
+    expect(version, Version(3, 2, 6));
+  });
+
+  // 関数毎にグループ化して例外時もテストするといいかも
   test('get flutter version', () {
     // arrange
     const input = '''
