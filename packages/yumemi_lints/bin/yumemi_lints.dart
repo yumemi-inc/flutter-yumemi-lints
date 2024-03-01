@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:yumemi_lints/src/app_command_runner.dart';
-import 'package:yumemi_lints/src/models/exit_status.dart';
+import 'package:yumemi_lints/yumemi_lints.dart';
 
 Future<void> main(List<String> args) async {
   final commandRunner = AppCommandRunner();
