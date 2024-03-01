@@ -3,7 +3,6 @@ sdkPath: .dvm/dart_sdk
 
 packages:
   - tools/**
-  - packages/yumemi_lints
 
 command:
   bootstrap:
