@@ -6,7 +6,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
 
-final class UpdateCommandService {
+class UpdateCommandService {
   const UpdateCommandService();
 
   ExitStatus call() {
@@ -14,10 +14,12 @@ final class UpdateCommandService {
       // Determine if it is a Dart project or a Flutter project
       final projectType = _getProjectType();
 
-      return switch (projectType) {
-        ProjectType.dart => _updateDartProjectLintRule(),
-        ProjectType.flutter => _updateFlutterProjectLintRule(),
-      };
+      switch (projectType) {
+        case ProjectType.dart:
+          return _updateDartProjectLintRule();
+        case ProjectType.flutter:
+          return _updateFlutterProjectLintRule();
+      }
     } on Exception catch (e) {
       print(e);
       return ExitStatus.error;

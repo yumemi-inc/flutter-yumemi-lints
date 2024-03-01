@@ -1,4 +1,4 @@
-final class CliInfo {
+class CliInfo {
   const CliInfo._();
 
   static const name = 'yumemi_lints';

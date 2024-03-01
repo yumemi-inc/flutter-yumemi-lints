@@ -6,11 +6,16 @@ enum ExitStatus {
 
   const ExitStatus(this.code);
 
-  factory ExitStatus.fromCode(int code) => switch (code) {
-        0 => ExitStatus.success,
-        64 => ExitStatus.usage,
-        _ => ExitStatus.error,
-      };
+  factory ExitStatus.fromCode(int code) {
+    switch (code) {
+      case 0:
+        return ExitStatus.success;
+      case 64:
+        return ExitStatus.usage;
+      default:
+        return ExitStatus.error;
+    }
+  }
 
   final int code;
 }
