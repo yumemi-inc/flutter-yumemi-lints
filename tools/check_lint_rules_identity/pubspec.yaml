@@ -9,7 +9,7 @@ dependencies:
   async: ^2.11.0
   collection: ^1.18.0
   file: ^7.0.0
-  meta: ^1.10.0
+  meta: ^1.11.0
   pub_semver: ^2.1.4
   riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
