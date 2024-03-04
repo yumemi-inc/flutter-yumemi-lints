@@ -3,7 +3,9 @@ import 'package:yumemi_lints/src/commands/update_command.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/utils/cli_info.dart';
 
+/// A command runner for the yumemi_lints
 class AppCommandRunner extends CommandRunner<ExitStatus> {
+  /// Creates a new instance of [AppCommandRunner]
   AppCommandRunner() : super(CliInfo.name, CliInfo.description) {
     addCommand(UpdateCommand());
   }
