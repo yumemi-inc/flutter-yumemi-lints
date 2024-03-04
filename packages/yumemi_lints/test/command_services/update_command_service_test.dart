@@ -34,8 +34,8 @@ void main() {
 
   group('UpdateCommandService.getFlutterVersion', () {
     test(
-        'Successfully retrieve flutter version when appropriate input is received',
-        () {
+        'Successfully retrieve flutter version '
+        'when appropriate input is received', () {
       // arrange
       const input = '''
 Flutter 3.16.4 • channel stable • https://github.com/flutter/flutter.git
