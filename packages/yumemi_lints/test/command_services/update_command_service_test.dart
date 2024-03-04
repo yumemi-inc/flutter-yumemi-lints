@@ -56,7 +56,7 @@ Tools • Dart 3.2.3 • DevTools 2.28.4''';
 
       // act, assert
       expect(
-        () => updateCommandService.getDartVersion(input),
+        () => updateCommandService.getFlutterVersion(input),
         throwsA(isA<FormatException>()),
       );
     });
