@@ -49,15 +49,7 @@ class UpdateCommandService {
   }
 
   ExitStatus _updateFlutterProjectLintRule() {
-    ProcessResult command;
-
-    // Determine if fvm is being used
-    final fvm = Directory(path.join(Directory.current.path, '.fvm'));
-    if (fvm.existsSync()) {
-      command = Process.runSync('fvm', ['flutter', '--version']);
-    } else {
-      command = Process.runSync('flutter', ['--version']);
-    }
+    final command = Process.runSync('flutter', ['--version']);
 
     final exitStatus = ExitStatus.fromCode(command.exitCode);
     if (exitStatus != ExitStatus.success) {
