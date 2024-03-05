@@ -27,15 +27,7 @@ class UpdateCommandService {
   }
 
   ExitStatus _updateDartProjectLintRule() {
-    ProcessResult command;
-
-    // Determine if dvm is being used
-    final dvm = Directory(path.join(Directory.current.path, '.dvm'));
-    if (dvm.existsSync()) {
-      command = Process.runSync('dvm', ['dart', '--version']);
-    } else {
-      command = Process.runSync('dart', ['--version']);
-    }
+    final command = Process.runSync('dart', ['--version']);
 
     final exitStatus = ExitStatus.fromCode(command.exitCode);
     if (exitStatus != ExitStatus.success) {
