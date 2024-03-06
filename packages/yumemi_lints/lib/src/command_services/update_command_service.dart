@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
+import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
 
@@ -35,7 +36,7 @@ class UpdateCommandService {
     }
 
     try {
-      final dartVersion = getDartVersion(command.stdout.toString());
+      final dartVersion = getDartVersion(_getPubspecFile());
 
       final includeLine =
           'include: package:yumemi_lints/dart/${dartVersion.excludePatchVersion}/recommended.yaml';
@@ -69,7 +70,7 @@ class UpdateCommandService {
     }
   }
 
-  ProjectType _getProjectType() {
+  File _getPubspecFile() {
     final pubspecFile = File(
       path.join(
         Directory.current.path,
@@ -85,6 +86,11 @@ class UpdateCommandService {
       );
     }
 
+    return pubspecFile;
+  }
+
+  ProjectType _getProjectType() {
+    final pubspecFile = _getPubspecFile();
     final lines = pubspecFile.readAsLinesSync();
     for (final line in lines) {
       if (line.trim() == 'sdk: flutter') {
@@ -114,13 +120,25 @@ class UpdateCommandService {
   }
 
   @visibleForTesting
-  Version getDartVersion(String input) {
-    final regExp = RegExp(r'Dart SDK version:\s+(\d+\.\d+\.\d+)');
-    final match = regExp.firstMatch(input);
+  Version getDartVersion(File pubspecFile) {
+    final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
+    final dartVersion = (yaml['environment'] as YamlMap)['sdk'] as String;
+
+    RegExp regExp;
+    if (dartVersion.contains('<') && !dartVersion.contains('>=')) {
+      throw FormatException('Please specify the minimum version.');
+    }
+
+    if (dartVersion.contains('>=')) {
+      regExp = RegExp(r'>=\s*(\d+\.\d+\.\d+)');
+    } else {
+      regExp = RegExp(r's*(\d+\.\d+\.\d+)');
+    }
+    final match = regExp.firstMatch(dartVersion);
 
     if (match == null) {
-      throw const FormatException(
-        'Dart version could not be found from [dart --version].',
+      throw FormatException(
+        'Dart version could not be found from pubspec.yaml.',
       );
     }
 
@@ -128,6 +146,7 @@ class UpdateCommandService {
     if (version == null) {
       throw const FormatException('Dart version extraction failed.');
     }
+
     return Version.parse(version);
   }
 
