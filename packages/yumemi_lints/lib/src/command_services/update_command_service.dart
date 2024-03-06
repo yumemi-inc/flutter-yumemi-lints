@@ -58,7 +58,7 @@ class UpdateCommandService {
     }
 
     try {
-      final flutterVersion = getFlutterVersion(command.stdout.toString());
+      final flutterVersion = getFlutterVersion(_getPubspecFile());
       final includeLine =
           'include: package:yumemi_lints/flutter/${flutterVersion.excludePatchVersion}/recommended.yaml';
       _updateLintRule(includeLine);
@@ -101,22 +101,17 @@ class UpdateCommandService {
   }
 
   @visibleForTesting
-  Version getFlutterVersion(String input) {
-    final regExp = RegExp(r'Flutter\s+(\d+\.\d+\.\d+)');
-    final match = regExp.firstMatch(input);
+  Version getFlutterVersion(File pubspecFile) {
+    final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
+    final flutterVersion = (yaml['environment'] as YamlMap)['flutter'];
 
-    if (match == null) {
-      throw const FormatException(
-        'Flutter version could not be found from [flutter --version].',
+    if (flutterVersion == null) {
+      throw FormatException(
+        'Please list the Flutter version to be used in pubspec.yaml.',
       );
     }
 
-    final version = match.group(1);
-    if (version == null) {
-      throw const FormatException('Flutter version extraction failed.');
-    }
-
-    return Version.parse(version);
+    return _extractVersion(flutterVersion as String);
   }
 
   @visibleForTesting
@@ -124,17 +119,21 @@ class UpdateCommandService {
     final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
     final dartVersion = (yaml['environment'] as YamlMap)['sdk'] as String;
 
-    RegExp regExp;
-    if (dartVersion.contains('<') && !dartVersion.contains('>=')) {
+    return _extractVersion(dartVersion);
+  }
+
+  Version _extractVersion(String pubspecVersion) {
+    if (pubspecVersion.contains('<') && !pubspecVersion.contains('>=')) {
       throw FormatException('Please specify the minimum version.');
     }
 
-    if (dartVersion.contains('>=')) {
+    RegExp regExp;
+    if (pubspecVersion.contains('>=')) {
       regExp = RegExp(r'>=\s*(\d+\.\d+\.\d+)');
     } else {
       regExp = RegExp(r's*(\d+\.\d+\.\d+)');
     }
-    final match = regExp.firstMatch(dartVersion);
+    final match = regExp.firstMatch(pubspecVersion);
 
     if (match == null) {
       throw FormatException(
