@@ -1,3 +1,4 @@
+import 'package:file/memory.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
 import 'package:yumemi_lints/src/command_services/update_command_service.dart';
@@ -5,60 +6,107 @@ import 'package:yumemi_lints/src/command_services/update_command_service.dart';
 void main() {
   const updateCommandService = UpdateCommandService();
   group('UpdateCommandService.getDartVersion', () {
-    test(
-        'Successfully retrieve dart version when appropriate input is received',
-        () {
+    group('Successfully extract dart version', () {
       // arrange
-      const input =
-          'Dart SDK version: 3.2.6 (stable) (Wed Jan 24 13:41:58 2024 +0000)'
-          ' on "macos_arm64"';
+      const sdks = [
+        '^2.17.0',
+        '2.17.0',
+        '>=2.17.0 <4.0.0',
+        '<4.0.0 >=2.17.0',
+      ];
 
-      // act
-      final version = updateCommandService.getDartVersion(input);
+      final files = [
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${sdks[0]}'
+''',
+          ),
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${sdks[1]}'
+''',
+          ),
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${sdks[2]}'
+''',
+          ),
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${sdks[3]}'
+''',
+          ),
+      ];
 
-      // assert
-      expect(version, Version(3, 2, 6));
+      for (var i = 0; i < files.length; i++) {
+        // act
+        final version = updateCommandService.getDartVersion(files[i]);
+
+        test('when input sdk version is ${sdks[i]}', () {
+          // assert
+          expect(
+            version,
+            Version(2, 17, 0),
+          );
+        });
+      }
     });
 
-    test('Failure to get Dart version if input is incorrect', () {
+    group('Failure to get dart version', () {
       // arrange
-      const input = '';
+      const versionErrorMessageScenarios = [
+        {
+          'version': 'any',
+          'errorMessage': 'Dart version could not be found from pubspec.yaml.'
+        },
+        {
+          'version': '<4.0.0',
+          'errorMessage': 'Please specify the minimum version.'
+        },
+      ];
 
-      // act, assert
-      expect(
-        () => updateCommandService.getDartVersion(input),
-        throwsA(isA<FormatException>()),
-      );
-    });
-  });
+      final files = [
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${versionErrorMessageScenarios[0]['version']}'
+''',
+          ),
+        MemoryFileSystem().file('file')
+          ..writeAsStringSync(
+            '''
+environment:
+  sdk: '${versionErrorMessageScenarios[1]['version']}'
+''',
+          ),
+      ];
 
-  group('UpdateCommandService.getFlutterVersion', () {
-    test(
-        'Successfully retrieve flutter version '
-        'when appropriate input is received', () {
-      // arrange
-      const input = '''
-Flutter 3.16.4 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision 2e9cb0aa71 (3 months ago) • 2023-12-11 14:35:13 -0700
-Engine • revision 54a7145303
-Tools • Dart 3.2.3 • DevTools 2.28.4''';
-
-      // act
-      final version = updateCommandService.getFlutterVersion(input);
-
-      // assert
-      expect(version, Version(3, 16, 4));
-    });
-
-    test('Failure to get Flutter version if input is incorrect', () {
-      // arrange
-      const input = '';
-
-      // act, assert
-      expect(
-        () => updateCommandService.getFlutterVersion(input),
-        throwsA(isA<FormatException>()),
-      );
+      for (var i = 0; i < files.length; i++) {
+        test(
+            'when input sdk version is ${versionErrorMessageScenarios[i]['version']}',
+            () {
+          // act, assert
+          expect(
+            () => updateCommandService.getDartVersion(files[i]),
+            throwsA(
+              isA<FormatException>().having(
+                (e) => e.message,
+                'errorMessage',
+                versionErrorMessageScenarios[i]['errorMessage'],
+              ),
+            ),
+          );
+        });
+      }
     });
   });
 }
