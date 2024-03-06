@@ -109,4 +109,31 @@ environment:
       }
     });
   });
+
+  group('UpdateCommandService.getFlutterVersion', () {
+    test(
+        'Throws FormatException '
+        'when the flutter version is not listed in pubspec.yaml', () {
+      // arrange
+      final file = MemoryFileSystem().file('file')
+        ..writeAsStringSync(
+          '''
+environment:
+  sdk: '2.17.0'
+''',
+        );
+
+      // act, assert
+      expect(
+        () => updateCommandService.getFlutterVersion(file),
+        throwsA(
+          isA<FormatException>().having(
+            (e) => e.message,
+            'errorMessage',
+            'Please list the Flutter version to be used in pubspec.yaml.',
+          ),
+        ),
+      );
+    });
+  });
 }
