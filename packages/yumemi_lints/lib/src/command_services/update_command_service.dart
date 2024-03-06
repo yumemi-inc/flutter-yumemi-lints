@@ -28,13 +28,6 @@ class UpdateCommandService {
   }
 
   ExitStatus _updateDartProjectLintRule() {
-    final command = Process.runSync('dart', ['--version']);
-
-    final exitStatus = ExitStatus.fromCode(command.exitCode);
-    if (exitStatus != ExitStatus.success) {
-      return exitStatus;
-    }
-
     try {
       final dartVersion = getDartVersion(_getPubspecFile());
 
@@ -50,13 +43,6 @@ class UpdateCommandService {
   }
 
   ExitStatus _updateFlutterProjectLintRule() {
-    final command = Process.runSync('flutter', ['--version']);
-
-    final exitStatus = ExitStatus.fromCode(command.exitCode);
-    if (exitStatus != ExitStatus.success) {
-      return exitStatus;
-    }
-
     try {
       final flutterVersion = getFlutterVersion(_getPubspecFile());
       final includeLine =
