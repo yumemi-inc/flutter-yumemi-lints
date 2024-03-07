@@ -80,7 +80,8 @@ class UpdateCommandService {
 
     if (flutterVersion == null) {
       throw FormatException(
-        'Please list the Flutter version to be used in pubspec.yaml.',
+        'Please put [flutter: Flutter Version] '
+        'under the environment section in pubspec.yaml',
       );
     }
 

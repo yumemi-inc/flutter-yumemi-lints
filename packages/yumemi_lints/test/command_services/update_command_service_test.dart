@@ -25,7 +25,8 @@ environment:
           isA<FormatException>().having(
             (e) => e.message,
             'errorMessage',
-            'Please list the Flutter version to be used in pubspec.yaml.',
+            'Please put [flutter: Flutter Version] '
+                'under the environment section in pubspec.yaml',
           ),
         ),
       );
