@@ -158,10 +158,9 @@ class UpdateCommandService {
     // insert includes at the top
     if (!foundIncludeLine) {
       newLines.insert(0, includeLine);
-      newLines.insert(1, '');
     }
 
-    analysisOptionsFile.writeAsStringSync(newLines.join('\n'));
+    analysisOptionsFile.writeAsStringSync('${newLines.join('\n')}\n');
   }
 }
 
