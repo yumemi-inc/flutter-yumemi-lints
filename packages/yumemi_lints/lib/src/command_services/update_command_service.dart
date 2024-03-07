@@ -14,41 +14,28 @@ class UpdateCommandService {
     try {
       // Determine if it is a Dart project or a Flutter project
       final projectType = _getProjectType();
-
-      switch (projectType) {
-        case ProjectType.dart:
-          return _updateDartProjectLintRule();
-        case ProjectType.flutter:
-          return _updateFlutterProjectLintRule();
-      }
+      return _updateLintRule(projectType);
     } on Exception catch (e) {
       print(e);
       return ExitStatus.error;
     }
   }
 
-  ExitStatus _updateDartProjectLintRule() {
+  ExitStatus _updateLintRule(ProjectType projectType) {
+    Version version;
     try {
-      final dartVersion = getDartVersion(_getPubspecFile());
+      switch (projectType) {
+        case ProjectType.dart:
+          version = getDartVersion(_getPubspecFile());
+          break;
+        case ProjectType.flutter:
+          version = getFlutterVersion(_getPubspecFile());
+          break;
+      }
 
       final includeLine =
-          'include: package:yumemi_lints/dart/${dartVersion.excludePatchVersion}/recommended.yaml';
-      _updateLintRule(includeLine);
-
-      return ExitStatus.success;
-    } on FormatException catch (e) {
-      print(e.message);
-      return ExitStatus.error;
-    }
-  }
-
-  ExitStatus _updateFlutterProjectLintRule() {
-    try {
-      final flutterVersion = getFlutterVersion(_getPubspecFile());
-      final includeLine =
-          'include: package:yumemi_lints/flutter/${flutterVersion.excludePatchVersion}/recommended.yaml';
-      _updateLintRule(includeLine);
-
+          'include: package:yumemi_lints/${projectType.name}/${version.excludePatchVersion}/recommended.yaml';
+      _updateAnalysisOptionsFile(includeLine);
       return ExitStatus.success;
     } on FormatException catch (e) {
       print(e.message);
@@ -97,45 +84,52 @@ class UpdateCommandService {
       );
     }
 
-    return _extractVersion(flutterVersion as String);
+    return extractVersion(flutterVersion as String);
   }
 
   @visibleForTesting
   Version getDartVersion(File pubspecFile) {
     final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
-    final dartVersion = (yaml['environment'] as YamlMap)['sdk'] as String;
+    final dartVersion = (yaml['environment'] as YamlMap)['sdk'];
 
-    return _extractVersion(dartVersion);
+    if (dartVersion == null) {
+      throw FormatException(
+        'Please list the Dart version to be used in pubspec.yaml.',
+      );
+    }
+
+    return extractVersion(dartVersion as String);
   }
 
-  Version _extractVersion(String pubspecVersion) {
-    if (pubspecVersion.contains('<') && !pubspecVersion.contains('>=')) {
+  @visibleForTesting
+  Version extractVersion(String versionString) {
+    if (versionString.contains('<') && !versionString.contains('>=')) {
       throw FormatException('Please specify the minimum version.');
     }
 
     RegExp regExp;
-    if (pubspecVersion.contains('>=')) {
+    if (versionString.contains('>=')) {
       regExp = RegExp(r'>=\s*(\d+\.\d+\.\d+)');
     } else {
       regExp = RegExp(r's*(\d+\.\d+\.\d+)');
     }
-    final match = regExp.firstMatch(pubspecVersion);
+    final match = regExp.firstMatch(versionString);
 
     if (match == null) {
       throw FormatException(
-        'Dart version could not be found from pubspec.yaml.',
+        'Version could not be found from pubspec.yaml.',
       );
     }
 
     final version = match.group(1);
     if (version == null) {
-      throw const FormatException('Dart version extraction failed.');
+      throw const FormatException('Version extraction failed.');
     }
 
     return Version.parse(version);
   }
 
-  void _updateLintRule(String includeLine) {
+  void _updateAnalysisOptionsFile(String includeLine) {
     final analysisOptionsFile = File(
       path.join(Directory.current.path, 'analysis_options.yaml'),
     );
