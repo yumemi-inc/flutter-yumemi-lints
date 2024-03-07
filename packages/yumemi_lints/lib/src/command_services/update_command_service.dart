@@ -125,11 +125,7 @@ class UpdateCommandService {
       );
     }
 
-    final version = match.group(1);
-    if (version == null) {
-      throw const FormatException('Version extraction failed.');
-    }
-
+    final version = match.group(1)!;
     return Version.parse(version);
   }
 
