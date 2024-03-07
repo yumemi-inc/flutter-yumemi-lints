@@ -52,7 +52,8 @@ environment:
           isA<FormatException>().having(
             (e) => e.message,
             'errorMessage',
-            'Please list the Dart version to be used in pubspec.yaml.',
+            'Please put [sdk: Dart Version] '
+                'under the environment section in pubspec.yaml',
           ),
         ),
       );

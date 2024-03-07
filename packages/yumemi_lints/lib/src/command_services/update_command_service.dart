@@ -94,7 +94,8 @@ class UpdateCommandService {
 
     if (dartVersion == null) {
       throw FormatException(
-        'Please list the Dart version to be used in pubspec.yaml.',
+        'Please put [sdk: Dart Version] '
+        'under the environment section in pubspec.yaml',
       );
     }
 
