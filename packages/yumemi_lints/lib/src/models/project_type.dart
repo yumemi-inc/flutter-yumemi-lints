@@ -1,0 +1,4 @@
+enum ProjectType {
+  dart,
+  flutter,
+}

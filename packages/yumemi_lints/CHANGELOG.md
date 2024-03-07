@@ -26,6 +26,7 @@ Examples of version updates are as follows:
 - Changed the warning level of `invalid_use_of_visible_for_testing_member` to error.
 - Changed the lint rule `use_setters_to_change_properties` to be deprecated.
 - Removed the patch version from the directory name of Lint Rules.
+- Added update command to automatically update lint rules to match the Flutter or Dart sdk version of the project.
 
 ## 1.7.0
 
