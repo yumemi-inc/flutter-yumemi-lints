@@ -22,7 +22,7 @@ In a terminal, located at the root of your package, run this command:
 dart run yumemi_lints update
 ```
 
-The above command will automatically update the lint rules to match the version of Flutter or Dart SDK used in the project.
+The above command will automatically update the lint rules to the recommended.yaml recommended by Yumemi Inc. according to the version of Flutter or Dart SDK used in the project.
 
 This can be used when introducing yumemi_lints or when updating the Flutter or Dart sdk version to avoid the hassle of manually updating lints.
 
