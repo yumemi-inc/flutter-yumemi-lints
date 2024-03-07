@@ -119,7 +119,9 @@ class UpdateCommandService {
 
     if (match == null) {
       throw FormatException(
-        'Version could not be found from pubspec.yaml.',
+        'The version of Dart or Flutter could not be found in pubspec.yaml. '
+        'Please ensure that '
+        'the version is correctly specified for Dart or Flutter.',
       );
     }
 

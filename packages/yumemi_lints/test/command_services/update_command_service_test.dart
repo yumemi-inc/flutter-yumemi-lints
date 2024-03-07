@@ -89,7 +89,9 @@ environment:
     const versionErrorScenarios = [
       {
         'version': 'any',
-        'errorMessage': 'Version could not be found from pubspec.yaml.',
+        'errorMessage': 'The version of Dart or Flutter could not be found '
+        'in pubspec.yaml. Please ensure that '
+        'the version is correctly specified for Dart or Flutter.',
       },
       {
         'version': '<4.0.0',
