@@ -16,6 +16,8 @@ analyzer:
     # of the library in which they are declared or libraries within the test
     # directory.
     invalid_use_of_visible_for_testing_member: error
+    # Files in the package's lib/src directory are not public APIs and should not be imported.
+    implementation_imports: error
 
 linter:
   rules:
