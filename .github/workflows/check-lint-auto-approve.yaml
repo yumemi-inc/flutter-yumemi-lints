@@ -42,7 +42,7 @@ jobs:
         continue-on-error: true
 
       - name: Auto approve
-        uses: hmarr/auto-approve-action@v3
+        uses: hmarr/auto-approve-action@v4
         if: steps.identity.outcome == 'success'
         with:
           review-message: Approved. Because it is the same lint rule as the previous version.
