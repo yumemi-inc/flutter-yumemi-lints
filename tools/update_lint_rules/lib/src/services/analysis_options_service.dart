@@ -48,6 +48,15 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredRecommendedRuleSeverities = recommendedRuleSeverities.where(
+        (r) {
+          final since = r.rule.since;
+          if (since is! SinceDartSdk) {
+            return false;
+          }
+          return since.version <= dartSdkVersion;
+        },
+      );
 
       final dartOutputDir = _outputDir
           .childDirectory('dart/${dartSdkVersion.excludePatchVersion}');
@@ -66,7 +75,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
-        recommendedRuleSeverities: recommendedRuleSeverities,
+        recommendedRuleSeverities: filteredRecommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
@@ -97,6 +106,15 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredRecommendedRuleSeverities = recommendedRuleSeverities.where(
+        (r) {
+          final since = r.rule.since;
+          if (since is! SinceDartSdk) {
+            return false;
+          }
+          return since.version <= dartSdkVersion;
+        },
+      );
 
       final flutterOutputDir = _outputDir
           .childDirectory('flutter/${flutterSdkVersion.excludePatchVersion}');
@@ -118,7 +136,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
-        recommendedRuleSeverities: recommendedRuleSeverities,
+        recommendedRuleSeverities: filteredRecommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
