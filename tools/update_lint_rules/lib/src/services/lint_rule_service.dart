@@ -30,13 +30,16 @@ class LintRuleService {
 
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
-    final allLintRules = allRules.map((rule) {
-      if (rule.isFlutterOnly) {
-        return LintRule.flutter(rule);
-      } else {
-        return LintRule.dart(rule);
-      }
-    });
+    final allLintRules = await Future.wait(
+      allRules.map((rule) async {
+        final isFlutterOnly = await isFlutterOnlyRule(rule);
+        if (isFlutterOnly) {
+          return LintRule.flutter(rule);
+        } else {
+          return LintRule.dart(rule);
+        }
+      }),
+    );
 
     return (
       dart: allLintRules.whereType<DartLintRule>(),
@@ -47,23 +50,25 @@ class LintRuleService {
   Future<NotRecommendedRules> getNotRecommendedRules() async {
     final allRules = await getRules();
 
-    final notRecommendedAllRules =
-        _yumemiNotRecommendedRules.map((notRecommendedRule) {
-      final rule = allRules.firstWhereOrNull(
-        (rule) => notRecommendedRule.name == rule.name,
-      );
-      if (rule == null) {
-        return null;
-      }
+    final notRecommendedAllRules = await Future.wait(
+      _yumemiNotRecommendedRules.map((notRecommendedRule) async {
+        final rule = allRules.firstWhereOrNull(
+          (rule) => notRecommendedRule.name == rule.name,
+        );
+        if (rule == null) {
+          return null;
+        }
 
-      if (rule.isFlutterOnly) {
-        return NotRecommendedRule.flutter(
-            rule: rule, reason: notRecommendedRule.reason);
-      } else {
-        return NotRecommendedRule.dart(
-            rule: rule, reason: notRecommendedRule.reason);
-      }
-    });
+        final isFlutterOnly = await isFlutterOnlyRule(rule);
+        if (isFlutterOnly) {
+          return NotRecommendedRule.flutter(
+              rule: rule, reason: notRecommendedRule.reason);
+        } else {
+          return NotRecommendedRule.dart(
+              rule: rule, reason: notRecommendedRule.reason);
+        }
+      }),
+    );
     return (
       flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
       dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
@@ -73,31 +78,35 @@ class LintRuleService {
   Future<RecommendedRuleSeverities> getRecommendedRuleSeverities() async {
     final allRules = await getRules();
 
-    final recommendedRuleSeverities = _yumemiRecommendedRuleSeverities.map(
-      (lintRuleRecommendedSeverity) {
-        final rule = allRules.firstWhereOrNull(
-          (rule) => lintRuleRecommendedSeverity.name == rule.name,
-        );
-        if (rule == null) {
-          return null;
-        }
+    final recommendedRuleSeverities = await Future.wait(
+      _yumemiRecommendedRuleSeverities.map(
+        (lintRuleRecommendedSeverity) async {
+          final rule = allRules.firstWhereOrNull(
+            (rule) => lintRuleRecommendedSeverity.name == rule.name,
+          );
+          if (rule == null) {
+            return null;
+          }
 
-        final reason = lintRuleRecommendedSeverity.reason;
-        final severityLevel = lintRuleRecommendedSeverity.severityLevel;
-        if (rule.isFlutterOnly) {
-          return RecommendedRuleSeverity.flutter(
-            rule: rule,
-            reason: reason,
-            severityLevel: severityLevel,
-          );
-        } else {
-          return RecommendedRuleSeverity.dart(
-            rule: rule,
-            reason: reason,
-            severityLevel: severityLevel,
-          );
-        }
-      },
+          final reason = lintRuleRecommendedSeverity.reason;
+          final severityLevel = lintRuleRecommendedSeverity.severityLevel;
+
+          final isFlutterOnly = await isFlutterOnlyRule(rule);
+          if (isFlutterOnly) {
+            return RecommendedRuleSeverity.flutter(
+              rule: rule,
+              reason: reason,
+              severityLevel: severityLevel,
+            );
+          } else {
+            return RecommendedRuleSeverity.dart(
+              rule: rule,
+              reason: reason,
+              severityLevel: severityLevel,
+            );
+          }
+        },
+      ),
     );
     return (
       dart: recommendedRuleSeverities.whereType<RecommendedRuleSeverityDart>(),
