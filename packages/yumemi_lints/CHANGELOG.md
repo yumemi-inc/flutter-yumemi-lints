@@ -49,6 +49,18 @@ Examples of version updates are as follows:
   - `package_names`
   - `recursive_getters`
   - `void_checks`
+- Fixed a bug in determining if a lint rule is exclusive to Flutter, and added/removed some lint rules in all.yaml for dart and flutter.
+  - Added to Dart and removed from Flutter.
+    - `avoid_print`
+    - `prefer_const_constructors`
+    - `prefer_const_constructors_in_immutables`
+    - `prefer_const_declarations`
+    - `prefer_const_literals_to_create_immutables`
+  - Added to Flutter and removed from Dart.
+    - `diagnostic_describe_all_properties`
+    - `sized_box_shrink_expand`
+    - `use_colored_box`
+    - `use_decorated_box`
 
 ## 1.7.0
 
