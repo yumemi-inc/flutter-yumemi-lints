@@ -93,8 +93,13 @@ class LintRuleService {
       );
 }
 
+typedef _NotRecommendedRule = ({
+  String name,
+  String reason,
+});
+
 ///　Rules not recommended by YUMEMI Inc.
-const _yumemiNotRecommendedRules = <({String name, String reason})>[
+const _yumemiNotRecommendedRules = <_NotRecommendedRule>[
   (
     name: 'always_specify_types',
     reason:
