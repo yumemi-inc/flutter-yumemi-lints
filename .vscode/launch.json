@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev: update lint rules",
+      "cwd": "tools/update_lint_rules",
+      "type": "dart",
+      "request": "launch",
+      "program": "bin/update_lint_rules.dart"
+    },
+    {
+      "name": "prod: update lint rules",
+      "cwd": "tools/update_lint_rules",
+      "type": "dart",
+      "request": "launch",
+      "program": "bin/update_lint_rules.dart",
+      "args": ["../../packages/yumemi_lints/lib"]
+    },
+    {
+      "name": "no-diff: check lint rules identity",
+      "cwd": "tools/check_lint_rules_identity",
+      "request": "launch",
+      "type": "dart",
+      "program": "bin/check_lint_rules_identity.dart",
+      "args": [
+        "input_example/no_diff_version_paths.txt",
+        "../../packages/yumemi_lints/lib"
+      ]
+    },
+    {
+      "name": "has-diff: check lint rules identity",
+      "cwd": "tools/check_lint_rules_identity",
+      "request": "launch",
+      "type": "dart",
+      "program": "bin/check_lint_rules_identity.dart",
+      "args": [
+        "input_example/has_diff_version_paths.txt",
+        "../../packages/yumemi_lints/lib"
+      ]
+    }
+  ]
+}

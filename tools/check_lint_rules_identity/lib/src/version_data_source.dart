@@ -1,3 +1,4 @@
+import 'package:check_lint_rules_identity/src/utils/version_utils.dart';
 import 'package:file/file.dart';
 
 import 'package:async/async.dart';
@@ -49,7 +50,7 @@ abstract class VersionDataSource {
 
   Future<List<Version>> readVersions() => _versionsMemo.runOnce(() async {
         final versions = (await _readVersionDirs())
-            .map((e) => Version.parse(e.name))
+            .map((e) => parseStringToVersion(e.name))
             .toList()
           ..sort((a, b) => a.compareTo(b));
 
@@ -63,7 +64,7 @@ abstract class VersionDataSource {
 
   Future<String> readAllYamlAsString(Version version) async {
     final targetVersionDir = (await _readVersionDirs())
-        .firstWhere((dir) => Version.parse(dir.name) == version);
+        .firstWhere((dir) => parseStringToVersion(dir.name) == version);
 
     final ls = await targetVersionDir.list().toList();
     final allYaml = ls

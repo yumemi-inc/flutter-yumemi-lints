@@ -22,10 +22,14 @@ jobs:
         with:
           fetch-depth: branch
 
+      - name: Get dvm config
+        uses: blendfactory/dvm-config-action@v1
+        id: dvm-config-action
+
       - name: Set up dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: "3.1.0" # See: tools/check_lint_rules_identity/pubspec.yaml
+          sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
       - name: Install dependencies
         run: dart pub get
@@ -36,7 +40,7 @@ jobs:
         run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
 
       - name: Run check_lint_rules_identity
-        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lib
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} packages/yumemi_lints/lib
         shell: bash
         id: identity
         continue-on-error: true

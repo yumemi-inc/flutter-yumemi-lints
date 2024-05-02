@@ -34,8 +34,6 @@ class Rule with _$Rule {
   factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
 
   const Rule._();
-
-  bool get isFlutterOnly => sets.length == 1 && sets.first == RuleSet.flutter;
 }
 
 enum RuleGroup {

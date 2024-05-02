@@ -1,0 +1,5 @@
+include: package:yumemi_lints/dart/2.17/recommended.yaml
+
+linter:
+  rules:
+    avoid_print: false

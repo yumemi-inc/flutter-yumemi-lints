@@ -17,10 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get dvm config
+        uses: blendfactory/dvm-config-action@v1
+        id: dvm-config-action
+
       - name: Set up dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.1.0' # See: tools/update_lint_rules/pubspec.yaml
+          sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
       - name: Install dependencies
         run: dart pub get
@@ -28,7 +32,7 @@ jobs:
         working-directory: tools/update_lint_rules
 
       - name: Run update_lint_rules
-        run: dart run bin/update_lint_rules.dart "$GITHUB_WORKSPACE/lib"
+        run: dart run bin/update_lint_rules.dart "$GITHUB_WORKSPACE/packages/yumemi_lints/lib"
         shell: bash
         working-directory: tools/update_lint_rules
 
@@ -36,8 +40,8 @@ jobs:
         id: generate_token
         uses: actions/create-github-app-token@v1
         with:
-          app_id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+          app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
 
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v6

@@ -1,0 +1,21 @@
+{
+  "dart.sdkPath": ".dvm/dart_sdk",
+  "github.copilot.enable": {
+    "*": false,
+    "markdown": true,
+    "dart": true,
+    "json": true,
+    "yaml": true
+  },
+  "github.copilot.editor.enableCodeActions": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "cSpell.words": [
+    "yumemi",
+    "riverpod",
+    "pubspec",
+    "intellij",
+    "todos",
+    "googleapis",
+    "Memoizer",
+  ],
+}

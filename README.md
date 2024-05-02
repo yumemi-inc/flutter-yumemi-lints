@@ -1,3 +1,5 @@
+[![melos](https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square)](https://github.com/invertase/melos)
+
 ## Overview
 
 Provides a set of lint rules recommended by YUMEMI Inc. for Dart and Flutter projects. These rules help enhance code quality and maintainability by ensuring adherence to best practices and style conventions. Follow the steps below to integrate and customize these lint rules into your project.
@@ -12,14 +14,26 @@ In a terminal, located at the root of your package, run this command:
 dart pub add dev:yumemi_lints
 ```
 
-### 2. Configuration
+### 2. Setting
+
+In a terminal, located at the root of your package, run this command:
+
+```shell
+dart run yumemi_lints update
+```
+
+The above command will automatically update the lint rules to the recommended.yaml recommended by Yumemi Inc. according to the version of Flutter or Dart SDK used in the project.
+
+This can be used when introducing yumemi_lints or when updating the Flutter or Dart sdk version to avoid the hassle of manually updating lints.
+
+### 3. Configuration
 
 #### Basic
 
 For basic lint rule configuration, include lint rules recommended by YUMEMI Inc. in your `analysis_options.yaml` file as shown below:
 
 ```yaml:analysis_options.yaml
-include: package:yumemi_lints/dart/2.17.0/recommended.yaml
+include: package:yumemi_lints/dart/2.17/recommended.yaml
 ```
 
 Please note that you need to adjust the file path accordingly based on the Dart or Flutter version your project is using.
@@ -29,7 +43,7 @@ Please note that you need to adjust the file path accordingly based on the Dart 
 If you want to customize lint rules, include all lint rules in your `analysis_options.yaml` file as shown below:
 
 ```yaml:analysis_options.yaml
-include: package:yumemi_lints/dart/2.17.0/all.yaml
+include: package:yumemi_lints/dart/2.17/all.yaml
 
 analyzer:
   errors:
@@ -115,4 +129,4 @@ See [Contributor Guide] for contributing conventions.
 
 <!-- Links -->
 
-[Contributor Guide]: docs/contributing/CONTRIBUTING.md
+[Contributor Guide]: https://github.com/yumemi-inc/flutter-yumemi-lints/blob/main/docs/contributing/CONTRIBUTING.md
