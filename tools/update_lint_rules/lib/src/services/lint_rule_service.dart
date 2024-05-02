@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:async/async.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
@@ -29,13 +30,16 @@ class LintRuleService {
 
   Future<LintRules> getLintRules() async {
     final allRules = await getRules();
-    final allLintRules = allRules.map((rule) {
-      if (rule.isFlutterOnly) {
-        return LintRule.flutter(rule);
-      } else {
-        return LintRule.dart(rule);
-      }
-    });
+    final allLintRules = await Future.wait(
+      allRules.map((rule) async {
+        final isFlutterOnly = await isFlutterOnlyRule(rule);
+        if (isFlutterOnly) {
+          return LintRule.flutter(rule);
+        } else {
+          return LintRule.dart(rule);
+        }
+      }),
+    );
 
     return (
       dart: allLintRules.whereType<DartLintRule>(),
@@ -46,23 +50,25 @@ class LintRuleService {
   Future<NotRecommendedRules> getNotRecommendedRules() async {
     final allRules = await getRules();
 
-    final notRecommendedAllRules =
-        _yumemiNotRecommendedRules.map((notRecommendedRule) {
-      final rule = allRules.firstWhereOrNull(
-        (rule) => notRecommendedRule.name == rule.name,
-      );
-      if (rule == null) {
-        return null;
-      }
+    final notRecommendedAllRules = await Future.wait(
+      _yumemiNotRecommendedRules.map((notRecommendedRule) async {
+        final rule = allRules.firstWhereOrNull(
+          (rule) => notRecommendedRule.name == rule.name,
+        );
+        if (rule == null) {
+          return null;
+        }
 
-      if (rule.isFlutterOnly) {
-        return NotRecommendedRule.flutter(
-            rule: rule, reason: notRecommendedRule.reason);
-      } else {
-        return NotRecommendedRule.dart(
-            rule: rule, reason: notRecommendedRule.reason);
-      }
-    });
+        final isFlutterOnly = await isFlutterOnlyRule(rule);
+        if (isFlutterOnly) {
+          return NotRecommendedRule.flutter(
+              rule: rule, reason: notRecommendedRule.reason);
+        } else {
+          return NotRecommendedRule.dart(
+              rule: rule, reason: notRecommendedRule.reason);
+        }
+      }),
+    );
     return (
       flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
       dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
@@ -72,31 +78,35 @@ class LintRuleService {
   Future<RecommendedRuleSeverities> getRecommendedRuleSeverities() async {
     final allRules = await getRules();
 
-    final recommendedRuleSeverities = _yumemiRecommendedRuleSeverities.map(
-      (lintRuleRecommendedSeverity) {
-        final rule = allRules.firstWhereOrNull(
-          (rule) => lintRuleRecommendedSeverity.name == rule.name,
-        );
-        if (rule == null) {
-          return null;
-        }
+    final recommendedRuleSeverities = await Future.wait(
+      _yumemiRecommendedRuleSeverities.map(
+        (lintRuleRecommendedSeverity) async {
+          final rule = allRules.firstWhereOrNull(
+            (rule) => lintRuleRecommendedSeverity.name == rule.name,
+          );
+          if (rule == null) {
+            return null;
+          }
 
-        final reason = lintRuleRecommendedSeverity.reason;
-        final severityLevel = lintRuleRecommendedSeverity.severityLevel;
-        if (rule.isFlutterOnly) {
-          return RecommendedRuleSeverity.flutter(
-            rule: rule,
-            reason: reason,
-            severityLevel: severityLevel,
-          );
-        } else {
-          return RecommendedRuleSeverity.dart(
-            rule: rule,
-            reason: reason,
-            severityLevel: severityLevel,
-          );
-        }
-      },
+          final reason = lintRuleRecommendedSeverity.reason;
+          final severityLevel = lintRuleRecommendedSeverity.severityLevel;
+
+          final isFlutterOnly = await isFlutterOnlyRule(rule);
+          if (isFlutterOnly) {
+            return RecommendedRuleSeverity.flutter(
+              rule: rule,
+              reason: reason,
+              severityLevel: severityLevel,
+            );
+          } else {
+            return RecommendedRuleSeverity.dart(
+              rule: rule,
+              reason: reason,
+              severityLevel: severityLevel,
+            );
+          }
+        },
+      ),
     );
     return (
       dart: recommendedRuleSeverities.whereType<RecommendedRuleSeverityDart>(),
@@ -128,7 +138,36 @@ class LintRuleService {
           return rules;
         },
       );
+
+  Future<bool> isFlutterOnlyRule(Rule rule) async {
+    if (_isNotFlutterOnlyRules.contains(rule.name)) {
+      return false;
+    }
+
+    final url = Uri.https(
+      'raw.githubusercontent.com',
+      'dart-lang/sdk/main/pkg/linter/lib/src/rules/${rule.name}.dart',
+    );
+
+    try {
+      final responseBody = await _appClient.read(url);
+      return responseBody.contains('flutter');
+    } on ClientException {
+      return false;
+    }
+  }
 }
+
+/// NOTE:
+///   The current implementation of `isFlutterOnlyRule()` cannot accurately
+///   determine if a rule is a Flutter-only rule, so as a workaround, it keeps
+///   a list of rule names that cannot be accurately determined.
+const _isNotFlutterOnlyRules = [
+  'avoid_print',
+  'always_put_control_body_on_new_line',
+  'always_specify_types',
+  'flutter_style_todos',
+];
 
 typedef _NotRecommendedRule = ({
   String name,

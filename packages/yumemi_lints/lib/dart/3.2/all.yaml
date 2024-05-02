@@ -6,6 +6,7 @@ linter:
     - always_use_package_imports # incompatibles: prefer_relative_imports
     - avoid_dynamic_calls
     - avoid_empty_else
+    - avoid_print
     - avoid_relative_lib_imports
     - avoid_slow_async_io
     - avoid_type_to_string
@@ -16,7 +17,6 @@ linter:
     - comment_references
     - control_flow_in_finally
     - deprecated_member_use_from_same_package
-    - diagnostic_describe_all_properties
     - discarded_futures
     - empty_statements
     - hash_and_equals
@@ -123,6 +123,10 @@ linter:
     - prefer_asserts_with_message
     - prefer_collection_literals
     - prefer_conditional_assignment
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
     - prefer_constructors_over_static_methods
     - prefer_contains
     - prefer_double_quotes # incompatibles: prefer_single_quotes
@@ -155,7 +159,6 @@ linter:
     - public_member_api_docs
     - recursive_getters
     - require_trailing_commas
-    - sized_box_shrink_expand
     - slash_for_doc_comments
     - sort_constructors_first
     - sort_unnamed_constructors_first
@@ -188,8 +191,6 @@ linter:
     - unnecessary_this
     - unnecessary_to_list_in_spreads
     - unreachable_from_main
-    - use_colored_box
-    - use_decorated_box
     - use_enums
     - use_function_type_syntax_for_parameters
     - use_if_null_to_convert_nulls_to_bools

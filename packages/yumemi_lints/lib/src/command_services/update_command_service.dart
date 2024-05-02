@@ -79,7 +79,7 @@ class UpdateCommandService {
     final flutterVersion = (yaml['environment'] as YamlMap)['flutter'];
 
     if (flutterVersion == null) {
-      throw FormatException(
+      throw const FormatException(
         'Please put [flutter: Flutter Version] '
         'under the environment section in pubspec.yaml',
       );
@@ -94,7 +94,7 @@ class UpdateCommandService {
     final dartVersion = (yaml['environment'] as YamlMap)['sdk'];
 
     if (dartVersion == null) {
-      throw FormatException(
+      throw const FormatException(
         'Please put [sdk: Dart Version] '
         'under the environment section in pubspec.yaml',
       );
@@ -106,7 +106,7 @@ class UpdateCommandService {
   @visibleForTesting
   Version extractVersion(String versionString) {
     if (versionString.contains('<') && !versionString.contains('>=')) {
-      throw FormatException('Please specify the minimum version.');
+      throw const FormatException('Please specify the minimum version.');
     }
 
     RegExp regExp;
@@ -118,7 +118,7 @@ class UpdateCommandService {
     final match = regExp.firstMatch(versionString);
 
     if (match == null) {
-      throw FormatException(
+      throw const FormatException(
         'The version of Dart or Flutter could not be found in pubspec.yaml. '
         'Please ensure that '
         'the version is correctly specified for Dart or Flutter.',
