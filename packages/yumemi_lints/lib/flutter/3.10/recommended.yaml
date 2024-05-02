@@ -9,15 +9,53 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   errors:
-    # By including all.yaml, some rules will conflict.
-    # These warnings will be addressed within this file.
+    # By including all.yaml, some rules will conflict. These warnings will be addressed within this file.
     included_file_warning: ignore
-    # Members annotated with `visibleForTesting` should not be referenced outside
-    # of the library in which they are declared or libraries within the test
-    # directory.
+
+    # Members annotated with `visibleForTesting` should not be referenced outside of the library in which they are declared or libraries within the test directory.
     invalid_use_of_visible_for_testing_member: error
+
+    # Superclass members should not be unintentionally overridden, as this reduces readability.
+    annotate_overrides: error
+
+    # When using implements, you do not inherit the method body of `==`, making it nearly impossible to follow the contract of `==`.
+    avoid_implementing_value_types: error
+
+    # Parameter names in overridden methods that do not match the original method's parameter names are usually considered typos.
+    avoid_renaming_method_parameters: error
+
+    # Shadowing type parameters should not be used, as this reduces readability.
+    avoid_shadowing_type_parameters: error
+
+    # Should not reference files that do not exist for conditional imports, as this will result in possible runtime failures.
+    conditional_uri_does_not_exist: error
+
+    # When importing a package, add it as a dependency in pubspec to impose constraints on the dependency, protecting against breaking changes.
+    depend_on_referenced_packages: error
+
+    # Some file systems are not case-sensitive, so many projects require filenames to be all lowercase.
+    file_names: error
+
     # Files in the package's lib/src directory are not public APIs and should not be imported.
     implementation_imports: error
+
+    # Some file systems are not case-sensitive, so many projects require filenames to be all lowercase.
+    library_names: error
+
+    # Super parameter names that do not match the parameter name of the corresponding super constructor are usually considered typos.
+    matching_super_parameters: error
+
+    # When unwrapping to a generic type parameter T, using `x!` can lead to a runtime error if T is given a nullable type, so you should use `x as T` instead.
+    null_check_on_nullable_type_parameter: error
+
+    # If package names are not determined according to the rules, unexpected problems may occur.
+    package_names: error
+
+    # Recursive getters are usually considered typos.
+    recursive_getters: error
+
+    # Should not be assigned to `void`.
+    void_checks: error
 
 linter:
   rules:
