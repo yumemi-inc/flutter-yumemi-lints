@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:async/async.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
@@ -128,6 +129,20 @@ class LintRuleService {
           return rules;
         },
       );
+
+  Future<bool> isFlutterOnlyRule(Rule rule) async {
+    final url = Uri.https(
+      'raw.githubusercontent.com',
+      'dart-lang/sdk/main/pkg/linter/lib/src/rules/${rule.name}.dart',
+    );
+
+    try {
+      final responseBody = await _appClient.read(url);
+      return responseBody.contains('flutter');
+    } on ClientException {
+      return false;
+    }
+  }
 }
 
 typedef _NotRecommendedRule = ({
