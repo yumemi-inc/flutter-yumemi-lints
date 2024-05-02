@@ -56,12 +56,13 @@ Future<ExitStatus> updateLintRules(ProviderContainer container) async {
 
     final flutterSdkReleases = await sdkService.getFlutterSdkReleases();
     await analysisOptionsService.updateFlutterLintRule(
-        releases: flutterSdkReleases,
-        lintRules: lintRules.flutter,
-        notRecommendedRules: [
-          ...notRecommendedRules.dart,
-          ...notRecommendedRules.flutter,
-        ]);
+      releases: flutterSdkReleases,
+      lintRules: lintRules.flutter,
+      notRecommendedRules: [
+        ...notRecommendedRules.dart,
+        ...notRecommendedRules.flutter,
+      ],
+    );
 
     return ExitStatus.success;
   } on Exception catch (e) {
