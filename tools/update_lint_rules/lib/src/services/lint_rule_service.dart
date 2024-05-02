@@ -140,6 +140,10 @@ class LintRuleService {
       );
 
   Future<bool> isFlutterOnlyRule(Rule rule) async {
+    if (_isNotFlutterOnlyRules.contains(rule.name)) {
+      return false;
+    }
+
     final url = Uri.https(
       'raw.githubusercontent.com',
       'dart-lang/sdk/main/pkg/linter/lib/src/rules/${rule.name}.dart',
@@ -153,6 +157,17 @@ class LintRuleService {
     }
   }
 }
+
+/// NOTE:
+///   The current implementation of `isFlutterOnlyRule()` cannot accurately
+///   determine if a rule is a Flutter-only rule, so as a workaround, it keeps
+///   a list of rule names that cannot be accurately determined.
+const _isNotFlutterOnlyRules = [
+  'avoid_print',
+  'always_put_control_body_on_new_line',
+  'always_specify_types',
+  'flutter_style_todos',
+];
 
 typedef _NotRecommendedRule = ({
   String name,
