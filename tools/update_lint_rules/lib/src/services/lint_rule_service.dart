@@ -7,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
+import 'package:update_lint_rules/src/models/recommended_rule_severity.dart';
 import 'package:update_lint_rules/src/models/severity_level.dart';
 
 part 'lint_rule_service.g.dart';
@@ -65,6 +66,42 @@ class LintRuleService {
     return (
       flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
       dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
+    );
+  }
+
+  Future<RecommendedRuleSeverities> getRecommendedRuleSeverities() async {
+    final allRules = await getRules();
+
+    final recommendedRuleSeverities = _yumemiRecommendedRuleSeverities.map(
+      (lintRuleRecommendedSeverity) {
+        final rule = allRules.firstWhereOrNull(
+          (rule) => lintRuleRecommendedSeverity.name == rule.name,
+        );
+        if (rule == null) {
+          return null;
+        }
+
+        final reason = lintRuleRecommendedSeverity.reason;
+        final severityLevel = lintRuleRecommendedSeverity.severityLevel;
+        if (rule.isFlutterOnly) {
+          return RecommendedRuleSeverity.flutter(
+            rule: rule,
+            reason: reason,
+            severityLevel: severityLevel,
+          );
+        } else {
+          return RecommendedRuleSeverity.dart(
+            rule: rule,
+            reason: reason,
+            severityLevel: severityLevel,
+          );
+        }
+      },
+    );
+    return (
+      dart: recommendedRuleSeverities.whereType<RecommendedRuleSeverityDart>(),
+      flutter:
+          recommendedRuleSeverities.whereType<RecommendedRuleSeverityFlutter>(),
     );
   }
 
