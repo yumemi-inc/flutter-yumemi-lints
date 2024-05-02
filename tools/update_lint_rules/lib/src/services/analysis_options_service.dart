@@ -6,6 +6,7 @@ import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
 import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
+import 'package:update_lint_rules/src/models/recommended_rule_severity.dart';
 import 'package:update_lint_rules/src/output_dir.dart';
 
 part 'analysis_options_service.g.dart';
@@ -29,6 +30,7 @@ class AnalysisOptionsService {
     required Iterable<DartSdkRelease> releases,
     required Iterable<DartLintRule> lintRules,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
   }) async {
     final futures = releases.map((release) async {
       final dartSdkVersion = release.version;
@@ -64,6 +66,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
+        recommendedRuleSeverities: recommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
@@ -75,6 +78,7 @@ class AnalysisOptionsService {
     required Iterable<FlutterSdkRelease> releases,
     required Iterable<FlutterLintRule> lintRules,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
   }) async {
     final futures = releases.map((release) async {
       final flutterSdkVersion = release.version;
@@ -114,6 +118,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
+        recommendedRuleSeverities: recommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
@@ -175,6 +180,7 @@ linter:
   Future<void> outputRecommendedLintRules({
     required File outputFile,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
     required String includeContent,
   }) async {
     final contentBuffer = StringBuffer();
