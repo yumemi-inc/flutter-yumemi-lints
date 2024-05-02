@@ -19,7 +19,7 @@ LintRuleService lintRuleService(LintRuleServiceRef ref) {
   );
 }
 
-//　Lint rules not recommended by YUMEMI Inc.
+///　Rules not recommended by YUMEMI Inc.
 const _yumemiNotRecommendedRules = <({String name, String reason})>[
   (
     name: 'always_specify_types',
