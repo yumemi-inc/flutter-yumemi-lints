@@ -216,22 +216,26 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   errors:
-    # By including all.yaml, some rules will conflict.
-    # These warnings will be addressed within this file.
+    # By including all.yaml, some rules will conflict. These warnings will be addressed within this file.
     included_file_warning: ignore
-    # Members annotated with `visibleForTesting` should not be referenced outside
-    # of the library in which they are declared or libraries within the test
-    # directory.
+
+    # Members annotated with `visibleForTesting` should not be referenced outside of the library in which they are declared or libraries within the test directory.
     invalid_use_of_visible_for_testing_member: error
-    # Files in the package's lib/src directory are not public APIs and should not be imported.
-    implementation_imports: error
 ''');
+
+    const indent = '    ';
+    final recommendedRuleSeveritiesTexts = recommendedRuleSeverities.map((l) {
+      final buffer = StringBuffer();
+      buffer.writeln('$indent# ${l.reason}');
+      buffer.write('$indent${l.rule.name}: ${l.severityLevel.name}');
+      return buffer.toString();
+    }).join('\n\n');
+    contentBuffer.writeln(recommendedRuleSeveritiesTexts);
+    contentBuffer.writeln();
 
     contentBuffer.writeln('''
 linter:
   rules:''');
-
-    const indent = '    ';
     final disableLintRuleTexts = notRecommendedRules.map((l) {
       final buffer = StringBuffer();
       buffer.writeln('$indent# ${l.reason}');
