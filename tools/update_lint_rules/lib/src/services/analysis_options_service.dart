@@ -6,6 +6,7 @@ import 'package:update_lint_rules/src/models/dart_sdk_release.dart';
 import 'package:update_lint_rules/src/models/flutter_sdk_release.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
+import 'package:update_lint_rules/src/models/recommended_rule_severity.dart';
 import 'package:update_lint_rules/src/output_dir.dart';
 
 part 'analysis_options_service.g.dart';
@@ -29,6 +30,7 @@ class AnalysisOptionsService {
     required Iterable<DartSdkRelease> releases,
     required Iterable<DartLintRule> lintRules,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
   }) async {
     final futures = releases.map((release) async {
       final dartSdkVersion = release.version;
@@ -46,6 +48,15 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredRecommendedRuleSeverities = recommendedRuleSeverities.where(
+        (r) {
+          final since = r.rule.since;
+          if (since is! SinceDartSdk) {
+            return false;
+          }
+          return since.version <= dartSdkVersion;
+        },
+      );
 
       final dartOutputDir = _outputDir
           .childDirectory('dart/${dartSdkVersion.excludePatchVersion}');
@@ -64,6 +75,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
+        recommendedRuleSeverities: filteredRecommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
@@ -75,6 +87,7 @@ class AnalysisOptionsService {
     required Iterable<FlutterSdkRelease> releases,
     required Iterable<FlutterLintRule> lintRules,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
   }) async {
     final futures = releases.map((release) async {
       final flutterSdkVersion = release.version;
@@ -93,6 +106,15 @@ class AnalysisOptionsService {
         }
         return since.version <= dartSdkVersion;
       });
+      final filteredRecommendedRuleSeverities = recommendedRuleSeverities.where(
+        (r) {
+          final since = r.rule.since;
+          if (since is! SinceDartSdk) {
+            return false;
+          }
+          return since.version <= dartSdkVersion;
+        },
+      );
 
       final flutterOutputDir = _outputDir
           .childDirectory('flutter/${flutterSdkVersion.excludePatchVersion}');
@@ -114,6 +136,7 @@ class AnalysisOptionsService {
       return outputRecommendedLintRules(
         outputFile: recommendedFile,
         notRecommendedRules: filteredNotRecommendedRules,
+        recommendedRuleSeverities: filteredRecommendedRuleSeverities,
         includeContent: recommendedIncludeContent,
       );
     });
@@ -175,6 +198,7 @@ linter:
   Future<void> outputRecommendedLintRules({
     required File outputFile,
     required Iterable<NotRecommendedRule> notRecommendedRules,
+    required Iterable<RecommendedRuleSeverity> recommendedRuleSeverities,
     required String includeContent,
   }) async {
     final contentBuffer = StringBuffer();
@@ -192,22 +216,26 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   errors:
-    # By including all.yaml, some rules will conflict.
-    # These warnings will be addressed within this file.
+    # By including all.yaml, some rules will conflict. These warnings will be addressed within this file.
     included_file_warning: ignore
-    # Members annotated with `visibleForTesting` should not be referenced outside
-    # of the library in which they are declared or libraries within the test
-    # directory.
+
+    # Members annotated with `visibleForTesting` should not be referenced outside of the library in which they are declared or libraries within the test directory.
     invalid_use_of_visible_for_testing_member: error
-    # Files in the package's lib/src directory are not public APIs and should not be imported.
-    implementation_imports: error
 ''');
+
+    const indent = '    ';
+    final recommendedRuleSeveritiesTexts = recommendedRuleSeverities.map((l) {
+      final buffer = StringBuffer();
+      buffer.writeln('$indent# ${l.reason}');
+      buffer.write('$indent${l.rule.name}: ${l.severityLevel.name}');
+      return buffer.toString();
+    }).join('\n\n');
+    contentBuffer.writeln(recommendedRuleSeveritiesTexts);
+    contentBuffer.writeln();
 
     contentBuffer.writeln('''
 linter:
   rules:''');
-
-    const indent = '    ';
     final disableLintRuleTexts = notRecommendedRules.map((l) {
       final buffer = StringBuffer();
       buffer.writeln('$indent# ${l.reason}');

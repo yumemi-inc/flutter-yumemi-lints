@@ -23,11 +23,32 @@ Examples of version updates are as follows:
 
 ## 2.0.0
 
-- Changed the warning level of `invalid_use_of_visible_for_testing_member` to error.
-- Changed the warning level of `implementation_imports` to error.
-- Changed the lint rule `use_setters_to_change_properties` to be deprecated.
-- Removed the patch version from the directory name of Lint Rules.
+### Features
+
 - Added update command to automatically update lint rules to match the Flutter or Dart sdk version of the project.
+  - `dart run yumemi_lints update`
+
+### Breaking Changes
+
+- Removed the patch version from the directory name of Lint Rules.
+- Changed the lint rule `use_setters_to_change_properties` to be deprecated.
+- Changed the severity level of some lint rules to `error`.
+  - `invalid_use_of_visible_for_testing_member`
+  - `annotate_overrides`
+  - `annotate_redeclares`
+  - `avoid_implementing_value_types`
+  - `avoid_renaming_method_parameters`
+  - `avoid_shadowing_type_parameters`
+  - `conditional_uri_does_not_exist`
+  - `depend_on_referenced_packages`
+  - `file_names`
+  - `implementation_imports`
+  - `library_names`
+  - `matching_super_parameters`
+  - `null_check_on_nullable_type_parameter`
+  - `package_names`
+  - `recursive_getters`
+  - `void_checks`
 
 ## 1.7.0
 

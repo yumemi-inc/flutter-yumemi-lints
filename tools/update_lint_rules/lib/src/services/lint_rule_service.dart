@@ -7,6 +7,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:update_lint_rules/src/clients/app_client.dart';
 import 'package:update_lint_rules/src/models/lint_rule.dart';
 import 'package:update_lint_rules/src/models/not_recommended_rule.dart';
+import 'package:update_lint_rules/src/models/recommended_rule_severity.dart';
+import 'package:update_lint_rules/src/models/severity_level.dart';
 
 part 'lint_rule_service.g.dart';
 
@@ -18,8 +20,123 @@ LintRuleService lintRuleService(LintRuleServiceRef ref) {
   );
 }
 
-//　Lint rules not recommended by YUMEMI Inc.
-const _yumemiNotRecommendedRules = <({String name, String reason})>[
+class LintRuleService {
+  LintRuleService({
+    required AppClient appClient,
+  }) : _appClient = appClient;
+
+  final AppClient _appClient;
+
+  Future<LintRules> getLintRules() async {
+    final allRules = await getRules();
+    final allLintRules = allRules.map((rule) {
+      if (rule.isFlutterOnly) {
+        return LintRule.flutter(rule);
+      } else {
+        return LintRule.dart(rule);
+      }
+    });
+
+    return (
+      dart: allLintRules.whereType<DartLintRule>(),
+      flutter: allLintRules.whereType<FlutterLintRule>(),
+    );
+  }
+
+  Future<NotRecommendedRules> getNotRecommendedRules() async {
+    final allRules = await getRules();
+
+    final notRecommendedAllRules =
+        _yumemiNotRecommendedRules.map((notRecommendedRule) {
+      final rule = allRules.firstWhereOrNull(
+        (rule) => notRecommendedRule.name == rule.name,
+      );
+      if (rule == null) {
+        return null;
+      }
+
+      if (rule.isFlutterOnly) {
+        return NotRecommendedRule.flutter(
+            rule: rule, reason: notRecommendedRule.reason);
+      } else {
+        return NotRecommendedRule.dart(
+            rule: rule, reason: notRecommendedRule.reason);
+      }
+    });
+    return (
+      flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
+      dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
+    );
+  }
+
+  Future<RecommendedRuleSeverities> getRecommendedRuleSeverities() async {
+    final allRules = await getRules();
+
+    final recommendedRuleSeverities = _yumemiRecommendedRuleSeverities.map(
+      (lintRuleRecommendedSeverity) {
+        final rule = allRules.firstWhereOrNull(
+          (rule) => lintRuleRecommendedSeverity.name == rule.name,
+        );
+        if (rule == null) {
+          return null;
+        }
+
+        final reason = lintRuleRecommendedSeverity.reason;
+        final severityLevel = lintRuleRecommendedSeverity.severityLevel;
+        if (rule.isFlutterOnly) {
+          return RecommendedRuleSeverity.flutter(
+            rule: rule,
+            reason: reason,
+            severityLevel: severityLevel,
+          );
+        } else {
+          return RecommendedRuleSeverity.dart(
+            rule: rule,
+            reason: reason,
+            severityLevel: severityLevel,
+          );
+        }
+      },
+    );
+    return (
+      dart: recommendedRuleSeverities.whereType<RecommendedRuleSeverityDart>(),
+      flutter:
+          recommendedRuleSeverities.whereType<RecommendedRuleSeverityFlutter>(),
+    );
+  }
+
+  final _allRulesMemo = AsyncMemoizer<Iterable<Rule>>();
+
+  @visibleForTesting
+  Future<Iterable<Rule>> getRules() => _allRulesMemo.runOnce(
+        () async {
+          final url = Uri.https(
+            'raw.githubusercontent.com',
+            'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
+          );
+
+          final responseBody = await _appClient.read(url);
+
+          final json = jsonDecode(responseBody) as List<dynamic>;
+
+          final rules = json.map((e) => Rule.fromJson(e)).where(
+                (e) => switch (e.state) {
+                  RuleState.stable || RuleState.experimental => true,
+                  RuleState.deprecated || RuleState.removed => false,
+                },
+              );
+          return rules;
+        },
+      );
+}
+
+typedef _NotRecommendedRule = ({
+  String name,
+  String reason,
+});
+
+///　Rules not recommended by YUMEMI Inc.
+const _yumemiNotRecommendedRules = <_NotRecommendedRule>[
   (
     name: 'always_specify_types',
     reason:
@@ -72,76 +189,100 @@ const _yumemiNotRecommendedRules = <({String name, String reason})>[
   ),
 ];
 
-class LintRuleService {
-  LintRuleService({
-    required AppClient appClient,
-  }) : _appClient = appClient;
+typedef _RecommendedRuleSeverity = ({
+  String name,
+  String reason,
+  SeverityLevel severityLevel,
+});
 
-  final AppClient _appClient;
-
-  Future<LintRules> getLintRules() async {
-    final allRules = await getRules();
-    final allLintRules = allRules.map((rule) {
-      if (rule.isFlutterOnly) {
-        return LintRule.flutter(rule);
-      } else {
-        return LintRule.dart(rule);
-      }
-    });
-
-    return (
-      dart: allLintRules.whereType<DartLintRule>(),
-      flutter: allLintRules.whereType<FlutterLintRule>(),
-    );
-  }
-
-  Future<NotRecommendedRules> getNotRecommendedRules() async {
-    final allRules = await getRules();
-
-    final notRecommendedAllRules =
-        _yumemiNotRecommendedRules.map((notRecommendedRule) {
-      final rule = allRules.firstWhereOrNull(
-        (rule) => notRecommendedRule.name == rule.name,
-      );
-      if (rule == null) {
-        return null;
-      }
-
-      if (rule.isFlutterOnly) {
-        return NotRecommendedRule.flutter(
-            rule: rule, reason: notRecommendedRule.reason);
-      } else {
-        return NotRecommendedRule.dart(
-            rule: rule, reason: notRecommendedRule.reason);
-      }
-    });
-    return (
-      flutter: notRecommendedAllRules.whereType<NotRecommendedFlutterRule>(),
-      dart: notRecommendedAllRules.whereType<NotRecommendedDartRule>()
-    );
-  }
-
-  final _allRulesMemo = AsyncMemoizer<Iterable<Rule>>();
-
-  @visibleForTesting
-  Future<Iterable<Rule>> getRules() => _allRulesMemo.runOnce(
-        () async {
-          final url = Uri.https(
-            'raw.githubusercontent.com',
-            'dart-lang/sdk/main/pkg/linter/tool/machine/rules.json',
-          );
-
-          final responseBody = await _appClient.read(url);
-
-          final json = jsonDecode(responseBody) as List<dynamic>;
-
-          final rules = json.map((e) => Rule.fromJson(e)).where(
-                (e) => switch (e.state) {
-                  RuleState.stable || RuleState.experimental => true,
-                  RuleState.deprecated || RuleState.removed => false,
-                },
-              );
-          return rules;
-        },
-      );
-}
+/// Severity levels of rule recommended by YUMEMI Inc.
+const _yumemiRecommendedRuleSeverities = <_RecommendedRuleSeverity>[
+  (
+    name: 'annotate_overrides',
+    reason:
+        'Superclass members should not be unintentionally overridden, as this reduces readability.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'annotate_redeclares',
+    reason:
+        'Class members should not be unintentionally redeclared, as this reduces readability.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'avoid_implementing_value_types',
+    reason:
+        'When using implements, you do not inherit the method body of `==`, making it nearly impossible to follow the contract of `==`.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'avoid_renaming_method_parameters',
+    reason:
+        "Parameter names in overridden methods that do not match the original method's parameter names are usually considered typos.",
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'avoid_shadowing_type_parameters',
+    reason:
+        'Shadowing type parameters should not be used, as this reduces readability.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'conditional_uri_does_not_exist',
+    reason:
+        'Should not reference files that do not exist for conditional imports, as this will result in possible runtime failures.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'depend_on_referenced_packages',
+    reason:
+        'When importing a package, add it as a dependency in pubspec to impose constraints on the dependency, protecting against breaking changes.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'file_names',
+    reason:
+        'Some file systems are not case-sensitive, so many projects require filenames to be all lowercase.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'implementation_imports',
+    reason:
+        "Files in the package's lib/src directory are not public APIs and should not be imported.",
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'library_names',
+    reason:
+        'Some file systems are not case-sensitive, so many projects require filenames to be all lowercase.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'matching_super_parameters',
+    reason:
+        'Super parameter names that do not match the parameter name of the corresponding super constructor are usually considered typos.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'null_check_on_nullable_type_parameter',
+    reason:
+        'When unwrapping to a generic type parameter T, using `x!` can lead to a runtime error if T is given a nullable type, so you should use `x as T` instead.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'package_names',
+    reason:
+        'If package names are not determined according to the rules, unexpected problems may occur.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'recursive_getters',
+    reason: 'Recursive getters are usually considered typos.',
+    severityLevel: SeverityLevel.error,
+  ),
+  (
+    name: 'void_checks',
+    reason: 'Should not be assigned to `void`.',
+    severityLevel: SeverityLevel.error,
+  ),
+];
