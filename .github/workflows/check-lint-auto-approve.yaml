@@ -23,7 +23,7 @@ jobs:
           fetch-depth: branch
 
       - name: Get dvm config
-        uses: blendfactory/dvm-config-action@v1
+        uses: blendfactory/dvm-config-action@v2
         id: dvm-config-action
 
       - name: Set up dart
