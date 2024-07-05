@@ -24,7 +24,6 @@ linter:
     - invalid_case_patterns
     - literal_only_boolean_expressions
     - missing_code_block_language_in_doc_comment
-    - no_adjacent_strings_in_list
     - no_duplicate_case_values
     - no_self_assignments
     - no_wildcard_variable_uses
@@ -103,6 +102,7 @@ linter:
     - lines_longer_than_80_chars
     - matching_super_parameters
     - missing_whitespace_between_adjacent_strings
+    - no_adjacent_strings_in_list
     - no_default_cases
     - no_leading_underscores_for_library_prefixes
     - no_leading_underscores_for_local_identifiers
@@ -117,6 +117,7 @@ linter:
     - only_throw_errors
     - overridden_fields
     - package_api_docs
+    - package_names
     - package_prefixed_library_names
     - parameter_assignments
     - prefer_adjacent_string_concatenation
@@ -211,6 +212,5 @@ linter:
 
     # Pub
     - depend_on_referenced_packages
-    - package_names
     - secure_pubspec_urls
     - sort_pub_dependencies
