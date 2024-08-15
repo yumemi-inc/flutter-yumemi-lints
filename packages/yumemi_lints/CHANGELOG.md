@@ -21,6 +21,12 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 2.2.0
+
+### Improvements
+
+- Output to use "categories" instead of "group".
+
 ## 2.1.0
 
 - Added support for Dart 3.4.x.
