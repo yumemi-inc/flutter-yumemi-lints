@@ -23,6 +23,11 @@ Examples of version updates are as follows:
 
 ## 2.2.0
 
+### Features
+
+- Added support for Dart 3.5.x.
+- Added support for Flutter 3.24.x.
+
 ### Improvements
 
 - Output to use "categories" instead of "group".
