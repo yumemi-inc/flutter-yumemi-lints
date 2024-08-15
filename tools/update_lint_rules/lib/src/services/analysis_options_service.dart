@@ -163,35 +163,22 @@ class AnalysisOptionsService {
 linter:
   rules:''');
 
-    String? lintRuleText(Iterable<LintRule> lintRules, RuleGroup group) {
-      final filteredLintRules = lintRules.where((l) => l.rule.group == group);
-      if (filteredLintRules.isEmpty) {
-        return null;
-      }
+    String ruleText(Rule rule) {
       const indent = '    ';
-      final buffer = StringBuffer();
-      buffer.writeln('$indent# ${group.title}');
-      final lintRuleTexts = filteredLintRules.map((l) {
-        final buffer = StringBuffer('$indent- ${l.rule.name}');
-        if (l.rule.incompatibles case final incompatibles
-            when incompatibles.isNotEmpty) {
-          buffer.write(' # incompatibles: ${incompatibles.join(',')}');
-        }
-        return buffer.toString();
-      }).join('\n');
-      buffer.write(lintRuleTexts);
+      final buffer = StringBuffer('$indent- ${rule.name}');
+      if (rule.incompatibles case final incompatibles
+          when incompatibles.isNotEmpty) {
+        buffer.write(' # incompatibles: ${incompatibles.join(',')}');
+      }
+      if (rule.categories case final categories when categories.isNotEmpty) {
+        buffer.write(' # categories: ${categories.join(',')}');
+      }
       return buffer.toString();
     }
 
-    final lintRuleTexts = [
-      lintRuleText(lintRules, RuleGroup.errors),
-      lintRuleText(lintRules, RuleGroup.style),
-      lintRuleText(lintRules, RuleGroup.pub),
-    ].nonNulls;
+    final lintRuleTexts = lintRules.map((l) => ruleText(l.rule));
+    contentBuffer.writeln(lintRuleTexts.join('\n'));
 
-    if (lintRuleTexts.isNotEmpty) {
-      contentBuffer.writeln(lintRuleTexts.join('\n\n'));
-    }
     outputFile.writeAsStringSync(contentBuffer.toString());
   }
 
@@ -246,12 +233,4 @@ linter:
     contentBuffer.writeln(disableLintRuleTexts);
     outputFile.writeAsStringSync(contentBuffer.toString());
   }
-}
-
-extension _RuleGroupTitle on RuleGroup {
-  String get title => switch (this) {
-        RuleGroup.errors => 'Errors',
-        RuleGroup.style => 'Style',
-        RuleGroup.pub => 'Pub',
-      };
 }
