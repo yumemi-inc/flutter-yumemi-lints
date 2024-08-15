@@ -391,7 +391,7 @@ Rule _$RuleFromJson(Map<String, dynamic> json) {
 mixin _$Rule {
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  RuleGroup get group => throw _privateConstructorUsedError;
+  List<String> get categories => throw _privateConstructorUsedError;
   RuleState get state => throw _privateConstructorUsedError;
   @JsonKey(name: 'incompatible')
   List<String> get incompatibles => throw _privateConstructorUsedError;
@@ -414,7 +414,7 @@ abstract class $RuleCopyWith<$Res> {
   $Res call(
       {String name,
       String description,
-      RuleGroup group,
+      List<String> categories,
       RuleState state,
       @JsonKey(name: 'incompatible') List<String> incompatibles,
       List<RuleSet> sets,
@@ -440,7 +440,7 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
   $Res call({
     Object? name = null,
     Object? description = null,
-    Object? group = null,
+    Object? categories = null,
     Object? state = null,
     Object? incompatibles = null,
     Object? sets = null,
@@ -457,10 +457,10 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      group: null == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as RuleGroup,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -506,7 +506,7 @@ abstract class _$$_RuleCopyWith<$Res> implements $RuleCopyWith<$Res> {
   $Res call(
       {String name,
       String description,
-      RuleGroup group,
+      List<String> categories,
       RuleState state,
       @JsonKey(name: 'incompatible') List<String> incompatibles,
       List<RuleSet> sets,
@@ -529,7 +529,7 @@ class __$$_RuleCopyWithImpl<$Res> extends _$RuleCopyWithImpl<$Res, _$_Rule>
   $Res call({
     Object? name = null,
     Object? description = null,
-    Object? group = null,
+    Object? categories = null,
     Object? state = null,
     Object? incompatibles = null,
     Object? sets = null,
@@ -546,10 +546,10 @@ class __$$_RuleCopyWithImpl<$Res> extends _$RuleCopyWithImpl<$Res, _$_Rule>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      group: null == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as RuleGroup,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -584,14 +584,15 @@ class _$_Rule extends _Rule {
   const _$_Rule(
       {required this.name,
       required this.description,
-      required this.group,
+      required final List<String> categories,
       required this.state,
       @JsonKey(name: 'incompatible') required final List<String> incompatibles,
       required final List<RuleSet> sets,
       required this.fixStatus,
       required this.details,
       @JsonKey(name: 'sinceDartSdk') required this.since})
-      : _incompatibles = incompatibles,
+      : _categories = categories,
+        _incompatibles = incompatibles,
         _sets = sets,
         super._();
 
@@ -601,8 +602,14 @@ class _$_Rule extends _Rule {
   final String name;
   @override
   final String description;
+  final List<String> _categories;
   @override
-  final RuleGroup group;
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   @override
   final RuleState state;
   final List<String> _incompatibles;
@@ -632,7 +639,7 @@ class _$_Rule extends _Rule {
 
   @override
   String toString() {
-    return 'Rule(name: $name, description: $description, group: $group, state: $state, incompatibles: $incompatibles, sets: $sets, fixStatus: $fixStatus, details: $details, since: $since)';
+    return 'Rule(name: $name, description: $description, categories: $categories, state: $state, incompatibles: $incompatibles, sets: $sets, fixStatus: $fixStatus, details: $details, since: $since)';
   }
 
   @override
@@ -643,7 +650,8 @@ class _$_Rule extends _Rule {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.group, group) || other.group == group) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
             (identical(other.state, state) || other.state == state) &&
             const DeepCollectionEquality()
                 .equals(other._incompatibles, _incompatibles) &&
@@ -660,7 +668,7 @@ class _$_Rule extends _Rule {
       runtimeType,
       name,
       description,
-      group,
+      const DeepCollectionEquality().hash(_categories),
       state,
       const DeepCollectionEquality().hash(_incompatibles),
       const DeepCollectionEquality().hash(_sets),
@@ -686,7 +694,7 @@ abstract class _Rule extends Rule {
   const factory _Rule(
       {required final String name,
       required final String description,
-      required final RuleGroup group,
+      required final List<String> categories,
       required final RuleState state,
       @JsonKey(name: 'incompatible') required final List<String> incompatibles,
       required final List<RuleSet> sets,
@@ -702,7 +710,7 @@ abstract class _Rule extends Rule {
   @override
   String get description;
   @override
-  RuleGroup get group;
+  List<String> get categories;
   @override
   RuleState get state;
   @override

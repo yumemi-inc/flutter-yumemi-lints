@@ -15,8 +15,8 @@ _$_Rule _$$_RuleFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = _$_Rule(
           name: $checkedConvert('name', (v) => v as String),
           description: $checkedConvert('description', (v) => v as String),
-          group: $checkedConvert(
-              'group', (v) => $enumDecode(_$RuleGroupEnumMap, v)),
+          categories: $checkedConvert('categories',
+              (v) => (v as List<dynamic>).map((e) => e as String).toList()),
           state: $checkedConvert(
               'state', (v) => $enumDecode(_$RuleStateEnumMap, v)),
           incompatibles: $checkedConvert('incompatible',
@@ -43,7 +43,7 @@ _$_Rule _$$_RuleFromJson(Map<String, dynamic> json) => $checkedCreate(
 Map<String, dynamic> _$$_RuleToJson(_$_Rule instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-      'group': _$RuleGroupEnumMap[instance.group]!,
+      'categories': instance.categories,
       'state': _$RuleStateEnumMap[instance.state]!,
       'incompatible': instance.incompatibles,
       'sets': instance.sets.map((e) => _$RuleSetEnumMap[e]!).toList(),
@@ -51,12 +51,6 @@ Map<String, dynamic> _$$_RuleToJson(_$_Rule instance) => <String, dynamic>{
       'details': instance.details,
       'sinceDartSdk': instance.since.toJson(),
     };
-
-const _$RuleGroupEnumMap = {
-  RuleGroup.pub: 'pub',
-  RuleGroup.style: 'style',
-  RuleGroup.errors: 'errors',
-};
 
 const _$RuleStateEnumMap = {
   RuleState.stable: 'stable',

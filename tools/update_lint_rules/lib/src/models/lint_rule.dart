@@ -22,7 +22,7 @@ class Rule with _$Rule {
   const factory Rule({
     required String name,
     required String description,
-    required RuleGroup group,
+    required List<String> categories,
     required RuleState state,
     @JsonKey(name: 'incompatible') required List<String> incompatibles,
     required List<RuleSet> sets,
@@ -34,12 +34,6 @@ class Rule with _$Rule {
   factory Rule.fromJson(Map<String, dynamic> json) => _$RuleFromJson(json);
 
   const Rule._();
-}
-
-enum RuleGroup {
-  pub,
-  style,
-  errors,
 }
 
 enum RuleState {

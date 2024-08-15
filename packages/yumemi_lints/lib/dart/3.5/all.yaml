@@ -66,6 +66,7 @@ linter:
     - directives_ordering # categories: style
     - discarded_futures # categories: error-prone
     - do_not_use_environment # categories: error-prone
+    - document_ignores # categories: style
     - empty_catches # categories: style
     - empty_constructor_bodies # categories: brevity,effective dart,style
     - empty_statements # categories: error-prone
@@ -78,6 +79,7 @@ linter:
     - implicit_call_tearoffs # categories: style
     - implicit_reopen # categories: error-prone
     - invalid_case_patterns # categories: language feature usage
+    - invalid_runtime_check_with_js_interop_types # categories: error-prone,web
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
     - library_annotations # categories: style
@@ -87,6 +89,7 @@ linter:
     - lines_longer_than_80_chars # categories: style
     - literal_only_boolean_expressions # categories: unused code
     - matching_super_parameters # categories: style
+    - missing_code_block_language_in_doc_comment # categories: error-prone
     - missing_whitespace_between_adjacent_strings # categories: error-prone
     - no_adjacent_strings_in_list # categories: style
     - no_default_cases # categories: style
@@ -164,6 +167,7 @@ linter:
     - type_init_formals # categories: effective dart,style
     - type_literal_in_constant_pattern # categories: style
     - unawaited_futures # categories: style
+    - unintended_html_in_doc_comment # categories: error-prone
     - unnecessary_await_in_return # categories: style
     - unnecessary_brace_in_string_interps # categories: brevity,style
     - unnecessary_breaks # categories: brevity,style
@@ -174,6 +178,7 @@ linter:
     - unnecessary_lambdas # categories: style
     - unnecessary_late # categories: style
     - unnecessary_library_directive # categories: brevity
+    - unnecessary_library_name # categories: brevity,language feature usage,style
     - unnecessary_new # categories: brevity,language feature usage,style
     - unnecessary_null_aware_assignments # categories: brevity,effective dart,style
     - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
