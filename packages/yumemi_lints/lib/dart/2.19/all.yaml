@@ -93,7 +93,7 @@ linter:
     - noop_primitive_operations # categories: style
     - null_check_on_nullable_type_parameter # categories: style
     - null_closures # categories: error-prone
-    - omit_local_variable_types # incompatibles: always_specify_types # categories: style
+    - omit_local_variable_types # incompatibles: always_specify_types,specify_nonobvious_local_variable_types # categories: style
     - one_member_abstracts # categories: effective dart,language feature usage,style
     - only_throw_errors # categories: style
     - overridden_fields # categories: style
