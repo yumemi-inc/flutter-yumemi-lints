@@ -124,6 +124,7 @@ class UpdateCommandService {
 
     final supportedVersions = lintRulesDir
         .listSync()
+        .whereType<Directory>()
         .map(
           (e) => Version.parse('${e.name}.0'),
         )
@@ -186,8 +187,10 @@ class UpdateCommandService {
       );
     }
 
-    final version = match.group(1)!;
-    return Version.parse(version);
+    final version = Version.parse(match.group(1)!);
+
+    // For ease of comparison, patch version is fixed at 0.
+    return Version(version.major, version.minor, 0);
   }
 
   void _updateAnalysisOptionsFile(String includeLine) {
