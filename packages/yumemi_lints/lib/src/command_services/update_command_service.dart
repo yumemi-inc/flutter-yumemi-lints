@@ -39,10 +39,11 @@ class UpdateCommandService {
     }
 
     final supportedVersions = await _getSupportedVersions(projectType);
+    final oldestSupportedVersion = supportedVersions.first;
+    final latestSupportedVersion = supportedVersions.last;
 
     // If lower than the oldest supported version, print error message and
-    // exit as error.
-    final oldestSupportedVersion = supportedVersions.first;
+    // exit as an error.
     if (oldestSupportedVersion > version) {
       final projectTypeFormalName = projectType.formalName;
       print(
@@ -53,9 +54,22 @@ class UpdateCommandService {
       return ExitStatus.error;
     }
 
+    // If larger than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported
+    // versions, print error message and exits as an error.
+    if (oldestSupportedVersion < version &&
+        version < latestSupportedVersion &&
+        !supportedVersions.contains(version)) {
+      final projectTypeFormalName = projectType.formalName;
+      print(
+        'The version of $projectTypeFormalName $version specified in '
+        'pubspec.yaml does not exist. Please specify the version that exists.',
+      );
+      return ExitStatus.error;
+    }
+
     // If larger than the latest supported version, print warning message and
     // use the latest supported version.
-    final latestSupportedVersion = supportedVersions.last;
     if (latestSupportedVersion < version) {
       final projectTypeFormalName = projectType.formalName;
       print(
