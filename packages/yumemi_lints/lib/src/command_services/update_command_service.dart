@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
@@ -10,7 +11,7 @@ import 'package:yumemi_lints/src/models/project_type.dart';
 class UpdateCommandService {
   const UpdateCommandService();
 
-  ExitStatus call() {
+  Future<ExitStatus> call() async {
     try {
       // Determine if it is a Dart project or a Flutter project
       final projectType = _getProjectType();
@@ -21,7 +22,7 @@ class UpdateCommandService {
     }
   }
 
-  ExitStatus _updateLintRule(ProjectType projectType) {
+  Future<ExitStatus> _updateLintRule(ProjectType projectType) async {
     Version version;
     try {
       switch (projectType) {
@@ -32,15 +33,43 @@ class UpdateCommandService {
           version = getFlutterVersion(_getPubspecFile());
           break;
       }
-
-      final includeLine =
-          'include: package:yumemi_lints/${projectType.name}/${version.excludePatchVersion}/recommended.yaml';
-      _updateAnalysisOptionsFile(includeLine);
-      return ExitStatus.success;
     } on FormatException catch (e) {
       print(e.message);
       return ExitStatus.error;
     }
+
+    final supportedVersions = await _getSupportedVersions(projectType);
+
+    // If lower than the oldest supported version, print error message and
+    // exit as error.
+    final oldestSupportedVersion = supportedVersions.first;
+    if (oldestSupportedVersion > version) {
+      final projectTypeFormalName = projectType.formalName;
+      print(
+        '$projectTypeFormalName $version is not supported by yumemi_lints and '
+        'should be used with $projectTypeFormalName $oldestSupportedVersion or '
+        'higher projects.',
+      );
+      return ExitStatus.error;
+    }
+
+    // If larger than the latest supported version, print warning message and
+    // use the latest supported version.
+    final latestSupportedVersion = supportedVersions.last;
+    if (latestSupportedVersion < version) {
+      final projectTypeFormalName = projectType.formalName;
+      print(
+        '$projectTypeFormalName $version is not supported by yumemi_lints. '
+        'Use the latest supported $projectTypeFormalName '
+        '$latestSupportedVersion instead.',
+      );
+      version = latestSupportedVersion;
+    }
+
+    final includeLine =
+        'include: package:yumemi_lints/${projectType.name}/${version.excludePatchVersion}/recommended.yaml';
+    _updateAnalysisOptionsFile(includeLine);
+    return ExitStatus.success;
   }
 
   File _getPubspecFile() {
@@ -71,6 +100,38 @@ class UpdateCommandService {
       }
     }
     return ProjectType.dart;
+  }
+
+  Future<List<Version>> _getSupportedVersions(ProjectType projectType) async {
+    final lintRulesDirPackageUri = Uri.parse(
+      'package:yumemi_lints/${projectType.name}',
+    );
+
+    final lintRulesDirPackageAbsoluteUri = await Isolate.resolvePackageUri(
+      lintRulesDirPackageUri,
+    );
+    if (lintRulesDirPackageAbsoluteUri == null) {
+      throw StateError('The yumemi_lints package not found.');
+    }
+
+    final lintRulesDir = Directory.fromUri(lintRulesDirPackageAbsoluteUri);
+    if (!lintRulesDir.existsSync()) {
+      throw StateError(
+        'The ${projectType.name} directory in the yumemi_lints package '
+        'not found.',
+      );
+    }
+
+    final supportedVersions = lintRulesDir
+        .listSync()
+        .map(
+          (e) => Version.parse('${e.name}.0'),
+        )
+        .toList();
+
+    // Sort by smallest to largest
+    supportedVersions.sort((a, b) => a.compareTo(b));
+    return supportedVersions;
   }
 
   @visibleForTesting
@@ -164,4 +225,21 @@ class UpdateCommandService {
 
 extension _VersionExt on Version {
   String get excludePatchVersion => '$major.$minor';
+}
+
+extension _ProjectTypeFormalName on ProjectType {
+  String get formalName {
+    switch (this) {
+      case ProjectType.dart:
+        return 'Dart';
+      case ProjectType.flutter:
+        return 'Flutter';
+    }
+  }
+}
+
+extension _FileSystemEntityName on FileSystemEntity {
+  String get name {
+    return this.path.split('/').last;
+  }
 }
