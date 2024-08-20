@@ -91,8 +91,8 @@ environment:
       {
         'version': 'any',
         'errorMessage': 'The version of Dart or Flutter could not be found '
-        'in pubspec.yaml. Please ensure that '
-        'the version is correctly specified for Dart or Flutter.',
+            'in pubspec.yaml. Please ensure that '
+            'the version is correctly specified for Dart or Flutter.',
       },
       {
         'version': '<4.0.0',
