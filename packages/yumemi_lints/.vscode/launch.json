@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "update",
+      "request": "launch",
+      "type": "dart",
+      "program": "bin/yumemi_lints.dart",
+      "args": [
+        "update"
+      ]
+    }
+  ]
+}
