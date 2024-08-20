@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
+import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
 
@@ -23,14 +24,14 @@ class UpdateCommandService {
   }
 
   Future<ExitStatus> _updateLintRule(ProjectType projectType) async {
-    Version version;
+    final Version specifiedVersion;
     try {
       switch (projectType) {
         case ProjectType.dart:
-          version = getDartVersion(_getPubspecFile());
+          specifiedVersion = getDartVersion(_getPubspecFile());
           break;
         case ProjectType.flutter:
-          version = getFlutterVersion(_getPubspecFile());
+          specifiedVersion = getFlutterVersion(_getPubspecFile());
           break;
       }
     } on FormatException catch (e) {
@@ -39,49 +40,21 @@ class UpdateCommandService {
     }
 
     final supportedVersions = await _getSupportedVersions(projectType);
-    final oldestSupportedVersion = supportedVersions.first;
-    final latestSupportedVersion = supportedVersions.last;
 
-    // If lower than the oldest supported version, print error message and
-    // exit as an error.
-    if (oldestSupportedVersion > version) {
-      final projectTypeFormalName = projectType.formalName;
-      print(
-        '$projectTypeFormalName $version is not supported by yumemi_lints and '
-        'should be used with $projectTypeFormalName $oldestSupportedVersion or '
-        'higher projects.',
+    final Version usedVersion;
+    try {
+      usedVersion = getUsedVersion(
+        projectType: projectType,
+        specifiedVersion: specifiedVersion,
+        supportedVersions: supportedVersions,
       );
+    } on UsedVersionException catch (_) {
+      // Already printed error messages, so nothing to do.
       return ExitStatus.error;
-    }
-
-    // If larger than the oldest supported version and lower than the latest
-    // supported version, but does not match any of the supported
-    // versions, print error message and exits as an error.
-    if (oldestSupportedVersion < version &&
-        version < latestSupportedVersion &&
-        !supportedVersions.contains(version)) {
-      final projectTypeFormalName = projectType.formalName;
-      print(
-        'The version of $projectTypeFormalName $version specified in '
-        'pubspec.yaml does not exist. Please specify the version that exists.',
-      );
-      return ExitStatus.error;
-    }
-
-    // If larger than the latest supported version, print warning message and
-    // use the latest supported version.
-    if (latestSupportedVersion < version) {
-      final projectTypeFormalName = projectType.formalName;
-      print(
-        '$projectTypeFormalName $version is not supported by yumemi_lints. '
-        'Use the latest supported $projectTypeFormalName '
-        '$latestSupportedVersion instead.',
-      );
-      version = latestSupportedVersion;
     }
 
     final includeLine =
-        'include: package:yumemi_lints/${projectType.name}/${version.excludePatchVersion}/recommended.yaml';
+        'include: package:yumemi_lints/${projectType.name}/${usedVersion.excludePatchVersion}/recommended.yaml';
     _updateAnalysisOptionsFile(includeLine);
     return ExitStatus.success;
   }
@@ -147,6 +120,57 @@ class UpdateCommandService {
     // Sort by smallest to largest
     supportedVersions.sort((a, b) => a.compareTo(b));
     return supportedVersions;
+  }
+
+  @visibleForTesting
+  Version getUsedVersion({
+    required ProjectType projectType,
+    required Version specifiedVersion,
+    required List<Version> supportedVersions,
+    void Function(String) printMessage = print,
+  }) {
+    final oldestSupportedVersion = supportedVersions.first;
+    final latestSupportedVersion = supportedVersions.last;
+
+    // If lower than the oldest supported version, print error message and
+    // exit as an error.
+    if (oldestSupportedVersion > specifiedVersion) {
+      final projectTypeFormalName = projectType.formalName;
+      printMessage(
+        '$projectTypeFormalName $specifiedVersion is not supported by '
+        'yumemi_lints and should be used with $projectTypeFormalName '
+        '$oldestSupportedVersion or higher projects.',
+      );
+      throw const UsedVersionException();
+    }
+
+    // If larger than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported
+    // versions, print error message and exits as an error.
+    if (oldestSupportedVersion < specifiedVersion &&
+        specifiedVersion < latestSupportedVersion &&
+        !supportedVersions.contains(specifiedVersion)) {
+      printMessage(
+        'The version of ${projectType.formalName} $specifiedVersion specified '
+        'in pubspec.yaml does not exist. Please specify the version '
+        'that exists.',
+      );
+      throw const UsedVersionException();
+    }
+
+    // If larger than the latest supported version, print warning message and
+    // use the latest supported version.
+    if (latestSupportedVersion < specifiedVersion) {
+      final projectTypeFormalName = projectType.formalName;
+      printMessage(
+        '$projectTypeFormalName $specifiedVersion is not supported by '
+        'yumemi_lints. Use the latest supported $projectTypeFormalName '
+        '$latestSupportedVersion instead.',
+      );
+      return latestSupportedVersion;
+    }
+
+    return specifiedVersion;
   }
 
   @visibleForTesting
