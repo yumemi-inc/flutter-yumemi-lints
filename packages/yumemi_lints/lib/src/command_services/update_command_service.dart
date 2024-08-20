@@ -132,8 +132,8 @@ class UpdateCommandService {
     final oldestSupportedVersion = supportedVersions.first;
     final latestSupportedVersion = supportedVersions.last;
 
-    // If lower than the oldest supported version, print error message and
-    // exit as an error.
+    // If lower than the oldest supported version, print an error message and
+    // exit with an error.
     if (oldestSupportedVersion > specifiedVersion) {
       final projectTypeFormalName = projectType.formalName;
       printMessage(
@@ -144,9 +144,9 @@ class UpdateCommandService {
       throw const UsedVersionException();
     }
 
-    // If larger than the oldest supported version and lower than the latest
-    // supported version, but does not match any of the supported
-    // versions, print error message and exits as an error.
+    // If higher than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported versions,
+    // print an error message and exit with an error.
     if (oldestSupportedVersion < specifiedVersion &&
         specifiedVersion < latestSupportedVersion &&
         !supportedVersions.contains(specifiedVersion)) {
@@ -158,7 +158,7 @@ class UpdateCommandService {
       throw const UsedVersionException();
     }
 
-    // If larger than the latest supported version, print warning message and
+    // If higher than the latest supported version, print a warning message and 
     // use the latest supported version.
     if (latestSupportedVersion < specifiedVersion) {
       final projectTypeFormalName = projectType.formalName;
