@@ -41,9 +41,9 @@ class UpdateCommandService {
 
     final supportedVersions = await _getSupportedVersions(projectType);
 
-    final Version usedVersion;
+    final Version compatibleVersion;
     try {
-      usedVersion = getCompatibleVersion(
+      compatibleVersion = getCompatibleVersion(
         projectType: projectType,
         specifiedVersion: specifiedVersion,
         supportedVersions: supportedVersions,
@@ -54,7 +54,7 @@ class UpdateCommandService {
     }
 
     final includeLine =
-        'include: package:yumemi_lints/${projectType.name}/${usedVersion.excludePatchVersion}/recommended.yaml';
+        'include: package:yumemi_lints/${projectType.name}/${compatibleVersion.excludePatchVersion}/recommended.yaml';
     _updateAnalysisOptionsFile(includeLine);
     return ExitStatus.success;
   }
@@ -158,7 +158,7 @@ class UpdateCommandService {
       throw const CompatibleVersionException();
     }
 
-    // If higher than the latest supported version, print a warning message and 
+    // If higher than the latest supported version, print a warning message and
     // use the latest supported version.
     if (latestSupportedVersion < specifiedVersion) {
       final projectTypeFormalName = projectType.formalName;

@@ -148,7 +148,7 @@ environment:
 
     group('Success', () {
       // arrange
-      const usedVersionScenarios = [
+      const compatibleVersionScenarios = [
         _CompatibleVersionSuccessScenario(
           specified: '2.17.0',
           expected: '2.17.0',
@@ -167,9 +167,11 @@ environment:
         ),
       ];
 
-      for (final usedVersionScenario in usedVersionScenarios) {
-        final specifiedVersion = Version.parse(usedVersionScenario.specified);
-        final expectedVersion = Version.parse(usedVersionScenario.expected);
+      for (final compatibleVersionScenario in compatibleVersionScenarios) {
+        final specifiedVersion =
+            Version.parse(compatibleVersionScenario.specified);
+        final expectedVersion =
+            Version.parse(compatibleVersionScenario.expected);
         test(
           'The $expectedVersion is used, '
           'when the specified version is $specifiedVersion',
@@ -196,7 +198,7 @@ environment:
 
     group('Failure', () {
       // arrange
-      const usedVersionScenarios = [
+      const compatibleVersionScenarios = [
         _CompatibleVersionFailureScenario(
           specified: '2.16.0',
         ),
@@ -205,11 +207,12 @@ environment:
         ),
       ];
 
-      for (final usedVersionScenario in usedVersionScenarios) {
-        final specifiedVersion = Version.parse(usedVersionScenario.specified);
+      for (final compatibleVersionScenario in compatibleVersionScenarios) {
+        final specifiedVersion =
+            Version.parse(compatibleVersionScenario.specified);
 
         test(
-          'Throw the UsedVersionException, '
+          'Throw the compatibleVersionException, '
           'when the specified version is $specifiedVersion',
           () {
             // act
