@@ -132,6 +132,23 @@ class UpdateCommandService {
     final oldestSupportedVersion = supportedVersions.first;
     final latestSupportedVersion = supportedVersions.last;
 
+    if (supportedVersions.contains(specifiedVersion)) {
+      return specifiedVersion;
+    }
+
+    // If higher than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported versions,
+    // print an error message and exit with an error.
+    if (latestSupportedVersion < specifiedVersion) {
+      final projectTypeFormalName = projectType.formalName;
+      printMessage(
+        '$projectTypeFormalName $specifiedVersion is not supported by '
+        'yumemi_lints. Use the latest supported $projectTypeFormalName '
+        '$latestSupportedVersion instead.',
+      );
+      return latestSupportedVersion;
+    }
+
     // If lower than the oldest supported version, print an error message and
     // exit with an error.
     if (oldestSupportedVersion > specifiedVersion) {
@@ -143,34 +160,16 @@ class UpdateCommandService {
       );
       throw const CompatibleVersionException();
     }
-
+    
     // If higher than the oldest supported version and lower than the latest
     // supported version, but does not match any of the supported versions,
     // print an error message and exit with an error.
-    if (oldestSupportedVersion < specifiedVersion &&
-        specifiedVersion < latestSupportedVersion &&
-        !supportedVersions.contains(specifiedVersion)) {
-      printMessage(
+    printMessage(
         'The version of ${projectType.formalName} $specifiedVersion specified '
         'in pubspec.yaml does not exist. Please specify the version '
         'that exists.',
       );
       throw const CompatibleVersionException();
-    }
-
-    // If higher than the latest supported version, print a warning message and
-    // use the latest supported version.
-    if (latestSupportedVersion < specifiedVersion) {
-      final projectTypeFormalName = projectType.formalName;
-      printMessage(
-        '$projectTypeFormalName $specifiedVersion is not supported by '
-        'yumemi_lints. Use the latest supported $projectTypeFormalName '
-        '$latestSupportedVersion instead.',
-      );
-      return latestSupportedVersion;
-    }
-
-    return specifiedVersion;
   }
 
   @visibleForTesting
