@@ -13,7 +13,7 @@ class UpdateCommand extends Command<ExitStatus> {
       ' recommended.yaml to match the Dart or Flutter version of the project.';
 
   @override
-  ExitStatus run() {
+  Future<ExitStatus> run() {
     const updateCommandService = UpdateCommandService();
     return updateCommandService.call();
   }

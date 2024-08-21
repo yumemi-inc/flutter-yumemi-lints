@@ -1,16 +1,18 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
+import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
 
 class UpdateCommandService {
   const UpdateCommandService();
 
-  ExitStatus call() {
+  Future<ExitStatus> call() async {
     try {
       // Determine if it is a Dart project or a Flutter project
       final projectType = _getProjectType();
@@ -21,26 +23,40 @@ class UpdateCommandService {
     }
   }
 
-  ExitStatus _updateLintRule(ProjectType projectType) {
-    Version version;
+  Future<ExitStatus> _updateLintRule(ProjectType projectType) async {
+    final Version specifiedVersion;
     try {
       switch (projectType) {
         case ProjectType.dart:
-          version = getDartVersion(_getPubspecFile());
+          specifiedVersion = getDartVersion(_getPubspecFile());
           break;
         case ProjectType.flutter:
-          version = getFlutterVersion(_getPubspecFile());
+          specifiedVersion = getFlutterVersion(_getPubspecFile());
           break;
       }
-
-      final includeLine =
-          'include: package:yumemi_lints/${projectType.name}/${version.excludePatchVersion}/recommended.yaml';
-      _updateAnalysisOptionsFile(includeLine);
-      return ExitStatus.success;
     } on FormatException catch (e) {
       print(e.message);
       return ExitStatus.error;
     }
+
+    final supportedVersions = await _getSupportedVersions(projectType);
+
+    final Version compatibleVersion;
+    try {
+      compatibleVersion = getCompatibleVersion(
+        projectType: projectType,
+        specifiedVersion: specifiedVersion,
+        supportedVersions: supportedVersions,
+      );
+    } on CompatibleVersionException catch (_) {
+      // Already printed error messages, so nothing to do.
+      return ExitStatus.error;
+    }
+
+    final includeLine =
+        'include: package:yumemi_lints/${projectType.name}/${compatibleVersion.excludePatchVersion}/recommended.yaml';
+    _updateAnalysisOptionsFile(includeLine);
+    return ExitStatus.success;
   }
 
   File _getPubspecFile() {
@@ -71,6 +87,89 @@ class UpdateCommandService {
       }
     }
     return ProjectType.dart;
+  }
+
+  Future<List<Version>> _getSupportedVersions(ProjectType projectType) async {
+    final lintRulesDirPackageUri = Uri.parse(
+      'package:yumemi_lints/${projectType.name}',
+    );
+
+    final lintRulesDirPackageAbsoluteUri = await Isolate.resolvePackageUri(
+      lintRulesDirPackageUri,
+    );
+    if (lintRulesDirPackageAbsoluteUri == null) {
+      throw StateError('The yumemi_lints package not found.');
+    }
+
+    final lintRulesDir = Directory.fromUri(lintRulesDirPackageAbsoluteUri);
+    if (!lintRulesDir.existsSync()) {
+      throw StateError(
+        'The ${projectType.name} directory in the yumemi_lints package '
+        'not found.',
+      );
+    }
+
+    final supportedVersions = lintRulesDir
+        .listSync()
+        .whereType<Directory>()
+        .map(
+          (e) => Version.parse('${e.name}.0'),
+        )
+        .toList();
+
+    // Sort by smallest to largest
+    supportedVersions.sort((a, b) => a.compareTo(b));
+    return supportedVersions;
+  }
+
+  @visibleForTesting
+  Version getCompatibleVersion({
+    required ProjectType projectType,
+    required Version specifiedVersion,
+    required List<Version> supportedVersions,
+    void Function(String) printMessage = print,
+  }) {
+    final oldestSupportedVersion = supportedVersions.first;
+    final latestSupportedVersion = supportedVersions.last;
+
+    if (supportedVersions.contains(specifiedVersion)) {
+      return specifiedVersion;
+    }
+
+    // If higher than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported versions,
+    // print an error message and exit with an error.
+    if (latestSupportedVersion < specifiedVersion) {
+      final projectTypeFormalName = projectType.formalName;
+      printMessage(
+        '$projectTypeFormalName $specifiedVersion is not supported by '
+        'yumemi_lints. Use the latest supported $projectTypeFormalName '
+        '$latestSupportedVersion instead.',
+      );
+      return latestSupportedVersion;
+    }
+
+    // If lower than the oldest supported version, print an error message and
+    // exit with an error.
+    if (oldestSupportedVersion > specifiedVersion) {
+      final projectTypeFormalName = projectType.formalName;
+      printMessage(
+        '$projectTypeFormalName $specifiedVersion is not supported by '
+        'yumemi_lints and should be used with $projectTypeFormalName '
+        '$oldestSupportedVersion or higher projects.',
+      );
+      throw const CompatibleVersionException();
+    }
+    
+    // If higher than the oldest supported version and lower than the latest
+    // supported version, but does not match any of the supported versions,
+    // print an error message and exit with an error.
+    printMessage(
+        'The version of ${projectType.formalName} $specifiedVersion specified '
+        'in pubspec.yaml does not exist. Please specify the version '
+        'that exists.',
+      );
+      throw const CompatibleVersionException();
   }
 
   @visibleForTesting
@@ -125,8 +224,10 @@ class UpdateCommandService {
       );
     }
 
-    final version = match.group(1)!;
-    return Version.parse(version);
+    final version = Version.parse(match.group(1)!);
+
+    // For ease of comparison, patch version is fixed at 0.
+    return Version(version.major, version.minor, 0);
   }
 
   void _updateAnalysisOptionsFile(String includeLine) {
@@ -164,4 +265,21 @@ class UpdateCommandService {
 
 extension _VersionExt on Version {
   String get excludePatchVersion => '$major.$minor';
+}
+
+extension _ProjectTypeFormalName on ProjectType {
+  String get formalName {
+    switch (this) {
+      case ProjectType.dart:
+        return 'Dart';
+      case ProjectType.flutter:
+        return 'Flutter';
+    }
+  }
+}
+
+extension _FileSystemEntityName on FileSystemEntity {
+  String get name {
+    return this.path.split('/').last;
+  }
 }
