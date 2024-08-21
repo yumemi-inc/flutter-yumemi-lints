@@ -43,12 +43,12 @@ class UpdateCommandService {
 
     final Version usedVersion;
     try {
-      usedVersion = getUsedVersion(
+      usedVersion = getCompatibleVersion(
         projectType: projectType,
         specifiedVersion: specifiedVersion,
         supportedVersions: supportedVersions,
       );
-    } on UsedVersionException catch (_) {
+    } on CompatibleVersionException catch (_) {
       // Already printed error messages, so nothing to do.
       return ExitStatus.error;
     }
@@ -123,7 +123,7 @@ class UpdateCommandService {
   }
 
   @visibleForTesting
-  Version getUsedVersion({
+  Version getCompatibleVersion({
     required ProjectType projectType,
     required Version specifiedVersion,
     required List<Version> supportedVersions,
@@ -141,7 +141,7 @@ class UpdateCommandService {
         'yumemi_lints and should be used with $projectTypeFormalName '
         '$oldestSupportedVersion or higher projects.',
       );
-      throw const UsedVersionException();
+      throw const CompatibleVersionException();
     }
 
     // If higher than the oldest supported version and lower than the latest
@@ -155,7 +155,7 @@ class UpdateCommandService {
         'in pubspec.yaml does not exist. Please specify the version '
         'that exists.',
       );
-      throw const UsedVersionException();
+      throw const CompatibleVersionException();
     }
 
     // If higher than the latest supported version, print a warning message and 

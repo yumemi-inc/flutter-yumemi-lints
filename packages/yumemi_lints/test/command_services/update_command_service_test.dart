@@ -123,7 +123,7 @@ environment:
     }
   });
 
-  group('UpdateCommandService.getUsedVersion', () {
+  group('UpdateCommandService.getCompatibleVersion', () {
     // arrange
     const projectType = ProjectType.dart;
     final supportedVersions = <String>[
@@ -149,19 +149,19 @@ environment:
     group('Success', () {
       // arrange
       const usedVersionScenarios = [
-        _UsedVersionSuccessScenario(
+        _CompatibleVersionSuccessScenario(
           specified: '2.17.0',
           expected: '2.17.0',
         ),
-        _UsedVersionSuccessScenario(
+        _CompatibleVersionSuccessScenario(
           specified: '3.0.0',
           expected: '3.0.0',
         ),
-        _UsedVersionSuccessScenario(
+        _CompatibleVersionSuccessScenario(
           specified: '3.5.0',
           expected: '3.5.0',
         ),
-        _UsedVersionSuccessScenario(
+        _CompatibleVersionSuccessScenario(
           specified: '3.6.0',
           expected: '3.5.0',
         ),
@@ -175,7 +175,7 @@ environment:
           'when the specified version is $specifiedVersion',
           () {
             // act
-            final actual = updateCommandService.getUsedVersion(
+            final actual = updateCommandService.getCompatibleVersion(
               projectType: projectType,
               specifiedVersion: specifiedVersion,
               supportedVersions: supportedVersions,
@@ -197,10 +197,10 @@ environment:
     group('Failure', () {
       // arrange
       const usedVersionScenarios = [
-        _UsedVersionFailureScenario(
+        _CompatibleVersionFailureScenario(
           specified: '2.16.0',
         ),
-        _UsedVersionFailureScenario(
+        _CompatibleVersionFailureScenario(
           specified: '2.20.0',
         ),
       ];
@@ -213,7 +213,7 @@ environment:
           'when the specified version is $specifiedVersion',
           () {
             // act
-            Version actual() => updateCommandService.getUsedVersion(
+            Version actual() => updateCommandService.getCompatibleVersion(
                   projectType: projectType,
                   specifiedVersion: specifiedVersion,
                   supportedVersions: supportedVersions,
@@ -221,7 +221,7 @@ environment:
                 );
 
             // assert
-            expect(actual, throwsA(isA<UsedVersionException>()));
+            expect(actual, throwsA(isA<CompatibleVersionException>()));
             verify(printMessageMock.call(any)).called(1);
           },
         );
@@ -230,8 +230,8 @@ environment:
   });
 }
 
-class _UsedVersionSuccessScenario {
-  const _UsedVersionSuccessScenario({
+class _CompatibleVersionSuccessScenario {
+  const _CompatibleVersionSuccessScenario({
     required this.specified,
     required this.expected,
   });
@@ -240,8 +240,8 @@ class _UsedVersionSuccessScenario {
   final String expected;
 }
 
-class _UsedVersionFailureScenario {
-  const _UsedVersionFailureScenario({
+class _CompatibleVersionFailureScenario {
+  const _CompatibleVersionFailureScenario({
     required this.specified,
   });
 

@@ -1,3 +1,3 @@
-class UsedVersionException implements Exception {
-  const UsedVersionException();
+class CompatibleVersionException implements Exception {
+  const CompatibleVersionException();
 }
