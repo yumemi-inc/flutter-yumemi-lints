@@ -147,53 +147,80 @@ environment:
     });
 
     group('Success', () {
-      // arrange
-      const compatibleVersionScenarios = [
-        _CompatibleVersionSuccessScenario(
-          specified: '2.17.0',
-          expected: '2.17.0',
-        ),
-        _CompatibleVersionSuccessScenario(
-          specified: '3.0.0',
-          expected: '3.0.0',
-        ),
-        _CompatibleVersionSuccessScenario(
-          specified: '3.5.0',
-          expected: '3.5.0',
-        ),
-        _CompatibleVersionSuccessScenario(
-          specified: '3.6.0',
-          expected: '3.5.0',
-        ),
-      ];
+      group('Supported versions', () {
+        // arrange
+        const compatibleVersionScenarios = [
+          _CompatibleVersionSuccessScenario(
+            specified: '2.17.0',
+            expected: '2.17.0',
+          ),
+          _CompatibleVersionSuccessScenario(
+            specified: '3.0.0',
+            expected: '3.0.0',
+          ),
+          _CompatibleVersionSuccessScenario(
+            specified: '3.5.0',
+            expected: '3.5.0',
+          ),
+        ];
 
-      for (final compatibleVersionScenario in compatibleVersionScenarios) {
-        final specifiedVersion =
-            Version.parse(compatibleVersionScenario.specified);
-        final expectedVersion =
-            Version.parse(compatibleVersionScenario.expected);
-        test(
-          'The $expectedVersion is used, '
-          'when the specified version is $specifiedVersion',
-          () {
-            // act
-            final actual = updateCommandService.getCompatibleVersion(
-              projectType: projectType,
-              specifiedVersion: specifiedVersion,
-              supportedVersions: supportedVersions,
-              printMessage: printMessageMock.call,
-            );
+        for (final compatibleVersionScenario in compatibleVersionScenarios) {
+          final specifiedVersion =
+              Version.parse(compatibleVersionScenario.specified);
+          final expectedVersion =
+              Version.parse(compatibleVersionScenario.expected);
+          test(
+            'The $expectedVersion is used, '
+            'when the specified version is $specifiedVersion',
+            () {
+              // act
+              final actual = updateCommandService.getCompatibleVersion(
+                projectType: projectType,
+                specifiedVersion: specifiedVersion,
+                supportedVersions: supportedVersions,
+                printMessage: printMessageMock.call,
+              );
 
-            // assert
-            expect(actual, expectedVersion);
-            if (specifiedVersion > expectedVersion) {
-              verify(printMessageMock.call(any)).called(1);
-            } else {
+              // assert
+              expect(actual, expectedVersion);
               verifyNever(printMessageMock.call(any));
-            }
-          },
-        );
-      }
+            },
+          );
+        }
+      });
+      group('Higher than supported versions', () {
+        // arrange
+        const compatibleVersionScenarios = [
+          _CompatibleVersionSuccessScenario(
+            specified: '3.6.0',
+            expected: '3.5.0',
+          ),
+        ];
+
+        for (final compatibleVersionScenario in compatibleVersionScenarios) {
+          final specifiedVersion =
+              Version.parse(compatibleVersionScenario.specified);
+          final expectedVersion =
+              Version.parse(compatibleVersionScenario.expected);
+          test(
+            'The $expectedVersion is used, '
+            'when the specified version is $specifiedVersion',
+            () {
+              // act
+              final actual = updateCommandService.getCompatibleVersion(
+                projectType: projectType,
+                specifiedVersion: specifiedVersion,
+                supportedVersions: supportedVersions,
+                printMessage: printMessageMock.call,
+              );
+
+              // assert
+              expect(actual, expectedVersion);
+              verify(printMessageMock.call(any)).called(1);
+            },
+          );
+        }
+      });
     });
 
     group('Failure', () {
