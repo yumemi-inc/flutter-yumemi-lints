@@ -21,6 +21,12 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 2.2.1
+
+### Improvements
+
+- Changed to be independent of the `path` package.
+
 ## 2.2.0
 
 ### Features

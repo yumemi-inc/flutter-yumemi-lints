@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
@@ -61,12 +60,11 @@ class UpdateCommandService {
 
   File _getPubspecFile() {
     final pubspecFile = File(
-      path.join(
+      [
         Directory.current.path,
         'pubspec.yaml',
-      ),
+      ].join(_separator),
     );
-
     if (!pubspecFile.existsSync()) {
       throw Exception(
         'The pubspec.yaml file could not be found in the current directory. '
@@ -160,16 +158,16 @@ class UpdateCommandService {
       );
       throw const CompatibleVersionException();
     }
-    
+
     // If higher than the oldest supported version and lower than the latest
     // supported version, but does not match any of the supported versions,
     // print an error message and exit with an error.
     printMessage(
-        'The version of ${projectType.formalName} $specifiedVersion specified '
-        'in pubspec.yaml does not exist. Please specify the version '
-        'that exists.',
-      );
-      throw const CompatibleVersionException();
+      'The version of ${projectType.formalName} $specifiedVersion specified '
+      'in pubspec.yaml does not exist. Please specify the version '
+      'that exists.',
+    );
+    throw const CompatibleVersionException();
   }
 
   @visibleForTesting
@@ -232,7 +230,10 @@ class UpdateCommandService {
 
   void _updateAnalysisOptionsFile(String includeLine) {
     final analysisOptionsFile = File(
-      path.join(Directory.current.path, 'analysis_options.yaml'),
+      [
+        Directory.current.path,
+        'analysis_options.yaml',
+      ].join(_separator),
     );
     if (!analysisOptionsFile.existsSync()) {
       // Create analysis_options.yaml if it does not exist
@@ -280,6 +281,23 @@ extension _ProjectTypeFormalName on ProjectType {
 
 extension _FileSystemEntityName on FileSystemEntity {
   String get name {
-    return this.path.split('/').last;
+    return path.split('/').last;
   }
+}
+
+bool get _isWindowsStyle {
+  if (Uri.base.scheme != 'file') {
+    return false;
+  }
+  if (!Uri.base.path.endsWith('/')) {
+    return false;
+  }
+  return Uri(path: 'a/b').toFilePath() == r'a\b';
+}
+
+String get _separator {
+  if (_isWindowsStyle) {
+    return r'\';
+  }
+  return '/';
 }
