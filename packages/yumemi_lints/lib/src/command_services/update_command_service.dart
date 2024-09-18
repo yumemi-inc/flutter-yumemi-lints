@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
@@ -61,12 +60,8 @@ class UpdateCommandService {
 
   File _getPubspecFile() {
     final pubspecFile = File(
-      path.join(
-        Directory.current.path,
-        'pubspec.yaml',
-      ),
+      '${Directory.current.path}/pubspec.yaml',
     );
-
     if (!pubspecFile.existsSync()) {
       throw Exception(
         'The pubspec.yaml file could not be found in the current directory. '
@@ -232,7 +227,7 @@ class UpdateCommandService {
 
   void _updateAnalysisOptionsFile(String includeLine) {
     final analysisOptionsFile = File(
-      path.join(Directory.current.path, 'analysis_options.yaml'),
+      '${Directory.current.path}/analysis_options.yaml',
     );
     if (!analysisOptionsFile.existsSync()) {
       // Create analysis_options.yaml if it does not exist
@@ -280,6 +275,6 @@ extension _ProjectTypeFormalName on ProjectType {
 
 extension _FileSystemEntityName on FileSystemEntity {
   String get name {
-    return this.path.split('/').last;
+    return path.split('/').last;
   }
 }
