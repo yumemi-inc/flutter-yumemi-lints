@@ -160,16 +160,16 @@ class UpdateCommandService {
       );
       throw const CompatibleVersionException();
     }
-    
+
     // If higher than the oldest supported version and lower than the latest
     // supported version, but does not match any of the supported versions,
     // print an error message and exit with an error.
     printMessage(
-        'The version of ${projectType.formalName} $specifiedVersion specified '
-        'in pubspec.yaml does not exist. Please specify the version '
-        'that exists.',
-      );
-      throw const CompatibleVersionException();
+      'The version of ${projectType.formalName} $specifiedVersion specified '
+      'in pubspec.yaml does not exist. Please specify the version '
+      'that exists.',
+    );
+    throw const CompatibleVersionException();
   }
 
   @visibleForTesting
