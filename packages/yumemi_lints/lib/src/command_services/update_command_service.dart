@@ -60,7 +60,10 @@ class UpdateCommandService {
 
   File _getPubspecFile() {
     final pubspecFile = File(
-      '${Directory.current.path}/pubspec.yaml',
+      [
+        Directory.current.path,
+        'pubspec.yaml',
+      ].join(_separator),
     );
     if (!pubspecFile.existsSync()) {
       throw Exception(
@@ -227,7 +230,10 @@ class UpdateCommandService {
 
   void _updateAnalysisOptionsFile(String includeLine) {
     final analysisOptionsFile = File(
-      '${Directory.current.path}/analysis_options.yaml',
+      [
+        Directory.current.path,
+        'analysis_options.yaml',
+      ].join(_separator),
     );
     if (!analysisOptionsFile.existsSync()) {
       // Create analysis_options.yaml if it does not exist
@@ -277,4 +283,21 @@ extension _FileSystemEntityName on FileSystemEntity {
   String get name {
     return path.split('/').last;
   }
+}
+
+bool get _isWindowsStyle {
+  if (Uri.base.scheme != 'file') {
+    return false;
+  }
+  if (!Uri.base.path.endsWith('/')) {
+    return false;
+  }
+  return Uri(path: 'a/b').toFilePath() == r'a\b';
+}
+
+String get _separator {
+  if (_isWindowsStyle) {
+    return r'\';
+  }
+  return '/';
 }
