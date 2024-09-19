@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
+import 'package:yumemi_lints/src/models/version.dart';
 
 class UpdateCommandService {
   const UpdateCommandService();
@@ -52,7 +52,7 @@ class UpdateCommandService {
     }
 
     final includeLine =
-        'include: package:yumemi_lints/${projectType.name}/${compatibleVersion.excludePatchVersion}/recommended.yaml';
+        'include: package:yumemi_lints/${projectType.name}/$compatibleVersion/recommended.yaml';
     _updateAnalysisOptionsFile(includeLine);
     return ExitStatus.success;
   }
@@ -110,7 +110,7 @@ class UpdateCommandService {
         .listSync()
         .whereType<Directory>()
         .map(
-          (e) => Version.parse('${e.name}.0'),
+          (e) => Version.parse(e.name),
         )
         .toList();
 
@@ -179,7 +179,7 @@ class UpdateCommandService {
       );
     }
 
-    return extractVersion(flutterVersion as String);
+    return Version.parse(flutterVersion as String);
   }
 
   Version getDartVersion(File pubspecFile) {
@@ -193,34 +193,7 @@ class UpdateCommandService {
       );
     }
 
-    return extractVersion(dartVersion as String);
-  }
-
-  Version extractVersion(String versionString) {
-    if (versionString.contains('<') && !versionString.contains('>=')) {
-      throw const FormatException('Please specify the minimum version.');
-    }
-
-    RegExp regExp;
-    if (versionString.contains('>=')) {
-      regExp = RegExp(r'>=\s*(\d+\.\d+\.\d+)');
-    } else {
-      regExp = RegExp(r's*(\d+\.\d+\.\d+)');
-    }
-    final match = regExp.firstMatch(versionString);
-
-    if (match == null) {
-      throw const FormatException(
-        'The version of Dart or Flutter could not be found in pubspec.yaml. '
-        'Please ensure that '
-        'the version is correctly specified for Dart or Flutter.',
-      );
-    }
-
-    final version = Version.parse(match.group(1)!);
-
-    // For ease of comparison, patch version is fixed at 0.
-    return Version(version.major, version.minor, 0);
+    return Version.parse(dartVersion as String);
   }
 
   void _updateAnalysisOptionsFile(String includeLine) {
@@ -257,10 +230,6 @@ class UpdateCommandService {
 
     analysisOptionsFile.writeAsStringSync('${newLines.join('\n')}\n');
   }
-}
-
-extension _VersionExt on Version {
-  String get excludePatchVersion => '$major.$minor';
 }
 
 extension _ProjectTypeFormalName on ProjectType {
