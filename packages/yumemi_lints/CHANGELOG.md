@@ -26,6 +26,7 @@ Examples of version updates are as follows:
 ### Improvements
 
 - Changed to be independent of the `path` package.
+- Changed to be independent of the `meta` package.
 
 ## 2.2.0
 
