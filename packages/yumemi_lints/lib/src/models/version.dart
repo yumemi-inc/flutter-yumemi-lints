@@ -48,6 +48,11 @@ class Version implements Comparable<Version> {
     return 0;
   }
 
+  bool operator <(Version other) => compareTo(other) < 0;
+  bool operator >(Version other) => compareTo(other) > 0;
+  bool operator <=(Version other) => compareTo(other) <= 0;
+  bool operator >=(Version other) => compareTo(other) >= 0;
+
   @override
   String toString() => '$_major.$_minor';
 }
