@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:meta/meta.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
@@ -120,7 +119,6 @@ class UpdateCommandService {
     return supportedVersions;
   }
 
-  @visibleForTesting
   Version getCompatibleVersion({
     required ProjectType projectType,
     required Version specifiedVersion,
@@ -170,7 +168,6 @@ class UpdateCommandService {
     throw const CompatibleVersionException();
   }
 
-  @visibleForTesting
   Version getFlutterVersion(File pubspecFile) {
     final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
     final flutterVersion = (yaml['environment'] as YamlMap)['flutter'];
@@ -185,7 +182,6 @@ class UpdateCommandService {
     return extractVersion(flutterVersion as String);
   }
 
-  @visibleForTesting
   Version getDartVersion(File pubspecFile) {
     final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
     final dartVersion = (yaml['environment'] as YamlMap)['sdk'];
@@ -200,7 +196,6 @@ class UpdateCommandService {
     return extractVersion(dartVersion as String);
   }
 
-  @visibleForTesting
   Version extractVersion(String versionString) {
     if (versionString.contains('<') && !versionString.contains('>=')) {
       throw const FormatException('Please specify the minimum version.');
