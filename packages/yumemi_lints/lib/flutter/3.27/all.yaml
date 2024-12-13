@@ -1,6 +1,6 @@
 # GENERATED CODE - DO NOT MODIFY BY HAND
 
-include: package:yumemi_lints/dart/2.18/all.yaml
+include: package:yumemi_lints/dart/3.6/all.yaml
 
 linter:
   rules:
