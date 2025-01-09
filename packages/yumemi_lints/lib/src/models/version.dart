@@ -10,7 +10,7 @@ class Version implements Comparable<Version> {
       throw MinimumVersionMissingException(text);
     }
 
-    RegExp regExp;
+    final RegExp regExp;
     if (text.contains('>=')) {
       regExp = RegExp(r'>=\s*(\d+)\.(\d+)');
     } else {
