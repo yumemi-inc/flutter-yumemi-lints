@@ -3,110 +3,109 @@
 linter:
   rules:
     - always_declare_return_types # categories: style
-    - always_put_control_body_on_new_line # categories: style
+    - always_put_control_body_on_new_line # categories: errorProne,style
     - always_put_required_named_parameters_first # categories: style
-    - always_specify_types # incompatibles: avoid_types_on_closure_parameters,omit_local_variable_types,omit_obvious_local_variable_types # categories: style
-    - always_use_package_imports # incompatibles: prefer_relative_imports # categories: error-prone
+    - always_specify_types # incompatibles: avoid_types_on_closure_parameters,omit_local_variable_types,omit_obvious_local_variable_types,omit_obvious_property_types # categories: style
+    - always_use_package_imports # incompatibles: prefer_relative_imports # categories: errorProne
     - annotate_overrides # categories: style
     - annotate_redeclares # categories: style
     - avoid_annotating_with_dynamic # categories: brevity,style
     - avoid_bool_literals_in_conditional_expressions # categories: brevity
-    - avoid_catches_without_on_clauses # categories: effective dart,style
+    - avoid_catches_without_on_clauses # categories: effectiveDart,style
     - avoid_catching_errors # categories: style
-    - avoid_classes_with_only_static_members # categories: effective dart,language feature usage,style
-    - avoid_double_and_int_checks # categories: error-prone,web
-    - avoid_dynamic_calls # categories: binary size,error-prone
-    - avoid_empty_else # categories: brevity,error-prone
-    - avoid_equals_and_hash_code_on_mutable_classes # categories: effective dart,style
+    - avoid_classes_with_only_static_members # categories: effectiveDart,languageFeatureUsage,style
+    - avoid_double_and_int_checks # categories: errorProne,web
+    - avoid_dynamic_calls # categories: binarySize,errorProne
+    - avoid_empty_else # categories: brevity,errorProne
+    - avoid_equals_and_hash_code_on_mutable_classes # categories: effectiveDart,style
     - avoid_escaping_inner_quotes # categories: style
     - avoid_field_initializers_in_const_classes # categories: style
     - avoid_final_parameters # incompatibles: prefer_final_parameters # categories: style
     - avoid_function_literals_in_foreach_calls # categories: style
     - avoid_implementing_value_types # categories: style
-    - avoid_init_to_null # categories: brevity,effective dart,style
-    - avoid_js_rounded_ints # categories: error-prone,web
+    - avoid_init_to_null # categories: brevity,effectiveDart,style
+    - avoid_js_rounded_ints # categories: errorProne,web
     - avoid_multiple_declarations_per_line # categories: style
     - avoid_null_checks_in_equality_operators # categories: style
-    - avoid_positional_boolean_parameters # categories: effective dart,style
+    - avoid_positional_boolean_parameters # categories: effectiveDart,style
     - avoid_print # categories: unintentional
     - avoid_private_typedef_functions # categories: style
     - avoid_redundant_argument_values # categories: brevity,style
-    - avoid_relative_lib_imports # categories: error-prone
-    - avoid_renaming_method_parameters # categories: documentation comment maintenance
+    - avoid_relative_lib_imports # categories: errorProne
+    - avoid_renaming_method_parameters # categories: documentationCommentMaintenance
     - avoid_return_types_on_setters # categories: brevity,style
     - avoid_returning_null_for_void # categories: style
-    - avoid_returning_this # categories: effective dart,style
+    - avoid_returning_this # categories: effectiveDart,style
     - avoid_setters_without_getters # categories: style
-    - avoid_shadowing_type_parameters # categories: error-prone
+    - avoid_shadowing_type_parameters # categories: errorProne
     - avoid_single_cascade_in_expression_statements # categories: brevity,style
-    - avoid_slow_async_io # categories: non-performant
+    - avoid_slow_async_io # categories: nonPerformant
     - avoid_type_to_string # categories: unintentional
     - avoid_types_as_parameter_names # categories: unintentional
     - avoid_types_on_closure_parameters # incompatibles: always_specify_types # categories: style
     - avoid_unused_constructor_parameters # categories: unintentional
     - avoid_void_async # categories: style
     - await_only_futures # categories: style
-    - camel_case_extensions # categories: effective dart,style
-    - camel_case_types # categories: effective dart,style
-    - cancel_subscriptions # categories: error-prone,memory leaks
-    - cascade_invocations # categories: brevity,language feature usage,style
-    - cast_nullable_to_non_nullable # categories: error-prone
-    - close_sinks # categories: error-prone,memory leaks
+    - camel_case_extensions # categories: effectiveDart,style
+    - camel_case_types # categories: effectiveDart,style
+    - cancel_subscriptions # categories: errorProne,memoryLeaks
+    - cascade_invocations # categories: brevity,languageFeatureUsage,style
+    - cast_nullable_to_non_nullable # categories: errorProne
+    - close_sinks # categories: errorProne,memoryLeaks
     - collection_methods_unrelated_type # categories: unintentional
     - combinators_ordering # categories: style
-    - comment_references # categories: documentation comment maintenance
-    - conditional_uri_does_not_exist # categories: error-prone
+    - comment_references # categories: documentationCommentMaintenance
+    - conditional_uri_does_not_exist # categories: errorProne
     - constant_identifier_names # categories: style
-    - control_flow_in_finally # categories: error-prone
-    - curly_braces_in_flow_control_structures # categories: error-prone
-    - dangling_library_doc_comments # categories: documentation comment maintenance
+    - control_flow_in_finally # categories: errorProne
+    - curly_braces_in_flow_control_structures # categories: errorProne
+    - dangling_library_doc_comments # categories: documentationCommentMaintenance
     - depend_on_referenced_packages # categories: pub
     - deprecated_consistency # categories: style
-    - deprecated_member_use_from_same_package # categories: language feature usage
+    - deprecated_member_use_from_same_package # categories: languageFeatureUsage
     - directives_ordering # categories: style
-    - discarded_futures # categories: error-prone
-    - do_not_use_environment # categories: error-prone
+    - discarded_futures # categories: errorProne
+    - do_not_use_environment # categories: errorProne
     - empty_catches # categories: style
-    - empty_constructor_bodies # categories: brevity,effective dart,style
-    - empty_statements # categories: error-prone
+    - empty_constructor_bodies # categories: brevity,effectiveDart,style
+    - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
-    - exhaustive_cases # categories: error-prone
+    - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
-    - hash_and_equals # categories: error-prone
+    - hash_and_equals # categories: errorProne
     - implementation_imports # categories: style
     - implicit_call_tearoffs # categories: style
-    - implicit_reopen # categories: error-prone
-    - invalid_case_patterns # categories: language feature usage
+    - implicit_reopen # categories: errorProne
+    - invalid_case_patterns # categories: languageFeatureUsage
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
     - library_annotations # categories: style
     - library_names # categories: style
     - library_prefixes # categories: style
-    - library_private_types_in_public_api # categories: public interface
+    - library_private_types_in_public_api # categories: publicInterface
     - lines_longer_than_80_chars # categories: style
-    - literal_only_boolean_expressions # categories: unused code
+    - literal_only_boolean_expressions # categories: unusedCode
     - matching_super_parameters # categories: style
-    - missing_code_block_language_in_doc_comment # categories: error-prone
-    - missing_whitespace_between_adjacent_strings # categories: error-prone
+    - missing_code_block_language_in_doc_comment # categories: errorProne
+    - missing_whitespace_between_adjacent_strings # categories: errorProne
     - no_adjacent_strings_in_list # categories: style
     - no_default_cases # categories: style
-    - no_duplicate_case_values # categories: error-prone
+    - no_duplicate_case_values # categories: errorProne
     - no_leading_underscores_for_library_prefixes # categories: style
     - no_leading_underscores_for_local_identifiers # categories: style
-    - no_literal_bool_comparisons # categories: effective dart,style
-    - no_runtimeType_toString # categories: non-performant
+    - no_literal_bool_comparisons # categories: effectiveDart,style
+    - no_runtimeType_toString # categories: nonPerformant
     - no_self_assignments # categories: unintentional
-    - no_wildcard_variable_uses # categories: language feature usage,unintentional
+    - no_wildcard_variable_uses # categories: languageFeatureUsage,unintentional
     - non_constant_identifier_names # categories: style
     - noop_primitive_operations # categories: style
     - null_check_on_nullable_type_parameter # categories: style
-    - null_closures # categories: error-prone
+    - null_closures # categories: errorProne
     - omit_local_variable_types # incompatibles: always_specify_types,specify_nonobvious_local_variable_types # categories: style
-    - one_member_abstracts # categories: effective dart,language feature usage,style
+    - one_member_abstracts # categories: effectiveDart,languageFeatureUsage,style
     - only_throw_errors # categories: style
     - overridden_fields # categories: style
-    - package_api_docs # categories: effective dart,public interface
     - package_names # categories: style
     - package_prefixed_library_names # categories: style
     - parameter_assignments # categories: style
@@ -123,13 +122,13 @@ linter:
     - prefer_contains # categories: style
     - prefer_double_quotes # incompatibles: prefer_single_quotes # categories: style
     - prefer_expression_function_bodies # categories: brevity,style
-    - prefer_final_fields # categories: effective dart,style
-    - prefer_final_in_for_each # categories: style
+    - prefer_final_fields # categories: effectiveDart,style
+    - prefer_final_in_for_each # incompatibles: unnecessary_final # categories: style
     - prefer_final_locals # incompatibles: unnecessary_final # categories: style
     - prefer_final_parameters # incompatibles: unnecessary_final,avoid_final_parameters # categories: style
     - prefer_for_elements_to_map_fromIterable # categories: brevity,style
     - prefer_foreach # categories: style
-    - prefer_function_declarations_over_variables # categories: effective dart,style
+    - prefer_function_declarations_over_variables # categories: effectiveDart,style
     - prefer_generic_function_type_aliases # categories: style
     - prefer_if_elements_to_conditional_expressions # categories: brevity,style
     - prefer_if_null_operators # categories: brevity,style
@@ -137,32 +136,32 @@ linter:
     - prefer_inlined_adds # categories: brevity,style
     - prefer_int_literals # categories: style
     - prefer_interpolation_to_compose_strings # categories: style
-    - prefer_is_empty # categories: style
+    - prefer_is_empty # categories: errorProne
     - prefer_is_not_empty # categories: style
     - prefer_is_not_operator # categories: brevity,style
     - prefer_iterable_whereType # categories: style
-    - prefer_mixin # categories: language feature usage,style
+    - prefer_mixin # categories: languageFeatureUsage,style
     - prefer_null_aware_method_calls # categories: brevity,style
     - prefer_null_aware_operators # categories: brevity,style
-    - prefer_relative_imports # incompatibles: always_use_package_imports # categories: error-prone
+    - prefer_relative_imports # incompatibles: always_use_package_imports # categories: errorProne
     - prefer_single_quotes # incompatibles: prefer_double_quotes # categories: style
     - prefer_spread_collections # categories: brevity,style
-    - prefer_typing_uninitialized_variables # categories: error-prone,unintentional
-    - prefer_void_to_null # categories: error-prone
-    - provide_deprecation_message # categories: public interface
-    - public_member_api_docs # categories: public interface,style
-    - recursive_getters # categories: error-prone,unintentional
+    - prefer_typing_uninitialized_variables # categories: errorProne,unintentional
+    - prefer_void_to_null # categories: errorProne
+    - provide_deprecation_message # categories: publicInterface
+    - public_member_api_docs # categories: publicInterface,style
+    - recursive_getters # categories: errorProne,unintentional
     - require_trailing_commas # categories: style
     - secure_pubspec_urls # categories: pub
-    - slash_for_doc_comments # categories: effective dart,style
+    - slash_for_doc_comments # categories: effectiveDart,style
     - sort_constructors_first # categories: style
     - sort_pub_dependencies # categories: pub
     - sort_unnamed_constructors_first # categories: style
-    - test_types_in_equals # categories: error-prone
-    - throw_in_finally # categories: error-prone
+    - test_types_in_equals # categories: errorProne
+    - throw_in_finally # categories: errorProne
     - tighten_type_of_initializing_formals # categories: style
-    - type_annotate_public_apis # categories: effective dart,public interface
-    - type_init_formals # categories: effective dart,style
+    - type_annotate_public_apis # categories: effectiveDart,publicInterface
+    - type_init_formals # categories: effectiveDart,style
     - type_literal_in_constant_pattern # categories: style
     - unawaited_futures # categories: style
     - unnecessary_await_in_return # categories: style
@@ -170,14 +169,14 @@ linter:
     - unnecessary_breaks # categories: brevity,style
     - unnecessary_const # categories: brevity,style
     - unnecessary_constructor_name # categories: brevity,style
-    - unnecessary_final # incompatibles: prefer_final_locals,prefer_final_parameters # categories: effective dart,style
-    - unnecessary_getters_setters # categories: effective dart,style
+    - unnecessary_final # incompatibles: prefer_final_locals,prefer_final_parameters,prefer_final_in_for_each # categories: effectiveDart,style
+    - unnecessary_getters_setters # categories: effectiveDart,style
     - unnecessary_lambdas # categories: style
     - unnecessary_late # categories: style
     - unnecessary_library_directive # categories: brevity
-    - unnecessary_library_name # categories: brevity,language feature usage,style
-    - unnecessary_new # categories: brevity,language feature usage,style
-    - unnecessary_null_aware_assignments # categories: brevity,effective dart,style
+    - unnecessary_library_name # categories: brevity,languageFeatureUsage,style
+    - unnecessary_new # categories: brevity,languageFeatureUsage,style
+    - unnecessary_null_aware_assignments # categories: brevity,effectiveDart,style
     - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
     - unnecessary_null_checks # categories: brevity,style
     - unnecessary_null_in_if_null_operators # categories: style
@@ -188,24 +187,23 @@ linter:
     - unnecessary_statements # categories: brevity,unintentional
     - unnecessary_string_escapes # categories: brevity,style
     - unnecessary_string_interpolations # categories: brevity,style
-    - unnecessary_this # categories: brevity,effective dart,style
+    - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
-    - unreachable_from_main # categories: unused code
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
-    - unsafe_html # categories: errors
     - use_enums # categories: style
     - use_function_type_syntax_for_parameters # categories: style
-    - use_if_null_to_convert_nulls_to_bools # categories: effective dart,style
+    - use_if_null_to_convert_nulls_to_bools # categories: effectiveDart,style
     - use_is_even_rather_than_modulo # categories: style
     - use_late_for_private_fields_and_variables # categories: style
     - use_named_constants # categories: style
     - use_raw_strings # categories: style
-    - use_rethrow_when_possible # categories: brevity,effective dart
+    - use_rethrow_when_possible # categories: brevity,effectiveDart
     - use_setters_to_change_properties # categories: style
-    - use_string_buffers # categories: non-performant
-    - use_string_in_part_of_directives # categories: effective dart,style
+    - use_string_buffers # categories: nonPerformant
+    - use_string_in_part_of_directives # categories: effectiveDart,style
     - use_super_parameters # categories: brevity
     - use_test_throws_matchers # categories: style
-    - use_to_and_as_if_applicable # categories: effective dart,style
+    - use_to_and_as_if_applicable # categories: effectiveDart,style
     - valid_regexps # categories: unintentional
     - void_checks # categories: style
