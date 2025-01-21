@@ -68,18 +68,34 @@ sealed class Since with _$Since {
 
   const factory Since.unreleased() = SinceUnreleased;
 
+  static final _versionRegExp = RegExp(r'^(\d+)\.(\d+)$');
+
   factory Since.fromJson(String value) {
-    final Version version;
-    try {
-      version = Version.parse(value);
-    } on FormatException {
+    final match = _versionRegExp.firstMatch(value);
+    if (match == null) {
+      // NOTE:
+      //  This is a workaround for the fact that the `sinceDartSdk` field in the [rules.json] is not always a valid version.
+      //  Expected format: "1.0", "2.1", etc.
+      //  Unexpected format examples: "3.3-wip", "3.5-dev", etc.
+      //  [rules.json]: https://github.com/dart-lang/sdk/blob/main/pkg/linter/tool/machine/rules.json
       return SinceUnreleased();
     }
+
+    final major = int.parse(match[1]!);
+    final minor = int.parse(match[2]!);
+    const patch = 0;
+    final version = Version(
+      major,
+      minor,
+      patch,
+    );
+
     return SinceDartSdk(version);
   }
 
   String toJson() => switch (this) {
-        SinceDartSdk(version: final version) => version.toString(),
+        SinceDartSdk(version: final version) =>
+          '${version.major}.${version.minor}',
         SinceUnreleased() => 'unreleased',
       };
 }
