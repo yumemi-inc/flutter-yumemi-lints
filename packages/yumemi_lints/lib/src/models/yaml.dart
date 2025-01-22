@@ -5,8 +5,8 @@ class Yaml {
 
   // Convert and parse the file system into a Yaml file,
   // obtain a YamlMap, and then create a Yaml object.
-  factory Yaml.parse(File file) {
-    final lines = file.readAsStringSync().split('\n');
+  factory Yaml.parse(String file) {
+    final lines = file.split('\n');
     final result = <String, dynamic>{};
     final stack = <String>[];
     var current = result;
