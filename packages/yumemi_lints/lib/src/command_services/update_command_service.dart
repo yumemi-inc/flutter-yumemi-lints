@@ -186,7 +186,7 @@ class UpdateCommandService {
   Version getDartVersion(File pubspecFile) {
     final yaml = Yaml.parse(pubspecFile);
     final environment = yaml.yamlMap['environment'] as Map<String, dynamic>;
-    final dartVersion = environment['flutter'] as String?;
+    final dartVersion = environment['sdk'] as String?;
 
     if (dartVersion == null) {
       throw const FormatException(
