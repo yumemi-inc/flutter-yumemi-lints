@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:yumemi_lints/src/commands/update_command.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
