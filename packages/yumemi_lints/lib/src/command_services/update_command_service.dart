@@ -24,13 +24,13 @@ class UpdateCommandService {
   Future<ExitStatus> _updateLintRule(ProjectType projectType) async {
     final Version specifiedVersion;
     try {
-      final file = _getPubspecFile().readAsStringSync();
+      final fileContent = _getPubspecFile().readAsStringSync();
       switch (projectType) {
         case ProjectType.dart:
-          specifiedVersion = getDartVersion(file);
+          specifiedVersion = getDartVersion(fileContent);
           break;
         case ProjectType.flutter:
-          specifiedVersion = getFlutterVersion(file);
+          specifiedVersion = getFlutterVersion(fileContent);
           break;
       }
     } on FormatException catch (e) {
@@ -169,8 +169,8 @@ class UpdateCommandService {
     throw const CompatibleVersionException();
   }
 
-  Version getFlutterVersion(String pubspecFileString) {
-    final yaml = Yaml.parse(pubspecFileString);
+  Version getFlutterVersion(String pubspecFileContent) {
+    final yaml = Yaml.parse(pubspecFileContent);
     final environment = yaml.yamlMap['environment'] as Map<String, dynamic>;
     final flutterVersion = environment['flutter'] as String?;
 
@@ -184,8 +184,8 @@ class UpdateCommandService {
     return Version.parse(flutterVersion);
   }
 
-  Version getDartVersion(String pubspecFileString) {
-    final yaml = Yaml.parse(pubspecFileString);
+  Version getDartVersion(String pubspecFileContent) {
+    final yaml = Yaml.parse(pubspecFileContent);
     final environment = yaml.yamlMap['environment'] as Map<String, dynamic>;
     final dartVersion = environment['sdk'] as String?;
 
