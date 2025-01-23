@@ -1,7 +1,10 @@
-import 'package:args/command_runner.dart';
+import 'dart:async';
+
 import 'package:yumemi_lints/src/commands/update_command.dart';
+import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/utils/cli_info.dart';
+import 'package:yumemi_lints/src/utils/command_runner.dart';
 
 /// A command runner for the yumemi_lints
 class AppCommandRunner extends CommandRunner<ExitStatus> {
@@ -15,9 +18,9 @@ class AppCommandRunner extends CommandRunner<ExitStatus> {
     try {
       final argResults = parse(args);
       return await runCommand(argResults) ?? ExitStatus.success;
-    } on UsageException catch (e) {
+    } on ArgParserException catch (e) {
       print(e.message);
-      print(e.usage);
+      print(e.commandName);
       return ExitStatus.usage;
     } on Exception catch (e) {
       print(e);

@@ -1,6 +1,6 @@
-import 'package:args/command_runner.dart';
 import 'package:yumemi_lints/src/command_services/update_command_service.dart';
-import 'package:yumemi_lints/src/models/exit_status.dart';
+import 'package:yumemi_lints/src/models/command.dart';
+import 'package:yumemi_lints/yumemi_lints.dart';
 
 class UpdateCommand extends Command<ExitStatus> {
   UpdateCommand();
