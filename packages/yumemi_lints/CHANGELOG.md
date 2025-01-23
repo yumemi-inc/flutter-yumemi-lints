@@ -28,6 +28,8 @@ Examples of version updates are as follows:
 - Changed to be independent of the `path` package.
 - Changed to be independent of the `meta` package.
 - Changed to be independent of the `pub_semver` package.
+- Changed to be independent of the `yaml` package.
+- Changed to be independent of the `file` package.
 
 ## 2.2.0
 

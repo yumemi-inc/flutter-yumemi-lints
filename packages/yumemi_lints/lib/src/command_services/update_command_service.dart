@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:yaml/yaml.dart';
 import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
 import 'package:yumemi_lints/src/models/project_type.dart';
 import 'package:yumemi_lints/src/models/version.dart';
+import 'package:yumemi_lints/src/models/yaml.dart';
 
 class UpdateCommandService {
   const UpdateCommandService();
@@ -24,12 +24,13 @@ class UpdateCommandService {
   Future<ExitStatus> _updateLintRule(ProjectType projectType) async {
     final Version specifiedVersion;
     try {
+      final fileContent = _getPubspecFile().readAsStringSync();
       switch (projectType) {
         case ProjectType.dart:
-          specifiedVersion = getDartVersion(_getPubspecFile());
+          specifiedVersion = getDartVersion(fileContent);
           break;
         case ProjectType.flutter:
-          specifiedVersion = getFlutterVersion(_getPubspecFile());
+          specifiedVersion = getFlutterVersion(fileContent);
           break;
       }
     } on FormatException catch (e) {
@@ -168,9 +169,10 @@ class UpdateCommandService {
     throw const CompatibleVersionException();
   }
 
-  Version getFlutterVersion(File pubspecFile) {
-    final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
-    final flutterVersion = (yaml['environment'] as YamlMap)['flutter'];
+  Version getFlutterVersion(String pubspecFileContent) {
+    final yaml = Yaml.parse(pubspecFileContent);
+    final environment = yaml.yamlMap['environment'] as Map<String, dynamic>;
+    final flutterVersion = environment['flutter'] as String?;
 
     if (flutterVersion == null) {
       throw const FormatException(
@@ -179,12 +181,13 @@ class UpdateCommandService {
       );
     }
 
-    return Version.parse(flutterVersion as String);
+    return Version.parse(flutterVersion);
   }
 
-  Version getDartVersion(File pubspecFile) {
-    final yaml = loadYaml(pubspecFile.readAsStringSync()) as YamlMap;
-    final dartVersion = (yaml['environment'] as YamlMap)['sdk'];
+  Version getDartVersion(String pubspecFileContent) {
+    final yaml = Yaml.parse(pubspecFileContent);
+    final environment = yaml.yamlMap['environment'] as Map<String, dynamic>;
+    final dartVersion = environment['sdk'] as String?;
 
     if (dartVersion == null) {
       throw const FormatException(
@@ -193,7 +196,7 @@ class UpdateCommandService {
       );
     }
 
-    return Version.parse(dartVersion as String);
+    return Version.parse(dartVersion);
   }
 
   void _updateAnalysisOptionsFile(String includeLine) {

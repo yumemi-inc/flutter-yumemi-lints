@@ -1,4 +1,3 @@
-import 'package:file/memory.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:yumemi_lints/src/command_services/update_command_service.dart';
@@ -13,13 +12,10 @@ void main() {
         'Throws FormatException '
         'when the flutter version is not listed in pubspec.yaml', () {
       // arrange
-      final file = MemoryFileSystem().file('file')
-        ..writeAsStringSync(
-          '''
+      const file = '''
 environment:
   sdk: '2.17.0'
-''',
-        );
+''';
 
       // act, assert
       expect(
@@ -41,13 +37,10 @@ environment:
         'Throws FormatException '
         'when the dart version is not listed in pubspec.yaml', () {
       // arrange
-      final file = MemoryFileSystem().file('file')
-        ..writeAsStringSync(
-          '''
+      const file = '''
 environment:
   flutter: '3.16.7'
-''',
-        );
+''';
 
       // act, assert
       expect(
