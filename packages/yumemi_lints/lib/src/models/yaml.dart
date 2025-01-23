@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class Yaml {
   const Yaml._(this.yamlMap);
 
