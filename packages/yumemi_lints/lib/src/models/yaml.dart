@@ -3,11 +3,11 @@ class Yaml {
 
   // Convert and parse the file system into a Yaml file,
   // obtain a YamlMap, and then create a Yaml object.
-  factory Yaml.parse(String file) {
-    final lines = file.split('\n');
-    final result = <String, dynamic>{};
-    final stack = <String>[];
-    var current = result;
+  factory Yaml.parse(String fileContent) {
+    final lines = fileContent.split('\n');
+    // A stack of maps to manage the current nesting level.
+    final mapStack = <Map<String, dynamic>>[{}];
+    final currentMap = <String, dynamic>{};
 
     for (final line in lines) {
       final trimmed = line.trim();
@@ -15,44 +15,40 @@ class Yaml {
         continue;
       }
 
-      // Get parent element if there is an indent.
+      // Determine indentation by counting leading spaces.
       final indent = line.length - line.trimLeft().length;
-      while (stack.length > indent) {
-        stack.removeLast();
-        current = stack.isEmpty
-            ? result
-            : current['__parent__'] as Map<String, dynamic>;
+      // If the stack's depth is deeper than the current indent,
+      // pop until it matches.
+      while (mapStack.length > indent) {
+        mapStack.removeLast();
       }
 
+      // Only process the line if it contains a colon.
       if (trimmed.contains(':')) {
+        // Split the line into a key and value
+        // (joining the rest in case there are multiple colons).
         final parts = trimmed.split(':');
         final key = parts[0].trim();
         final value = parts.sublist(1).join(':').trim();
-        final newMap = <String, dynamic>{};
-        // If value is empty,
-        // create a new Map assuming a child element and add it to current.
-        if (value.isEmpty) {
-          current[key] = newMap;
-          newMap['__parent__'] = current;
-          stack.add(key);
-          current = newMap;
-        } else {
-          current[key] = value;
-        }
-      }
-    }
-    // Delete the "__parent__" key.
-    void cleanParent(Map<String, dynamic> map) {
-      map.remove('__parent__');
-      for (final value in map.values) {
-        if (value is Map<String, dynamic>) {
-          cleanParent(value);
-        }
-      }
-    }
 
-    cleanParent(result);
-    return Yaml._(result);
+        // If the value is empty, treat the key as a nested map.
+        if (value.isEmpty) {
+          final newMap = <String, dynamic>{};
+          currentMap[key] = newMap;
+          mapStack.add(newMap);
+        } else {
+          if (mapStack.isNotEmpty) {
+            final lastMap = mapStack.last;
+            lastMap[key] = value;
+            currentMap[lastMap.keys.first] = lastMap;
+          } else {
+            // Otherwise, assign the value as a string.
+            currentMap[key] = value;
+          }
+        }
+      }
+    }
+    return Yaml._(currentMap);
   }
 
   final YamlMap yamlMap;
