@@ -1,28 +1,32 @@
 import 'package:yumemi_lints/src/commands/update_command.dart';
-import 'package:yumemi_lints/src/models/exceptions.dart';
 import 'package:yumemi_lints/src/models/exit_status.dart';
-import 'package:yumemi_lints/src/utils/cli_info.dart';
-import 'package:yumemi_lints/src/utils/command_runner.dart';
 
 /// A command runner for the yumemi_lints
-class AppCommandRunner extends CommandRunner<ExitStatus> {
-  /// Creates a new instance of [AppCommandRunner]
-  AppCommandRunner() : super(CliInfo.name, CliInfo.description) {
-    addCommand(UpdateCommand());
-  }
+class AppCommandRunner {
+  AppCommandRunner();
 
-  @override
   Future<ExitStatus> run(Iterable<String> args) async {
     try {
-      final argResults = parse(args);
-      return await runCommand(argResults) ?? ExitStatus.success;
-    } on ArgParserException catch (e) {
-      print(e.message);
-      print(e.commandName);
-      return ExitStatus.usage;
+      if (args.isEmpty) {
+        return ExitStatus.success;
+      }
+      final updateExit = await _evaluateUpdateCommand(args);
+      return updateExit;
     } on Exception catch (e) {
       print(e);
       return ExitStatus.error;
     }
+  }
+
+  /// Evaluates [UpdateCommand].
+  ///
+  /// If [args] contains the `update` command, takes appropriate action.
+  /// Otherwise, treats as an error.
+  Future<ExitStatus> _evaluateUpdateCommand(Iterable<String> args) async {
+    final updateCommand = UpdateCommand();
+    if (updateCommand.check(args)) {
+      return await updateCommand.run() ?? ExitStatus.success;
+    }
+    return ExitStatus.error;
   }
 }
