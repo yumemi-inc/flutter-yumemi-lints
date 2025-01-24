@@ -5,13 +5,13 @@ include: package:yumemi_lints/dart/2.17/all.yaml
 linter:
   rules:
     - avoid_unnecessary_containers # categories: flutter,style
-    - avoid_web_libraries_in_flutter # categories: error-prone,flutter,web
-    - diagnostic_describe_all_properties # categories: error-prone,flutter
-    - no_logic_in_create_state # categories: errors,flutter
+    - avoid_web_libraries_in_flutter # categories: errorProne,flutter,web
+    - diagnostic_describe_all_properties # categories: errorProne,flutter
+    - no_logic_in_create_state # categories: errorProne,flutter
     - sized_box_for_whitespace # categories: flutter,style
     - sized_box_shrink_expand # categories: flutter,style
     - sort_child_properties_last # categories: flutter,style
-    - use_build_context_synchronously # categories: error-prone,flutter
+    - use_build_context_synchronously # categories: errorProne,flutter
     - use_colored_box # categories: flutter,style
     - use_decorated_box # categories: flutter,style
     - use_full_hex_values_for_flutter_colors # categories: flutter,style

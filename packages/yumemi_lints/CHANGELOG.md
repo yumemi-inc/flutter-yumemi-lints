@@ -21,7 +21,13 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
-## 2.2.1
+## 3.0.0
+
+### Changed
+
+- Removed lint rules as they are now marked as "removed" in the upstream Dart SDK [dart-lang/sdk/pkg/linter/tool/machine/rules.json@762a4c7]. This is an intentional change as these rules have been officially deprecated:
+  - `package_api_docs`
+  - `unsafe_html`
 
 ### Improvements
 
@@ -129,3 +135,5 @@ Examples of version updates are as follows:
 <!-- Links -->
 
 [Semantic Versioning 2.0.0]: https://semver.org/spec/v2.0.0.html
+
+[dart-lang/sdk/pkg/linter/tool/machine/rules.json@762a4c7]: https://github.com/dart-lang/sdk/blob/762a4c7e9147c028b28723e8fb2e04a717010c97/pkg/linter/tool/machine/rules.json
