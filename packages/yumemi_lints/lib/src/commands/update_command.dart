@@ -1,3 +1,4 @@
+import 'package:yumemi_lints/src/command_services/update_command_service.dart';
 import 'package:yumemi_lints/yumemi_lints.dart';
 
 class UpdateCommand {
@@ -6,7 +7,8 @@ class UpdateCommand {
   String get name => 'update';
 
   Future<ExitStatus?> run() async {
-    return ExitStatus.success;
+    const updateCommandService = UpdateCommandService();
+    return updateCommandService.call();
   }
 
   bool check(Iterable<String> args) {
