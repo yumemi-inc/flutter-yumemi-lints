@@ -6,7 +6,7 @@ class UpdateCommand {
 
   String get name => 'update';
 
-  Future<ExitStatus?> run() async {
+  Future<ExitStatus> run() async {
     const updateCommandService = UpdateCommandService();
     return updateCommandService.call();
   }
