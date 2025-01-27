@@ -179,7 +179,7 @@ const _yumemiNotRecommendedRules = <_NotRecommendedRule>[
   (
     name: 'always_specify_types',
     reason:
-        'Conflicts with enabling `avoid_types_on_closure_parameters`, `omit_local_variable_types`.',
+        'Conflicts with enabling `avoid_types_on_closure_parameters`, `omit_local_variable_types`, `omit_obvious_local_variable_types`, `omit_obvious_property_types`.',
   ),
   (
     name: 'avoid_annotating_with_dynamic',
