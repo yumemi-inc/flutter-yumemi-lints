@@ -56,7 +56,7 @@ analyzer:
 
 linter:
   rules:
-    # Conflicts with enabling `avoid_types_on_closure_parameters`, `omit_local_variable_types`.
+    # Conflicts with enabling `avoid_types_on_closure_parameters`, `omit_local_variable_types`, `omit_obvious_local_variable_types`, `omit_obvious_property_types`.
     always_specify_types: false
 
     # Conflicts with enabling `strict-raw-types`.

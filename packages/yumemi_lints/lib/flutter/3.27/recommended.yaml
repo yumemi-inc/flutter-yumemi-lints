@@ -1,6 +1,6 @@
 # GENERATED CODE - DO NOT MODIFY BY HAND
 
-include: package:yumemi_lints/dart/3.4/all.yaml
+include: package:yumemi_lints/flutter/3.27/all.yaml
 
 analyzer:
   language:
@@ -91,6 +91,9 @@ linter:
 
     # Don't often develop package.
     public_member_api_docs: false
+
+    # Conflicts with enabling `omit_local_variable_types`.
+    specify_nonobvious_local_variable_types: false
 
     # Conflicts with enabling `prefer_final_locals`.
     unnecessary_final: false

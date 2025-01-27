@@ -1,6 +1,6 @@
 name: update_lint_rules
 description: A sample command-line application.
-version: 3.0.0
+version: 3.1.0
 # repository: https://github.com/my_org/my_repo
 
 environment:
