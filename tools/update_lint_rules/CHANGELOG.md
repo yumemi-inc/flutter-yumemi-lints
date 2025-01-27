@@ -2,6 +2,16 @@
 
 Follow the [Keep a Changelog] format.
 
+## 3.1.0 - 2025-01-27
+
+### Added
+
+- Add `specify_nonobvious_local_variable_types` to the deprecated rules.
+
+### Improved
+
+- Update reason for 'always_specify_types' to include additional conflicting rules.
+
 ## 3.0.0 - 2025-01-21
 
 ### Changed
