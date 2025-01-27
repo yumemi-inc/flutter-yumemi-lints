@@ -1,20 +1,17 @@
-import 'package:args/command_runner.dart';
 import 'package:yumemi_lints/src/command_services/update_command_service.dart';
-import 'package:yumemi_lints/src/models/exit_status.dart';
+import 'package:yumemi_lints/yumemi_lints.dart';
 
-class UpdateCommand extends Command<ExitStatus> {
+class UpdateCommand {
   UpdateCommand();
 
-  @override
   String get name => 'update';
 
-  @override
-  String get description => "Automatically update the version of yumemi_lints'"
-      ' recommended.yaml to match the Dart or Flutter version of the project.';
-
-  @override
-  Future<ExitStatus> run() {
+  Future<ExitStatus> run() async {
     const updateCommandService = UpdateCommandService();
     return updateCommandService.call();
+  }
+
+  bool shouldRunCommand(Iterable<String> args) {
+    return args.contains(name);
   }
 }
