@@ -29,6 +29,11 @@ Examples of version updates are as follows:
   - `package_api_docs`
   - `unsafe_html`
 
+### Features
+
+- Added support for Dart 3.6.x.
+- Added support for Flutter 3.27.x.
+
 ### Improvements
 
 - Changed to be independent of the `path` package.
