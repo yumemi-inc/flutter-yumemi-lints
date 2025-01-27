@@ -218,6 +218,10 @@ const _yumemiNotRecommendedRules = <_NotRecommendedRule>[
     reason: "Don't often develop package.",
   ),
   (
+    name: 'specify_nonobvious_local_variable_types',
+    reason: 'Conflicts with enabling `omit_local_variable_types`.',
+  ),
+  (
     name: 'unnecessary_final',
     reason: 'Conflicts with enabling `prefer_final_locals`.',
   ),
