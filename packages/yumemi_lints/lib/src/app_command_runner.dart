@@ -24,8 +24,7 @@ class AppCommandRunner {
   /// Otherwise, treats as an error.
   Future<ExitStatus> _evaluateUpdateCommand(Iterable<String> args) async {
     final updateCommand = UpdateCommand();
-    if (updateCommand.check(args)) {
-      return await updateCommand.run() ?? ExitStatus.success;
+    if (updateCommand.shouldRunCommand(args)) {
     }
     return ExitStatus.error;
   }

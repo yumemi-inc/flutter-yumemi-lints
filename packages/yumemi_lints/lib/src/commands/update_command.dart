@@ -11,7 +11,7 @@ class UpdateCommand {
     return updateCommandService.call();
   }
 
-  bool check(Iterable<String> args) {
+  bool shouldRunCommand(Iterable<String> args) {
     return args.contains(name);
   }
 }
