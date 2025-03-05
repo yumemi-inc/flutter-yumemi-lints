@@ -1,0 +1,16 @@
+{
+    "words": [
+        "blendfactory",
+        "dvmx",
+        "hkusu",
+        "hmarr",
+        "pubspec",
+        "yumemi",
+    ],
+    "ignorePaths": [
+        "README.md",
+        "*.lock",
+        "lib/dart/*",
+        "lib/flutter/*",
+    ],
+}
