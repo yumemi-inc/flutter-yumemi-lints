@@ -1,6 +1,7 @@
 {
   "dart.sdkPath": ".dvm/dart_sdk",
   "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": ".github/ISSUE_TEMPLATE/config.yaml",
   },
