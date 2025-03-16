@@ -7,8 +7,8 @@
       "type": "dart",
       "program": "bin/yumemi_lints.dart",
       "args": [
-        "update"
-      ]
-    }
-  ]
+        "update",
+      ],
+    },
+  ],
 }

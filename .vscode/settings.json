@@ -5,4 +5,14 @@
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": ".github/ISSUE_TEMPLATE/config.yaml",
   },
+  "json.schemas": [
+    {
+      "fileMatch": [
+        ".vscode/*.json"
+      ],
+      "schema": {
+        "allowTrailingCommas": true,
+      },
+    },
+  ],
 }
