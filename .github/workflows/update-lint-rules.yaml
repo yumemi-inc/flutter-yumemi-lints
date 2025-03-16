@@ -15,14 +15,14 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Get dvm config
-        uses: blendfactory/dvm-config-action@v2
+        uses: blendfactory/dvm-config-action@acdae6fda79f5a230b5424fdf40fcfd9fcd3367b # v2.0.0
         id: dvm-config-action
 
       - name: Set up dart
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
         with:
           sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
@@ -38,13 +38,13 @@ jobs:
 
       - name: Generate a token
         id: generate_token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1.11.6
         with:
           app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
           private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
 
       - name: Create a pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
           token: ${{ steps.generate_token.outputs.token }}
           author: 'GitHub <noreply@github.com>'
