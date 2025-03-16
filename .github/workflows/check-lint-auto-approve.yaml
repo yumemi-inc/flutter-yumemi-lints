@@ -18,16 +18,16 @@ jobs:
       PROGRAM_DIR: tools/check_lint_rules_identity
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: branch
 
       - name: Get dvm config
-        uses: blendfactory/dvm-config-action@v2
+        uses: blendfactory/dvm-config-action@acdae6fda79f5a230b5424fdf40fcfd9fcd3367b # v2.0.0
         id: dvm-config-action
 
       - name: Set up dart
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
         with:
           sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
@@ -46,7 +46,7 @@ jobs:
         continue-on-error: true
 
       - name: Auto approve
-        uses: hmarr/auto-approve-action@v4
+        uses: hmarr/auto-approve-action@8f929096a962e83ccdfa8afcf855f39f12d4dac7 # v4
         if: steps.identity.outcome == 'success'
         with:
           review-message: Approved. Because it is the same lint rule as the previous version.
