@@ -53,7 +53,7 @@ jobs:
         working-directory: ${{ env.PROGRAM_DIR }}
 
       - name: Create diff.txt
-        run: git diff --name-only origin/main > $WORKSPACE/${{ env.DIFF_FILE }}
+        run: git diff --name-only origin/main > ${{ github.workspace }}/${{ env.DIFF_FILE }}
         working-directory: "lint"
 
       - name: Run check_lint_rules_identity
