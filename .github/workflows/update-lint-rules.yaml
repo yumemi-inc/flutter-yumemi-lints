@@ -13,13 +13,32 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    env:
+      PROGRAM_DIR: tool/tools/update_lint_rules
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: lint
+
+      - name: Generate a token
+        id: app-token
+        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1.11.6
+        with:
+          app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: yumemi-inc/flutter-yumemi-lints-tools
+          path: tool
 
       - name: Get dvm config
         uses: blendfactory/dvm-config-action@acdae6fda79f5a230b5424fdf40fcfd9fcd3367b # v2.0.0
         id: dvm-config-action
+        with:
+          path: "./tool/.dvm/config.json"
 
       - name: Set up dart
         uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
@@ -29,24 +48,17 @@ jobs:
       - name: Install dependencies
         run: dart pub get
         shell: bash
-        working-directory: tools/update_lint_rules
+        working-directory: ${{ env.PROGRAM_DIR }}
 
       - name: Run update_lint_rules
-        run: dart run bin/update_lint_rules.dart "$GITHUB_WORKSPACE/packages/yumemi_lints/lib"
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/update_lint_rules.dart ${{ github.workspace }}/lint/lib
         shell: bash
-        working-directory: tools/update_lint_rules
-
-      - name: Generate a token
-        id: generate_token
-        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1.11.6
-        with:
-          app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
 
       - name: Create a pull request
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
-          token: ${{ steps.generate_token.outputs.token }}
+          path: lint
+          token: ${{ steps.app-token.outputs.token }}
           author: 'GitHub <noreply@github.com>'
           commit-message: 'auto: Update lint rules'
           title: Update lint rules
