@@ -1,21 +1,18 @@
 {
   "dart.sdkPath": ".dvm/dart_sdk",
-  "github.copilot.enable": {
-    "*": false,
-    "markdown": true,
-    "dart": true,
-    "json": true,
-    "yaml": true
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-issue-config.json": ".github/ISSUE_TEMPLATE/config.yaml",
   },
-  "github.copilot.editor.enableCodeActions": true,
-  "github.copilot.editor.enableAutoCompletions": true,
-  "cSpell.words": [
-    "yumemi",
-    "riverpod",
-    "pubspec",
-    "intellij",
-    "todos",
-    "googleapis",
-    "Memoizer",
+  "json.schemas": [
+    {
+      "fileMatch": [
+        ".vscode/*.json"
+      ],
+      "schema": {
+        "allowTrailingCommas": true,
+      },
+    },
   ],
 }

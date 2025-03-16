@@ -2,7 +2,7 @@
 
 In general, we welcome contributions in the following areas 🙌:
 
-- Improvements to `tools/update_lint_rules`
+- Improvements to `lib/src` and `test` directories
 - Other minor enhancements
 
 If your contribution doesn't fall into these categories, please feel free to discuss it in the [Discussions] section.

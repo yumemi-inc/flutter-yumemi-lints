@@ -15,19 +15,35 @@ jobs:
       pull-requests: write
     env:
       DIFF_FILE: diff.txt
-      PROGRAM_DIR: tools/check_lint_rules_identity
+      PROGRAM_DIR: tool/tools/check_lint_rules_identity
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: branch
+          fetch-depth: 0
+          path: lint
+
+      - name: Generate a token
+        id: app-token
+        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1.11.6
+        with:
+          app-id: ${{ secrets.APP_ID_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
+
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: yumemi-inc/flutter-yumemi-lints-tools
+          path: tool
 
       - name: Get dvm config
-        uses: blendfactory/dvm-config-action@v2
+        uses: blendfactory/dvm-config-action@acdae6fda79f5a230b5424fdf40fcfd9fcd3367b # v2.0.0
         id: dvm-config-action
+        with:
+          path: "./tool/.dvm/config.json"
 
       - name: Set up dart
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
         with:
           sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
@@ -37,16 +53,17 @@ jobs:
         working-directory: ${{ env.PROGRAM_DIR }}
 
       - name: Create diff.txt
-        run: git diff --name-only origin/main > ${{ env.DIFF_FILE }}
+        run: git diff --name-only origin/main > ${{ github.workspace }}/${{ env.DIFF_FILE }}
+        working-directory: "lint"
 
       - name: Run check_lint_rules_identity
-        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} packages/yumemi_lints/lib
+        run: dart run ${{ env.PROGRAM_DIR }}/bin/check_lint_rules_identity.dart ${{ env.DIFF_FILE }} lint/lib
         shell: bash
         id: identity
         continue-on-error: true
 
       - name: Auto approve
-        uses: hmarr/auto-approve-action@v4
+        uses: hmarr/auto-approve-action@8f929096a962e83ccdfa8afcf855f39f12d4dac7 # v4
         if: steps.identity.outcome == 'success'
         with:
           review-message: Approved. Because it is the same lint rule as the previous version.

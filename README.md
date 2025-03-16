@@ -1,5 +1,3 @@
-[![melos](https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square)](https://github.com/invertase/melos)
-
 ## Overview
 
 Provides a set of lint rules recommended by YUMEMI Inc. for Dart and Flutter projects. These rules help enhance code quality and maintainability by ensuring adherence to best practices and style conventions. Follow the steps below to integrate and customize these lint rules into your project.
