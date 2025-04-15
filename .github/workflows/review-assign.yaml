@@ -11,7 +11,8 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: hkusu/review-assign-action@v1
+       # https://github.com/hkusu/review-assign-action
+      - uses: hkusu/review-assign-action@5bee595fdb9765d4a0bd35724b6302fa15569158 # v1.4.0
         with:
           assignees: ${{ github.actor }}
           reviewers: ${{ vars.REVIEWERS }}
