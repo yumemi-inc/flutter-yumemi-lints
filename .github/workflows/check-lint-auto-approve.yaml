@@ -7,8 +7,9 @@ on:
 
 jobs:
   auto-approve:
-    # if: contains(github.head_ref, ${{ vars.AUTO_UPDATE_BRANCH_NAME }})
-    if: contains(github.head_ref, secrets.AUTO_UPDATE_BRANCH_NAME)
+    env:
+      AUTO_UPDATE_BRANCH: ${{ secrets.AUTO_UPDATE_BRANCH_NAME }}
+    if: contains(github.head_ref, env.AUTO_UPDATE_BRANCH)
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
