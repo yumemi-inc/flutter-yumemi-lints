@@ -7,9 +7,7 @@ on:
 
 jobs:
   auto-approve:
-    env:
-      AUTO_UPDATE_BRANCH: ${{ secrets.AUTO_UPDATE_BRANCH_NAME }}
-    if: contains(github.head_ref, env.AUTO_UPDATE_BRANCH)
+    if: startsWith(github.head_ref, 'auto/update-lint-rules-')
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
