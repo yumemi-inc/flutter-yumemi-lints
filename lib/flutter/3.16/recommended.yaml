@@ -18,9 +18,6 @@ analyzer:
     # Superclass members should not be unintentionally overridden, as this reduces readability.
     annotate_overrides: error
 
-    # Class members should not be unintentionally redeclared, as this reduces readability.
-    annotate_redeclares: error
-
     # When using implements, you do not inherit the method body of `==`, making it nearly impossible to follow the contract of `==`.
     avoid_implementing_value_types: error
 
