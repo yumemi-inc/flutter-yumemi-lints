@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto-approve:
-    if: startsWith(github.head_ref, vars.AUTO_UPDATE_BRANCH_NAME)
+    if: contains(github.head_ref, vars.AUTO_UPDATE_BRANCH_NAME)
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
