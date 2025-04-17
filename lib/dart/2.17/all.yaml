@@ -5,10 +5,12 @@ linter:
     - always_declare_return_types # categories: style
     - always_put_control_body_on_new_line # categories: errorProne,style
     - always_put_required_named_parameters_first # categories: style
-    - always_specify_types # incompatibles: avoid_types_on_closure_parameters,omit_local_variable_types,omit_obvious_local_variable_types,omit_obvious_property_types # categories: style
-    - always_use_package_imports # incompatibles: prefer_relative_imports # categories: errorProne
+    - always_require_non_null_named_parameters
+    - always_specify_types # categories: style
+    - always_use_package_imports # categories: errorProne
     - annotate_overrides # categories: style
     - avoid_annotating_with_dynamic # categories: brevity,style
+    - avoid_as
     - avoid_bool_literals_in_conditional_expressions # categories: brevity
     - avoid_catches_without_on_clauses # categories: effectiveDart,style
     - avoid_catching_errors # categories: style
@@ -19,7 +21,7 @@ linter:
     - avoid_equals_and_hash_code_on_mutable_classes # categories: effectiveDart,style
     - avoid_escaping_inner_quotes # categories: style
     - avoid_field_initializers_in_const_classes # categories: style
-    - avoid_final_parameters # incompatibles: prefer_final_parameters # categories: style
+    - avoid_final_parameters # categories: style
     - avoid_function_literals_in_foreach_calls # categories: style
     - avoid_implementing_value_types # categories: style
     - avoid_init_to_null # categories: brevity,effectiveDart,style
@@ -33,6 +35,8 @@ linter:
     - avoid_relative_lib_imports # categories: errorProne
     - avoid_renaming_method_parameters # categories: documentationCommentMaintenance
     - avoid_return_types_on_setters # categories: brevity,style
+    - avoid_returning_null
+    - avoid_returning_null_for_future
     - avoid_returning_null_for_void # categories: style
     - avoid_returning_this # categories: effectiveDart,style
     - avoid_setters_without_getters # categories: style
@@ -41,7 +45,7 @@ linter:
     - avoid_slow_async_io # categories: nonPerformant
     - avoid_type_to_string # categories: unintentional
     - avoid_types_as_parameter_names # categories: unintentional
-    - avoid_types_on_closure_parameters # incompatibles: always_specify_types # categories: style
+    - avoid_types_on_closure_parameters # categories: style
     - avoid_unused_constructor_parameters # categories: unintentional
     - avoid_void_async # categories: style
     - await_only_futures # categories: style
@@ -64,17 +68,21 @@ linter:
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
+    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
     - hash_and_equals # categories: errorProne
     - implementation_imports # categories: style
+    - invariant_booleans
+    - iterable_contains_unrelated_type
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
     - library_names # categories: style
     - library_prefixes # categories: style
     - library_private_types_in_public_api # categories: publicInterface
     - lines_longer_than_80_chars # categories: style
+    - list_remove_unrelated_type
     - literal_only_boolean_expressions # categories: unusedCode
     - missing_whitespace_between_adjacent_strings # categories: errorProne
     - no_adjacent_strings_in_list # categories: style
@@ -85,18 +93,19 @@ linter:
     - no_runtimeType_toString # categories: nonPerformant
     - non_constant_identifier_names # categories: style
     - noop_primitive_operations # categories: style
-    - null_check_on_nullable_type_parameter # categories: style
     - null_closures # categories: errorProne
-    - omit_local_variable_types # incompatibles: always_specify_types,specify_nonobvious_local_variable_types # categories: style
+    - omit_local_variable_types # categories: style
     - one_member_abstracts # categories: effectiveDart,languageFeatureUsage,style
     - only_throw_errors # categories: style
     - overridden_fields # categories: style
+    - package_api_docs # categories: effectiveDart,publicInterface
     - package_names # categories: style
     - package_prefixed_library_names # categories: style
     - parameter_assignments # categories: style
     - prefer_adjacent_string_concatenation # categories: style
     - prefer_asserts_in_initializer_lists # categories: style
     - prefer_asserts_with_message # categories: style
+    - prefer_bool_in_asserts
     - prefer_collection_literals # categories: brevity,style
     - prefer_conditional_assignment # categories: brevity,style
     - prefer_const_constructors # categories: style
@@ -105,12 +114,13 @@ linter:
     - prefer_const_literals_to_create_immutables # categories: style
     - prefer_constructors_over_static_methods # categories: style
     - prefer_contains # categories: style
-    - prefer_double_quotes # incompatibles: prefer_single_quotes # categories: style
+    - prefer_double_quotes # categories: style
+    - prefer_equal_for_default_values
     - prefer_expression_function_bodies # categories: brevity,style
     - prefer_final_fields # categories: effectiveDart,style
-    - prefer_final_in_for_each # incompatibles: unnecessary_final # categories: style
-    - prefer_final_locals # incompatibles: unnecessary_final # categories: style
-    - prefer_final_parameters # incompatibles: unnecessary_final,avoid_final_parameters # categories: style
+    - prefer_final_in_for_each # categories: style
+    - prefer_final_locals # categories: style
+    - prefer_final_parameters # categories: style
     - prefer_for_elements_to_map_fromIterable # categories: brevity,style
     - prefer_foreach # categories: style
     - prefer_function_declarations_over_variables # categories: effectiveDart,style
@@ -128,8 +138,8 @@ linter:
     - prefer_mixin # categories: languageFeatureUsage,style
     - prefer_null_aware_method_calls # categories: brevity,style
     - prefer_null_aware_operators # categories: brevity,style
-    - prefer_relative_imports # incompatibles: always_use_package_imports # categories: errorProne
-    - prefer_single_quotes # incompatibles: prefer_double_quotes # categories: style
+    - prefer_relative_imports # categories: errorProne
+    - prefer_single_quotes # categories: style
     - prefer_spread_collections # categories: brevity,style
     - prefer_typing_uninitialized_variables # categories: errorProne,unintentional
     - prefer_void_to_null # categories: errorProne
@@ -142,6 +152,7 @@ linter:
     - sort_constructors_first # categories: style
     - sort_pub_dependencies # categories: pub
     - sort_unnamed_constructors_first # categories: style
+    - super_goes_last
     - test_types_in_equals # categories: errorProne
     - throw_in_finally # categories: errorProne
     - tighten_type_of_initializing_formals # categories: style
@@ -152,7 +163,7 @@ linter:
     - unnecessary_brace_in_string_interps # categories: brevity,style
     - unnecessary_const # categories: brevity,style
     - unnecessary_constructor_name # categories: brevity,style
-    - unnecessary_final # incompatibles: prefer_final_locals,prefer_final_parameters,prefer_final_in_for_each # categories: effectiveDart,style
+    - unnecessary_final # categories: effectiveDart,style
     - unnecessary_getters_setters # categories: effectiveDart,style
     - unnecessary_lambdas # categories: style
     - unnecessary_late # categories: style
@@ -169,7 +180,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unrelated_type_equality_checks # categories: unintentional
-    - use_enums # categories: style
+    - unsafe_html # categories: errorProne
     - use_function_type_syntax_for_parameters # categories: style
     - use_if_null_to_convert_nulls_to_bools # categories: effectiveDart,style
     - use_is_even_rather_than_modulo # categories: style
@@ -179,7 +190,6 @@ linter:
     - use_rethrow_when_possible # categories: brevity,effectiveDart
     - use_setters_to_change_properties # categories: style
     - use_string_buffers # categories: nonPerformant
-    - use_super_parameters # categories: brevity
     - use_test_throws_matchers # categories: style
     - use_to_and_as_if_applicable # categories: effectiveDart,style
     - valid_regexps # categories: unintentional
