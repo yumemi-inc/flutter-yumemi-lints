@@ -3,7 +3,7 @@ name: Check for differences from the previous lint rule
 on:
   pull_request:
     branches:
-      - "main"
+      - "GH-143"
 
 jobs:
   auto-approve:
