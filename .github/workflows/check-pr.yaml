@@ -30,3 +30,9 @@ jobs:
         run: dart pub get
         shell: bash
 
+      - name: Analyze
+        run: dart analyze
+
+      - name: Check formatting
+        run: dart format --set-exit-if-changed .
+
