@@ -66,6 +66,7 @@ linter:
     - directives_ordering # categories: style
     - discarded_futures # categories: errorProne
     - do_not_use_environment # categories: errorProne
+    - document_ignores # categories: style
     - empty_catches # categories: style
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
@@ -78,6 +79,7 @@ linter:
     - implicit_call_tearoffs # categories: style
     - implicit_reopen # categories: errorProne
     - invalid_case_patterns # categories: languageFeatureUsage
+    - invalid_runtime_check_with_js_interop_types # categories: errorProne,web
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
     - library_annotations # categories: style
@@ -165,6 +167,7 @@ linter:
     - type_init_formals # categories: effectiveDart,style
     - type_literal_in_constant_pattern # categories: style
     - unawaited_futures # categories: style
+    - unintended_html_in_doc_comment # categories: errorProne
     - unnecessary_await_in_return # categories: style
     - unnecessary_brace_in_string_interps # categories: brevity,style
     - unnecessary_breaks # categories: brevity,style
@@ -190,6 +193,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style

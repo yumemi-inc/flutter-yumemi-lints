@@ -9,6 +9,7 @@ linter:
     - always_specify_types # categories: style
     - always_use_package_imports # categories: errorProne
     - annotate_overrides # categories: style
+    - annotate_redeclares # categories: style
     - avoid_annotating_with_dynamic # categories: brevity,style
     - avoid_bool_literals_in_conditional_expressions # categories: brevity
     - avoid_catches_without_on_clauses # categories: effectiveDart,style
@@ -72,7 +73,6 @@ linter:
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
-    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
@@ -193,6 +193,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style

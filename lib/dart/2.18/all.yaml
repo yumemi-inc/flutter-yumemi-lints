@@ -63,12 +63,12 @@ linter:
     - depend_on_referenced_packages # categories: pub
     - deprecated_consistency # categories: style
     - directives_ordering # categories: style
+    - discarded_futures # categories: errorProne
     - do_not_use_environment # categories: errorProne
     - empty_catches # categories: style
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
-    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
@@ -170,6 +170,7 @@ linter:
     - unnecessary_late # categories: style
     - unnecessary_new # categories: brevity,languageFeatureUsage,style
     - unnecessary_null_aware_assignments # categories: brevity,effectiveDart,style
+    - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
     - unnecessary_null_checks # categories: brevity,style
     - unnecessary_null_in_if_null_operators # categories: style
     - unnecessary_nullable_for_final_variable_declarations # categories: style
@@ -180,6 +181,7 @@ linter:
     - unnecessary_string_escapes # categories: brevity,style
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
+    - unnecessary_to_list_in_spreads # categories: brevity
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style

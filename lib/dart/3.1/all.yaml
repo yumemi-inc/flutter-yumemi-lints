@@ -72,7 +72,6 @@ linter:
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
-    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
@@ -100,6 +99,8 @@ linter:
     - no_leading_underscores_for_local_identifiers # categories: style
     - no_literal_bool_comparisons # categories: effectiveDart,style
     - no_runtimeType_toString # categories: nonPerformant
+    - no_self_assignments # categories: unintentional
+    - no_wildcard_variable_uses # categories: languageFeatureUsage,unintentional
     - non_constant_identifier_names # categories: style
     - noop_primitive_operations # categories: style
     - null_check_on_nullable_type_parameter # categories: style
@@ -191,6 +192,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style

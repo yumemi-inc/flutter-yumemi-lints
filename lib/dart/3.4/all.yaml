@@ -87,6 +87,7 @@ linter:
     - lines_longer_than_80_chars # categories: style
     - literal_only_boolean_expressions # categories: unusedCode
     - matching_super_parameters # categories: style
+    - missing_code_block_language_in_doc_comment # categories: errorProne
     - missing_whitespace_between_adjacent_strings # categories: errorProne
     - no_adjacent_strings_in_list # categories: style
     - no_default_cases # categories: style
@@ -174,6 +175,7 @@ linter:
     - unnecessary_lambdas # categories: style
     - unnecessary_late # categories: style
     - unnecessary_library_directive # categories: brevity
+    - unnecessary_library_name # categories: brevity,languageFeatureUsage,style
     - unnecessary_new # categories: brevity,languageFeatureUsage,style
     - unnecessary_null_aware_assignments # categories: brevity,effectiveDart,style
     - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
@@ -188,6 +190,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style

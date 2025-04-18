@@ -107,6 +107,7 @@ linter:
     - null_closures # categories: errorProne
     - omit_local_variable_types # categories: style
     - omit_obvious_local_variable_types # categories: style
+    - omit_obvious_property_types # categories: style
     - one_member_abstracts # categories: effectiveDart,languageFeatureUsage,style
     - only_throw_errors # categories: style
     - overridden_fields # categories: style
@@ -162,6 +163,8 @@ linter:
     - sort_pub_dependencies # categories: pub
     - sort_unnamed_constructors_first # categories: style
     - specify_nonobvious_local_variable_types # categories: style
+    - specify_nonobvious_property_types # categories: style
+    - strict_top_level_inference # categories: style
     - test_types_in_equals # categories: errorProne
     - throw_in_finally # categories: errorProne
     - tighten_type_of_initializing_formals # categories: style
@@ -170,6 +173,7 @@ linter:
     - type_literal_in_constant_pattern # categories: style
     - unawaited_futures # categories: style
     - unintended_html_in_doc_comment # categories: errorProne
+    - unnecessary_async # categories: style
     - unnecessary_await_in_return # categories: style
     - unnecessary_brace_in_string_interps # categories: brevity,style
     - unnecessary_breaks # categories: brevity,style
@@ -195,7 +199,10 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unnecessary_underscores # categories: brevity,style
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
+    - unsafe_variance # categories: errorProne
     - use_enums # categories: style
     - use_function_type_syntax_for_parameters # categories: style
     - use_if_null_to_convert_nulls_to_bools # categories: effectiveDart,style

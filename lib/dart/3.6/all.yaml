@@ -22,6 +22,7 @@ linter:
     - avoid_field_initializers_in_const_classes # categories: style
     - avoid_final_parameters # categories: style
     - avoid_function_literals_in_foreach_calls # categories: style
+    - avoid_futureor_void # categories: errorProne,unintentional
     - avoid_implementing_value_types # categories: style
     - avoid_init_to_null # categories: brevity,effectiveDart,style
     - avoid_js_rounded_ints # categories: errorProne,web
@@ -105,6 +106,7 @@ linter:
     - null_check_on_nullable_type_parameter # categories: style
     - null_closures # categories: errorProne
     - omit_local_variable_types # categories: style
+    - omit_obvious_local_variable_types # categories: style
     - one_member_abstracts # categories: effectiveDart,languageFeatureUsage,style
     - only_throw_errors # categories: style
     - overridden_fields # categories: style
@@ -160,6 +162,7 @@ linter:
     - sort_constructors_first # categories: style
     - sort_pub_dependencies # categories: pub
     - sort_unnamed_constructors_first # categories: style
+    - specify_nonobvious_local_variable_types # categories: style
     - test_types_in_equals # categories: errorProne
     - throw_in_finally # categories: errorProne
     - tighten_type_of_initializing_formals # categories: style
@@ -193,6 +196,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style
@@ -209,5 +213,6 @@ linter:
     - use_super_parameters # categories: brevity
     - use_test_throws_matchers # categories: style
     - use_to_and_as_if_applicable # categories: effectiveDart,style
+    - use_truncating_division # categories: languageFeatureUsage
     - valid_regexps # categories: unintentional
     - void_checks # categories: style

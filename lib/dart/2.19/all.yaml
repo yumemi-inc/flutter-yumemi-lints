@@ -55,11 +55,14 @@ linter:
     - cascade_invocations # categories: brevity,languageFeatureUsage,style
     - cast_nullable_to_non_nullable # categories: errorProne
     - close_sinks # categories: errorProne,memoryLeaks
+    - collection_methods_unrelated_type # categories: unintentional
+    - combinators_ordering # categories: style
     - comment_references # categories: documentationCommentMaintenance
     - conditional_uri_does_not_exist # categories: errorProne
     - constant_identifier_names # categories: style
     - control_flow_in_finally # categories: errorProne
     - curly_braces_in_flow_control_structures # categories: errorProne
+    - dangling_library_doc_comments # categories: documentationCommentMaintenance
     - depend_on_referenced_packages # categories: pub
     - deprecated_consistency # categories: style
     - directives_ordering # categories: style
@@ -68,17 +71,19 @@ linter:
     - empty_catches # categories: style
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
+    - enable_null_safety
     - eol_at_end_of_file # categories: style
-    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
     - hash_and_equals # categories: errorProne
     - implementation_imports # categories: style
+    - implicit_call_tearoffs # categories: style
     - invariant_booleans
     - iterable_contains_unrelated_type
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
+    - library_annotations # categories: style
     - library_names # categories: style
     - library_prefixes # categories: style
     - library_private_types_in_public_api # categories: publicInterface
@@ -169,6 +174,7 @@ linter:
     - unnecessary_getters_setters # categories: effectiveDart,style
     - unnecessary_lambdas # categories: style
     - unnecessary_late # categories: style
+    - unnecessary_library_directive # categories: brevity
     - unnecessary_new # categories: brevity,languageFeatureUsage,style
     - unnecessary_null_aware_assignments # categories: brevity,effectiveDart,style
     - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
@@ -183,6 +189,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style
@@ -195,6 +202,7 @@ linter:
     - use_rethrow_when_possible # categories: brevity,effectiveDart
     - use_setters_to_change_properties # categories: style
     - use_string_buffers # categories: nonPerformant
+    - use_string_in_part_of_directives # categories: effectiveDart,style
     - use_super_parameters # categories: brevity
     - use_test_throws_matchers # categories: style
     - use_to_and_as_if_applicable # categories: effectiveDart,style

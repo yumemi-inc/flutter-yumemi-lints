@@ -42,6 +42,9 @@ analyzer:
     # Some file systems are not case-sensitive, so many projects require filenames to be all lowercase.
     library_names: error
 
+    # When unwrapping to a generic type parameter T, using `x!` can lead to a runtime error if T is given a nullable type, so you should use `x as T` instead.
+    null_check_on_nullable_type_parameter: error
+
     # If package names are not determined according to the rules, unexpected problems may occur.
     package_names: error
 

@@ -64,6 +64,7 @@ linter:
     - dangling_library_doc_comments # categories: documentationCommentMaintenance
     - depend_on_referenced_packages # categories: pub
     - deprecated_consistency # categories: style
+    - deprecated_member_use_from_same_package # categories: languageFeatureUsage
     - directives_ordering # categories: style
     - discarded_futures # categories: errorProne
     - do_not_use_environment # categories: errorProne
@@ -71,13 +72,14 @@ linter:
     - empty_constructor_bodies # categories: brevity,effectiveDart,style
     - empty_statements # categories: errorProne
     - eol_at_end_of_file # categories: style
-    - erase_dart_type_extension_types # categories: errorProne
     - exhaustive_cases # categories: errorProne
     - file_names # categories: style
     - flutter_style_todos # categories: style
     - hash_and_equals # categories: errorProne
     - implementation_imports # categories: style
     - implicit_call_tearoffs # categories: style
+    - implicit_reopen # categories: errorProne
+    - invalid_case_patterns # categories: languageFeatureUsage
     - iterable_contains_unrelated_type
     - join_return_with_assignment # categories: brevity,style
     - leading_newlines_in_multiline_strings # categories: style
@@ -88,12 +90,14 @@ linter:
     - lines_longer_than_80_chars # categories: style
     - list_remove_unrelated_type
     - literal_only_boolean_expressions # categories: unusedCode
+    - matching_super_parameters # categories: style
     - missing_whitespace_between_adjacent_strings # categories: errorProne
     - no_adjacent_strings_in_list # categories: style
     - no_default_cases # categories: style
     - no_duplicate_case_values # categories: errorProne
     - no_leading_underscores_for_library_prefixes # categories: style
     - no_leading_underscores_for_local_identifiers # categories: style
+    - no_literal_bool_comparisons # categories: effectiveDart,style
     - no_runtimeType_toString # categories: nonPerformant
     - non_constant_identifier_names # categories: style
     - noop_primitive_operations # categories: style
@@ -160,9 +164,11 @@ linter:
     - tighten_type_of_initializing_formals # categories: style
     - type_annotate_public_apis # categories: effectiveDart,publicInterface
     - type_init_formals # categories: effectiveDart,style
+    - type_literal_in_constant_pattern # categories: style
     - unawaited_futures # categories: style
     - unnecessary_await_in_return # categories: style
     - unnecessary_brace_in_string_interps # categories: brevity,style
+    - unnecessary_breaks # categories: brevity,style
     - unnecessary_const # categories: brevity,style
     - unnecessary_constructor_name # categories: brevity,style
     - unnecessary_final # categories: effectiveDart,style
@@ -184,6 +190,7 @@ linter:
     - unnecessary_string_interpolations # categories: brevity,style
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
+    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_html # categories: errorProne
     - use_enums # categories: style
