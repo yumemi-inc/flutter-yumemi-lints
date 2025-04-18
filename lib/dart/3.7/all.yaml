@@ -200,7 +200,6 @@ linter:
     - unnecessary_this # categories: brevity,effectiveDart,style
     - unnecessary_to_list_in_spreads # categories: brevity
     - unnecessary_underscores # categories: brevity,style
-    - unreachable_from_main # categories: unusedCode
     - unrelated_type_equality_checks # categories: unintentional
     - unsafe_variance # categories: errorProne
     - use_enums # categories: style
