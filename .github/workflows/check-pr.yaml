@@ -9,3 +9,20 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Extract dart version
+      uses: blendfactory/dvm-config-action@1efe1a203d0a3a31bffd767b0affb251b54ff6bc # v2.0.0
+      id: dvm-config-action
+
+      - name: Set up dart
+        uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
+        with:
+          sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
+
