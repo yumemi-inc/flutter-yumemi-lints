@@ -26,3 +26,7 @@ jobs:
         with:
           sdk: ${{ steps.dvm-config-action.outputs.dart-sdk-version }}
 
+      - name: Install dependencies
+        run: dart pub get
+        shell: bash
+
