@@ -11,6 +11,7 @@ linter:
     - sized_box_for_whitespace # categories: flutter,style
     - sized_box_shrink_expand # categories: flutter,style
     - sort_child_properties_last # categories: flutter,style
+    - unreachable_from_main # categories: unusedCode
     - use_build_context_synchronously # categories: errorProne,flutter
     - use_colored_box # categories: flutter,style
     - use_decorated_box # categories: flutter,style
