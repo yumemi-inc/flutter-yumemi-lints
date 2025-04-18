@@ -36,3 +36,7 @@ jobs:
       - name: Check formatting
         run: dart format --set-exit-if-changed .
 
+     - name: Run test
+        run: dart test --file-reporter="json:test-results.json"
+        continue-on-error: true
+
