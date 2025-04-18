@@ -40,3 +40,11 @@ jobs:
         run: dart test --file-reporter="json:test-results.json"
         continue-on-error: true
 
+      # https://github.com/dorny/test-reporter
+      - name: Report test
+        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5 # v1.9.1
+        with:
+          name: "Dart Test"
+          path: "test-results.json"
+          reporter: "dart-json"
+          fail-on-error: "true"
