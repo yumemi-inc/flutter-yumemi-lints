@@ -26,7 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: dart pub get
-        shell: bash
 
       # https://github.com/invertase/github-action-dart-analyzer
       - name: Report analyze
