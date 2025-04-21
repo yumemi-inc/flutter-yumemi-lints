@@ -28,8 +28,11 @@ jobs:
         run: dart pub get
         shell: bash
 
-      - name: Analyze
-        run: dart analyze
+      # https://github.com/invertase/github-action-dart-analyzer
+      - name: Report analyze
+        uses: invertase/github-action-dart-analyzer@e981b01a458d0bab71ee5da182e5b26687b7101b # v3.0.0
+        with:
+          fatal-infos: true
 
       - name: Check formatting
         run: dart format --set-exit-if-changed .
