@@ -21,6 +21,24 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 4.0.0
+
+### Changed
+
+- Modified the reference source for lint rules, allowing precise identification of when each rule was added or removed. This enables providing accurate lint rule lists for specific Dart versions.
+  - Added the following lint rules with their supported Dart versions:
+    - `prefer_bool_in_asserts`: 2.17 - 2.19
+    - `prefer_equal_for_default_values`: 2.17 - 2.19
+    - `super_goes_last`: 2.17 - 2.19
+    - `always_require_non_null_named_parameters`: 2.17 - 3.2
+    - `package_api_docs`: 2.17 - 3.6
+    - `unsafe_html`: 2.17 - 3.6
+    - `enable_null_safety`: 2.19
+    - `avoid_returning_null`: 2.19 - 3.2
+    - `avoid_returning_null_for_future`: 2.19 - 3.2
+    - `iterable_contains_unrelated_type`: 2.19 - 3.2
+    - `list_remove_unrelated_type`: 2.19 - 3.2
+
 ## 3.1.0
 
 - Added support for Dart 3.7.x.
