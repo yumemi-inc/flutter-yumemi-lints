@@ -31,13 +31,13 @@ Examples of version updates are as follows:
     - `prefer_equal_for_default_values`: 2.17 - 2.19
     - `super_goes_last`: 2.17 - 2.19
     - `always_require_non_null_named_parameters`: 2.17 - 3.2
+    - `avoid_returning_null`: 2.17 - 3.2
+    - `avoid_returning_null_for_future`: 2.17 - 3.2
+    - `iterable_contains_unrelated_type`: 2.17 - 3.2
+    - `list_remove_unrelated_type`: 2.17 - 3.2
     - `package_api_docs`: 2.17 - 3.6
     - `unsafe_html`: 2.17 - 3.6
     - `enable_null_safety`: 2.19
-    - `avoid_returning_null`: 2.19 - 3.2
-    - `avoid_returning_null_for_future`: 2.19 - 3.2
-    - `iterable_contains_unrelated_type`: 2.19 - 3.2
-    - `list_remove_unrelated_type`: 2.19 - 3.2
 
 ## 3.1.0
 
