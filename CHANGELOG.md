@@ -27,6 +27,8 @@ Examples of version updates are as follows:
 
 - Modified the reference source for lint rules, allowing precise identification of when each rule was added or removed. This enables providing accurate lint rule lists for specific Dart versions.
   - Added the following lint rules with their supported Dart versions:
+    - `avoid_as`: 2.17 - 2.19
+    - `invariant_booleans`: 2.17 - 2.19
     - `prefer_bool_in_asserts`: 2.17 - 2.19
     - `prefer_equal_for_default_values`: 2.17 - 2.19
     - `super_goes_last`: 2.17 - 2.19
