@@ -21,6 +21,12 @@ Examples of version updates are as follows:
 > [!NOTE]
 > Changes to `tools/update_lint_rules` don't affect versioning.
 
+## 4.1.1
+
+### Improvements
+
+- Added `formatter: trailing_commas: preserve` to the recommended configuration files for Dart 3.8.x (`lib/dart/3.8/recommended.yaml`) and Flutter 3.32.x (`lib/flutter/3.32/recommended.yaml`) to explicitly preserve trailing commas.
+
 ## 4.1.0
 
 - Added support for Dart 3.8.x.
