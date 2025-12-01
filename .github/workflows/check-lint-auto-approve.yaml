@@ -18,7 +18,7 @@ jobs:
       PROGRAM_DIR: tool/tools/check_lint_rules_identity
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           fetch-depth: 0
           path: lint
@@ -31,7 +31,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY_OF_YUMEMI_PR_TOKEN_GENERATOR }}
 
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           repository: yumemi-inc/flutter-yumemi-lints-tools
           path: tool
