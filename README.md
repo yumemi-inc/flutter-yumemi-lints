@@ -116,26 +116,26 @@ See [Contributor Guide] for contributing conventions.
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
+        <a href=https://github.com/YumNumm>
+            <img src=https://avatars.githubusercontent.com/u/73390859?v=4 width="100;"  alt=Ryotaro Onoue/>
+            <br />
+            <sub style="font-size:14px"><b>Ryotaro Onoue</b></sub>
+        </a>
+    </td>
+</tr>
+<tr>
+    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/trm11tkr>
             <img src=https://avatars.githubusercontent.com/u/89247188?v=4 width="100;"  alt=trm11tkr/>
             <br />
             <sub style="font-size:14px"><b>trm11tkr</b></sub>
         </a>
     </td>
-</tr>
-<tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/K9i-0>
             <img src=https://avatars.githubusercontent.com/u/90010509?v=4 width="100;"  alt=K9i - Kota Hayashi/>
             <br />
             <sub style="font-size:14px"><b>K9i - Kota Hayashi</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
-        <a href=https://github.com/YumNumm>
-            <img src=https://avatars.githubusercontent.com/u/73390859?v=4 width="100;"  alt=Ryotaro Onoue/>
-            <br />
-            <sub style="font-size:14px"><b>Ryotaro Onoue</b></sub>
         </a>
     </td>
 </tr>
