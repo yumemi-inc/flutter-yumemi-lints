@@ -5,7 +5,6 @@ linter:
     - alwaysDeclareReturnTypes # categories: style
     - alwaysPutControlBodyOnNewLine # categories: errorProne,style
     - alwaysPutRequiredNamedParametersFirst # categories: style
-    - alwaysRequireNonNullNamedParameters
     - alwaysSpecifyTypes # categories: style
     - alwaysUsePackageImports # categories: errorProne
     - annotateOverrides # categories: style
@@ -23,11 +22,11 @@ linter:
     - avoidFieldInitializersInConstClasses # categories: style
     - avoidFinalParameters # categories: style
     - avoidFunctionLiteralsInForeachCalls # categories: style
+    - avoidFutureorVoid # categories: errorProne,unintentional
     - avoidImplementingValueTypes # categories: style
     - avoidInitToNull # categories: brevity,effectiveDart,style
     - avoidJsRoundedInts # categories: errorProne,web
     - avoidMultipleDeclarationsPerLine # categories: style
-    - avoidNullChecksInEqualityOperators # categories: style
     - avoidPositionalBooleanParameters # categories: effectiveDart,style
     - avoidPrint # categories: unintentional
     - avoidPrivateTypedefFunctions # categories: style
@@ -35,8 +34,6 @@ linter:
     - avoidRelativeLibImports # categories: errorProne
     - avoidRenamingMethodParameters # categories: documentationCommentMaintenance
     - avoidReturnTypesOnSetters # categories: brevity,style
-    - avoidReturningNull
-    - avoidReturningNullForFuture
     - avoidReturningNullForVoid # categories: style
     - avoidReturningThis # categories: effectiveDart,style
     - avoidSettersWithoutGetters # categories: style
@@ -72,6 +69,7 @@ linter:
     - directivesOrdering # categories: style
     - discardedFutures # categories: errorProne
     - doNotUseEnvironment # categories: errorProne
+    - documentIgnores # categories: style
     - emptyCatches # categories: style
     - emptyConstructorBodies # categories: brevity,effectiveDart,style
     - emptyStatements # categories: errorProne
@@ -84,7 +82,7 @@ linter:
     - implicitCallTearoffs # categories: style
     - implicitReopen # categories: errorProne
     - invalidCasePatterns # categories: languageFeatureUsage
-    - iterableContainsUnrelatedType
+    - invalidRuntimeCheckWithJsInteropTypes # categories: errorProne,web
     - joinReturnWithAssignment # categories: brevity,style
     - leadingNewlinesInMultilineStrings # categories: style
     - libraryAnnotations # categories: style
@@ -92,9 +90,9 @@ linter:
     - libraryPrefixes # categories: style
     - libraryPrivateTypesInPublicApi # categories: publicInterface
     - linesLongerThan80Chars # categories: style
-    - listRemoveUnrelatedType
     - literalOnlyBooleanExpressions # categories: unusedCode
     - matchingSuperParameters # categories: style
+    - missingCodeBlockLanguageInDocComment # categories: errorProne
     - missingWhitespaceBetweenAdjacentStrings # categories: errorProne
     - noAdjacentStringsInList # categories: style
     - noDefaultCases # categories: style
@@ -111,10 +109,11 @@ linter:
     - nullCheckOnNullableTypeParameter # categories: style
     - nullClosures # categories: errorProne
     - omitLocalVariableTypes # categories: style
+    - omitObviousLocalVariableTypes # categories: style
+    - omitObviousPropertyTypes # categories: style
     - oneMemberAbstracts # categories: effectiveDart,languageFeatureUsage,style
     - onlyThrowErrors # categories: style
     - overriddenFields # categories: style
-    - packageApiDocs # categories: effectiveDart,publicInterface
     - packageNames # categories: style
     - packagePrefixedLibraryNames # categories: style
     - parameterAssignments # categories: style
@@ -134,7 +133,6 @@ linter:
     - preferFinalFields # categories: effectiveDart,style
     - preferFinalInForEach # categories: style
     - preferFinalLocals # categories: style
-    - preferFinalParameters # categories: style
     - preferForElementsToMapFromiterable # categories: brevity,style
     - preferForeach # categories: style
     - preferFunctionDeclarationsOverVariables # categories: effectiveDart,style
@@ -160,8 +158,10 @@ linter:
     - provideDeprecationMessage # categories: publicInterface
     - publicMemberApiDocs # categories: publicInterface,style
     - recursiveGetters # categories: errorProne,unintentional
+    - removeDeprecationsInBreakingVersions # categories: publicInterface
     - requireTrailingCommas # categories: style
     - securePubspecUrls # categories: pub
+    - simplifyVariablePattern # categories: style
     - sizedBoxForWhitespace # categories: flutter,style
     - sizedBoxShrinkExpand # categories: flutter,style
     - slashForDocComments # categories: effectiveDart,style
@@ -169,6 +169,10 @@ linter:
     - sortConstructorsFirst # categories: style
     - sortPubDependencies # categories: pub
     - sortUnnamedConstructorsFirst # categories: style
+    - specifyNonobviousLocalVariableTypes # categories: style
+    - specifyNonobviousPropertyTypes # categories: style
+    - strictTopLevelInference # categories: style
+    - switchOnType # categories: unintentional,style,languageFeatureUsage,errorProne
     - testTypesInEquals # categories: errorProne
     - throwInFinally # categories: errorProne
     - tightenTypeOfInitializingFormals # categories: style
@@ -176,6 +180,8 @@ linter:
     - typeInitFormals # categories: effectiveDart,style
     - typeLiteralInConstantPattern # categories: style
     - unawaitedFutures # categories: style
+    - unintendedHtmlInDocComment # categories: errorProne
+    - unnecessaryAsync # categories: style
     - unnecessaryAwaitInReturn # categories: style
     - unnecessaryBraceInStringInterps # categories: brevity,style
     - unnecessaryBreaks # categories: brevity,style
@@ -183,9 +189,11 @@ linter:
     - unnecessaryConstructorName # categories: brevity,style
     - unnecessaryFinal # categories: effectiveDart,style
     - unnecessaryGettersSetters # categories: effectiveDart,style
+    - unnecessaryIgnore # categories: style
     - unnecessaryLambdas # categories: style
     - unnecessaryLate # categories: style
     - unnecessaryLibraryDirective # categories: brevity
+    - unnecessaryLibraryName # categories: brevity,languageFeatureUsage,style
     - unnecessaryNew # categories: brevity,languageFeatureUsage,style
     - unnecessaryNullAwareAssignments # categories: brevity,effectiveDart,style
     - unnecessaryNullAwareOperatorOnExtensionOnNullable # categories: style
@@ -200,20 +208,22 @@ linter:
     - unnecessaryStringInterpolations # categories: brevity,style
     - unnecessaryThis # categories: brevity,effectiveDart,style
     - unnecessaryToListInSpreads # categories: brevity
+    - unnecessaryUnawaited # categories: brevity,unintentional,unusedCode
+    - unnecessaryUnderscores # categories: brevity,style
     - unreachableFromMain # categories: unusedCode
     - unrelatedTypeEqualityChecks # categories: unintentional
-    - unsafeHtml # categories: errorProne
+    - unsafeVariance # categories: errorProne
     - useBuildContextSynchronously # categories: errorProne,flutter
     - useColoredBox # categories: flutter,style
     - useDecoratedBox # categories: flutter,style
     - useEnums # categories: style
     - useFullHexValuesForFlutterColors # categories: flutter,style
     - useFunctionTypeSyntaxForParameters # categories: style
-    - useIfNullToConvertNullsToBools # categories: effectiveDart,style
     - useIsEvenRatherThanModulo # categories: style
     - useKeyInWidgetConstructors # categories: flutter,style
     - useLateForPrivateFieldsAndVariables # categories: style
     - useNamedConstants # categories: style
+    - useNullAwareElements # categories: brevity,style
     - useRawStrings # categories: style
     - useRethrowWhenPossible # categories: brevity,effectiveDart
     - useSettersToChangeProperties # categories: style
@@ -222,5 +232,6 @@ linter:
     - useSuperParameters # categories: brevity
     - useTestThrowsMatchers # categories: style
     - useToAndAsIfApplicable # categories: effectiveDart,style
+    - useTruncatingDivision # categories: languageFeatureUsage
     - validRegexps # categories: unintentional
     - voidChecks # categories: style

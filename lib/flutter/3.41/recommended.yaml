@@ -1,6 +1,6 @@
 # GENERATED CODE - DO NOT MODIFY BY HAND
 
-include: package:yumemi_lints/dart/3.2/all.yaml
+include: package:yumemi_lints/flutter/3.41/all.yaml
 
 analyzer:
   language:
@@ -16,6 +16,9 @@ analyzer:
     invalid_use_of_visible_for_testing_member: error
 
 
+
+formatter:
+  trailing_commas: preserve
 
 linter:
   rules:
