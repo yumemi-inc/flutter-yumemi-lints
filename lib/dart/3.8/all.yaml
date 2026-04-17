@@ -189,7 +189,6 @@ linter:
     - unnecessary_new # categories: brevity,languageFeatureUsage,style
     - unnecessary_null_aware_assignments # categories: brevity,effectiveDart,style
     - unnecessary_null_aware_operator_on_extension_on_nullable # categories: style
-    - unnecessary_null_checks # categories: brevity,style
     - unnecessary_null_in_if_null_operators # categories: style
     - unnecessary_nullable_for_final_variable_declarations # categories: style
     - unnecessary_overrides # categories: style
